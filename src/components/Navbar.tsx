@@ -7,7 +7,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   HomeIcon,
-  UserGroupIcon,
+  ShoppingBagIcon,
   InformationCircleIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
@@ -18,7 +18,7 @@ import { ShoppingCart } from "lucide-react";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Products", href: "/products", icon: UserGroupIcon },
+  { name: "Products", href: "/products", icon: ShoppingBagIcon },
   { name: "About", href: "/about", icon: InformationCircleIcon },
   { name: "Contact", href: "/contact", icon: PhoneIcon },
 ];
@@ -50,11 +50,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled
+        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
             ? "bg-background/80 backdrop-blur-md shadow-lg"
             : "bg-white"
-        }`}
+          }`}
       >
         <nav
           className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -62,20 +61,20 @@ export default function Header() {
         >
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Tower of Refuge Hospital</span>
+              <span className="sr-only">Acefoods Global</span>
               <Image
                 height={40}
                 width={40}
                 className="h-10 w-auto"
                 src="/logo.png"
-                alt="Hospital Logo"
+                alt="Afrigold Logo"
               />
             </Link>
           </div>
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-muted-foreground hover:bg-accent"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-muted-foreground hover:bg-[#faba38]/30"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
@@ -87,16 +86,14 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-semibold leading-6 flex items-center space-x-1 px-3 py-2 rounded-full transition duration-300 ${
-                  pathname === item.href
-                    ? "text-primary bg-primary/10"
-                    : "text-foreground hover:bg-accent hover:text-accent-foreground"
-                }`}
+                className={`text-sm font-semibold leading-6 flex items-center space-x-1 px-3 py-2 rounded-full transition duration-300 ${pathname === item.href
+                    ? "text-primary bg-[#faba38]/30"
+                    : "text-foreground hover:bg-[#faba38]/30 hover:text-accent-foreground"
+                  }`}
               >
                 <item.icon
-                  className={`h-5 w-5 ${
-                    pathname === item.href ? "text-primary" : "text-primary/60"
-                  }`}
+                  className={`h-5 w-5 ${pathname === item.href ? "text-primary" : "text-primary/60"
+                    }`}
                 />
                 <span>{item.name}</span>
               </Link>
@@ -104,12 +101,12 @@ export default function Header() {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
-              href="/appointment"
-              className="text-sm font-semibold leading-6 text-black bg-[#faba38] px-4 py-2 rounded-full hover:bg-primary/90 transition duration-300 flex items-center space-x-1 shadow-md hover:shadow-lg"
+              href="https://buy.stripe.com/test_5kAaEWcnF62aau49AA"
+              className="text-sm font-semibold leading-6 text-black bg-[#faba38] px-4 py-2 rounded-full hover:bg-gold/90 transition duration-300 flex items-center space-x-1 shadow-md hover:shadow-lg"
             >
               {/* <Cart className="h-5 w-5 text-black" /> */}
               <ShoppingCart className="h-5 w-5 text-black" />
-              <span>Order Online</span>
+              <span>Order Now</span>
             </Link>
           </div>
         </nav>
@@ -141,7 +138,7 @@ export default function Header() {
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-md p-2.5 text-muted-foreground hover:bg-accent"
+                className="-m-2.5 rounded-md p-2.5 text-muted-foreground hover:bg-[#faba38]/20"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>
@@ -155,19 +152,17 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 flex items-center space-x-2 ${
-                        pathname === item.href
-                          ? "text-primary bg-primary/10"
-                          : "text-foreground hover:bg-accent hover:text-accent-foreground"
-                      }`}
+                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 flex items-center space-x-2 ${pathname === item.href
+                          ? "text-primary bg-[#faba38]/20"
+                          : "text-foreground hover:bg-[#faba38]/20 hover:text-accent-foreground"
+                        }`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <item.icon
-                        className={`h-6 w-6 ${
-                          pathname === item.href
+                        className={`h-6 w-6 ${pathname === item.href
                             ? "text-primary"
                             : "text-primary/60"
-                        }`}
+                          }`}
                       />
                       <span>{item.name}</span>
                     </Link>
@@ -175,12 +170,12 @@ export default function Header() {
                 </div>
                 <div className="py-6">
                   <Link
-                    href="/appointment"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-primary-foreground bg-primary hover:bg-primary/90 transition duration-300 flex items-center space-x-2 shadow-md hover:shadow-lg"
+                    href="https://buy.stripe.com/test_5kAaEWcnF62aau49AA"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-balck bg-[#faba38] hover:bg-gold/70 transition duration-300 flex items-center space-x-2 shadow-md hover:shadow-lg"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <CalendarIcon className="h-6 w-6 text-primary-foreground" />
-                    <span>Book Appointment</span>
+                    <CalendarIcon className="h-6 w-6 text-black" />
+                    <span>Order Now</span>
                   </Link>
                 </div>
               </div>

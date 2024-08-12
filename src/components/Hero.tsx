@@ -120,7 +120,7 @@ const Hero = () => {
                 {heroImages.map((_, index) => (
                     <button
                         key={index}
-                        className={`w-3 h-3 rounded-full ${index === currentSlide ? "bg-primary" : "bg-white bg-opacity-50"
+                        className={`w-3 h-3 rounded-full ${index === currentSlide ? "bg-[#faba38]" : "bg-white bg-opacity-50"
                             } transition-all duration-300`}
                         onClick={() => setCurrentSlide(index)}
                     />

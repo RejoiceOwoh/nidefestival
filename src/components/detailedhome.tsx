@@ -5,7 +5,7 @@ export default function DetailedHome() {
                 <div className="mx-auto bg-white w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                     <div className="max-w-3xl">
                         <h2 className="text-3xl font-bold sm:text-4xl">
-                            Lorem ipsum, dolor sit amet consectetur 
+                            Afrigold Palm Oil Originality 
                         </h2>
                     </div>
 
@@ -21,17 +21,13 @@ export default function DetailedHome() {
                         <div className="lg:py-16">
                             <article className="space-y-4 text-gray-600">
                                 <p>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui hic atque tenetur quis
-                                    eius quos ea neque sunt, accusantium soluta minus veniam tempora deserunt? Molestiae
-                                    eius quidem quam repellat.
+                                AfriGold Palm Oil is not just a product; it{"'"}s a heritage. The palm oil is sourced from the
+                                heart of Nigeria, where palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
                                 </p>
 
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum explicabo quidem
-                                    voluptatum voluptas illo accusantium ipsam quis, vel mollitia? Vel provident culpa
-                                    dignissimos possimus, perferendis consectetur odit accusantium dolorem amet voluptates
-                                    aliquid, ducimus tempore incidunt quas. Veritatis molestias tempora distinctio
-                                    voluptates sint! Itaque quasi corrupti, sequi quo odit illum impedit!
+                                Following
+                                meticulous traditional methods that have been refined over centuries. This process involves selecting the finest palm fruits, which are then carefully processed to extract the oil without losing its essential nutrients. The commitment to quality ensures that AfriGold Palm Oil remains unadulterated and true to its origins.
                                 </p>
                             </article>
                         </div>
