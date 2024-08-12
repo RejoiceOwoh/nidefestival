@@ -13,6 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        gold: '#faba38',  // Custom color for AfriGold
+        black: '#000000',
+      },
     },
   },
   plugins: [],
