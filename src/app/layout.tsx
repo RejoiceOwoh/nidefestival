@@ -8,6 +8,8 @@ export const metadata = {
   description: 'Premium, authentic palm oil sourced from Nigeria',
 };
 
+<link rel="icon" href="/favicon.ico" sizes="any" />
+
 export default function RootLayout({
   children,
 }: {
