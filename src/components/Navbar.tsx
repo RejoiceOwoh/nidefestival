@@ -17,7 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Services", href: "/services", icon: UserGroupIcon },
+  { name: "Products", href: "/products", icon: UserGroupIcon },
   { name: "About", href: "/about", icon: InformationCircleIcon },
   { name: "Contact", href: "/contact", icon: PhoneIcon },
 ];
@@ -52,7 +52,7 @@ export default function Header() {
         className={`fixed w-full z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-background/80 backdrop-blur-md shadow-lg"
-            : "bg-gold"
+            : "bg-white"
         }`}
       >
         <nav

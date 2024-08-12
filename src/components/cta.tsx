@@ -5,7 +5,7 @@ export default function CTA() {
     return (
         <div>
             <section>
-                <div className="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8">
+                <div className="mx-auto bg-white max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div className="bg-[#faba38] p-8 md:p-12 lg:px-16 lg:py-24">
                             <div className="mx-auto max-w-xl text-center">
@@ -31,20 +31,20 @@ export default function CTA() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
-        <img
-          alt=""
-          src="https://www.allrecipes.com/thmb/gGxd_XsQjCNs7Au0PfgvU4Uce2w=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/12978-Egusi-Soup-ddmfs-026-4x3-1-e662479f824b4b54bdc25165ad41c6b6.jpg"
-          className="h-40 w-full object-cover sm:h-56 md:h-full"
-        />
+                            <img
+                                alt=""
+                                src="https://www.allrecipes.com/thmb/gGxd_XsQjCNs7Au0PfgvU4Uce2w=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/12978-Egusi-Soup-ddmfs-026-4x3-1-e662479f824b4b54bdc25165ad41c6b6.jpg"
+                                className="h-40 w-full object-cover sm:h-56 md:h-full"
+                            />
 
-        <img
-          alt=""
-          src="https://www.chilipeppermadness.com/wp-content/uploads/2024/01/Egusi-Soup-Recipe1.jpg"
-          className="h-40 w-full object-cover sm:h-56 md:h-full"
-        />
-      </div>
+                            <img
+                                alt=""
+                                src="https://www.chilipeppermadness.com/wp-content/uploads/2024/01/Egusi-Soup-Recipe1.jpg"
+                                className="h-40 w-full object-cover sm:h-56 md:h-full"
+                            />
+                        </div>
 
-                    
+
                     </div>
                 </div>
             </section>
