@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import { ReactNode } from 'react';
 import Navbar from '../components/Navbar';
+import Footer from '@/components/footer';
 
 export const metadata = {
   title: 'AfriGold Palm Oil',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <Navbar />
         <main className="pt-16">{children}</main>
+        <Footer />
       </body>
     </html>
   );

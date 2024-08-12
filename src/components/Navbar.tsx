@@ -14,6 +14,7 @@ import {
 import { CalendarIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -104,10 +105,11 @@ export default function Header() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
               href="/appointment"
-              className="text-sm font-semibold leading-6 text-primary-foreground bg-primary px-4 py-2 rounded-full hover:bg-primary/90 transition duration-300 flex items-center space-x-1 shadow-md hover:shadow-lg"
+              className="text-sm font-semibold leading-6 text-black bg-[#faba38] px-4 py-2 rounded-full hover:bg-primary/90 transition duration-300 flex items-center space-x-1 shadow-md hover:shadow-lg"
             >
-              <CalendarIcon className="h-5 w-5 text-primary-foreground" />
-              <span>Book Appointment</span>
+              {/* <Cart className="h-5 w-5 text-black" /> */}
+              <ShoppingCart className="h-5 w-5 text-black" />
+              <span>Order Online</span>
             </Link>
           </div>
         </nav>

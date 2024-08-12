@@ -1,0 +1,186 @@
+import Link from "next/link";
+import {
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
+  ClockIcon,
+} from "@heroicons/react/24/outline";
+import { CalendarDaysIcon } from "@heroicons/react/24/solid";
+import {
+  FacebookIcon,
+  TwitterIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "lucide-react";
+
+const socialLinks = [
+  { name: "Facebook", href: "#", icon: FacebookIcon },
+  { name: "Twitter", href: "#", icon: TwitterIcon },
+  { name: "Instagram", href: "#", icon: InstagramIcon },
+  { name: "LinkedIn", href: "#", icon: LinkedinIcon },
+];
+
+const quickLinks = [
+  { name: "About Us", href: "/about" },
+  { name: "Our Services", href: "/services" },
+  { name: "Doctors", href: "/doctors" },
+  { name: "Appointments", href: "/appointments" },
+  { name: "News & Events", href: "/news" },
+];
+
+const legalLinks = [
+  { name: "Privacy Policy", href: "/privacy-policy" },
+  { name: "Terms of Service", href: "/terms-of-service" },
+  { name: "Sitemap", href: "/sitemap" },
+];
+
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-[#000000] text-white relative overflow-hidden">
+      {/* SVG Background */}
+      <svg
+        className="absolute inset-0 h-full w-full"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="rgba(255, 255, 255, 0.05)"
+          fillOpacity="1"
+          d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Hospital Info */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-white">
+              Acefoods Global
+            </h2>
+            <p className="mb-4 text-sm text-gray-200">
+              Providing advanced healthcare with a human touch in Enugu State.
+            </p>
+            <div className="flex space-x-4">
+              {socialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-300 hover:text-white transition duration-300"
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-6 w-6" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">
+              Quick Links
+            </h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-200 hover:text-white transition duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">
+              Contact Us
+            </h3>
+            <ul className="space-y-2">
+              <li className="flex items-center space-x-2 text-sm">
+                <MapPinIcon className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">
+                  No 3, Refuge Way, Ibute Bypass, 9th Mile Corner, Ngwo, Enugu
+                  State
+                </span>
+              </li>
+              <li className="flex items-center space-x-2 text-sm">
+                <PhoneIcon className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">09040848511, 09040848517</span>
+              </li>
+              <li className="flex items-center space-x-2 text-sm">
+                <EnvelopeIcon className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">
+                  info@towerofrefugehospital.com
+                </span>
+              </li>
+              <li className="flex items-center space-x-2 text-sm">
+                <ClockIcon className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">24/7 Emergency Services</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter Signup */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">
+              Stay Informed
+            </h3>
+            <p className="text-sm mb-4 text-gray-200">
+              Subscribe to our newsletter for health tips and hospital updates.
+            </p>
+            <form className="flex flex-col space-y-2">
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="px-4 py-2 bg-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 text-sm text-white placeholder-gray-400"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-white text-primary font-semibold rounded-md hover:bg-gray-100 transition duration-300 text-sm flex items-center justify-center"
+              >
+                <CalendarDaysIcon className="h-5 w-5 mr-2" />
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-center md:text-left text-gray-300">
+            &copy; {currentYear} Tower of Refuge Hospital. All rights reserved.
+          </p>
+          <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0">
+            <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
+              {legalLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-white transition duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-gray-400">
+              Designed and developed by{" "}
+              <a
+                href="https://mytechteam.ng"
+                className="text-gray-300 hover:text-white transition duration-300"
+              >
+                My Tech Team
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
