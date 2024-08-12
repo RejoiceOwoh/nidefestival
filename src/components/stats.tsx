@@ -5,11 +5,10 @@ export default function Stats() {
         <div>
             <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                 <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Trusted by eCommerce Businesses</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">More Than Just Palm Oil</h2>
 
                     <p className="mt-4 text-gray-500 sm:text-xl">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolores laborum labore
-                        provident impedit esse recusandae facere libero harum sequi.
+                    We are more than just palm oil. These numbers highlight our commitment to delivering the best while making a positive difference.
                     </p>
                 </div>
 
