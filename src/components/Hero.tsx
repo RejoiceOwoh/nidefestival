@@ -91,7 +91,7 @@ const Hero = () => {
                             </Link>
                             <Link
                                 href="/contact"
-                                className="bg-[#faba38] text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-white border-2 border-[#faba38] transition duration-300"
+                                className="bg-[#faba38] text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-transparent hover:text-[#faba38] border-2 border-[#faba38] transition duration-300"
                             >
                                 Buy Now
                             </Link>

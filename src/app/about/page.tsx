@@ -3,19 +3,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import ContactForm from "./_components/contact-form";
-import ContactInformation from "./_components/contact-info";
-import FindUs from "./_components/find-us";
+import AboutMain from "../about/_components/aboutmain";
 
-const ContactPage = () => {
+const AboutPage = () => {
   return (
     <div className="min-h-screen font-sans">
       <div className="relative h-[300px] md:h-[400px] overflow-hidden">
         <Image
-          src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218410/_LUP8406_gguzww.png"
+          src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218624/_LUP8399_qhesh0.png"
           alt="Hospital Banner"
           layout="fill"
           objectFit="cover"
+          objectPosition="bottom"
           priority
         />
         <div className="absolute inset-0 bg-black/50  flex items-center justify-center">
@@ -37,27 +36,11 @@ const ContactPage = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-white rounded-xl shadow-2xl p-8 md:p-12"
         >
-          <p className="text-xl text-gray-600 text-center mb-12 leading-relaxed">
-            We&apos;re can{"'"}t wait to hear from you. Kindly send us a message below
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold text-primary mb-6">
-                Send us a message
-              </h2>
-              <ContactForm />
-            </div>
-
-            <div className="space-y-8">
-              <ContactInformation />
-              <FindUs />
-            </div>
-          </div>
-        </motion.div>
+          <AboutMain />
+              </motion.div>
       </div>
     </div>
   );
 };
 
-export default ContactPage;
+export default AboutPage;

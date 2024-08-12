@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const ContactInformation = () => {
   return (
     <Card className="shadow-lg border-0 bg-white">
-      <CardHeader className="bg-[#faba38]/30 border-b border-primary/10">
+      <CardHeader className="bg-primary/5 border-b border-primary/10">
         <CardTitle className="text-2xl font-semibold text-primary">
           Contact Information
         </CardTitle>
@@ -24,7 +24,7 @@ const ContactInformation = () => {
               <p className="text-gray-600">
                 No 3, Refuge Way, Ibute Bypass,
                 <br />
-                123 Baker Street, London, NW1 6XE, United Kingdom
+                9th Mile Corner, Ngwo, Enugu State
               </p>
             </div>
           </div>
@@ -32,14 +32,21 @@ const ContactInformation = () => {
             <PhoneIcon className="w-6 h-6 text-gray-400 mr-4 flex-shrink-0" />
             <div>
               <h4 className="font-semibold text-gray-700">Phone</h4>
-              <p className="text-gray-600">+44 161 498 7654,  +44 20 7946 0958</p>
+              <p className="text-gray-600">09040848511, 09040848517</p>
             </div>
           </div>
           <div className="flex items-center">
             <EnvelopeIcon className="w-6 h-6 text-gray-400 mr-4 flex-shrink-0" />
             <div>
               <h4 className="font-semibold text-gray-700">Email</h4>
-              <p className="text-gray-600">info@acefoods.co.uk</p>
+              <p className="text-gray-600">info@towerofrefugehospital.com</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <ClockIcon className="w-6 h-6 text-gray-400 mr-4 flex-shrink-0" />
+            <div>
+              <h4 className="font-semibold text-gray-700">Hours</h4>
+              <p className="text-gray-600">24/7 Emergency Services</p>
             </div>
           </div>
         </div>

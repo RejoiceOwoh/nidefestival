@@ -82,10 +82,10 @@ export default function HeroProducts(){
                 </div>
   
                 <a
-                  href="#"
+                  href="https://buy.stripe.com/test_5kAaEWcnF62aau49AA"
                   className="inline-block rounded-md border border-transparent bg-[#faba38] px-8 py-3 text-center font-medium text-black hover:bg-[#faba38]/80"
                 >
-                  Shop Collection
+                  Order Now
                 </a>
               </div>
             </div>

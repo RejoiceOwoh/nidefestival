@@ -4,7 +4,7 @@ export default function Testimonial() {
             <section className="bg-white">
                 <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
                     <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                        Read trusted reviews from our customers
+                        Your review would definitely be the next here
                     </h2>
 
                     <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
@@ -17,7 +17,7 @@ export default function Testimonial() {
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-green-500">
+                                    <div className="flex justify-center gap-0.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"
@@ -90,7 +90,7 @@ export default function Testimonial() {
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-green-500">
+                                    <div className="flex justify-center gap-0.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"
@@ -163,7 +163,7 @@ export default function Testimonial() {
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-green-500">
+                                    <div className="flex justify-center gap-0.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"

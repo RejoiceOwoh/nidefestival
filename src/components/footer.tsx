@@ -57,11 +57,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Hospital Info */}
           <div>
-            <h2 className="text-2xl font-bold mb-4 text-white">
+            <h2 className="text-2xl font-bold mb-4 text-[gold]">
               Acefoods Global
             </h2>
             <p className="mb-4 text-sm text-gray-200">
-              Providing advanced healthcare with a human touch in Enugu State.
+              Palm Oil at its Originality
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((item) => (
@@ -105,23 +105,19 @@ export default function Footer() {
               <li className="flex items-center space-x-2 text-sm">
                 <MapPinIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                  No 3, Refuge Way, Ibute Bypass, 9th Mile Corner, Ngwo, Enugu
-                  State
+                123 Baker Street, London, NW1 6XE, United Kingdom
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <PhoneIcon className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-200">09040848511, 09040848517</span>
+                <span className="text-gray-200">+44 161 498 7654,  +44 20 7946 0958
+                </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <EnvelopeIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                  info@towerofrefugehospital.com
+                  info@acefoods.co.uk
                 </span>
-              </li>
-              <li className="flex items-center space-x-2 text-sm">
-                <ClockIcon className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-200">24/7 Emergency Services</span>
               </li>
             </ul>
           </div>
@@ -132,7 +128,7 @@ export default function Footer() {
               Stay Informed
             </h3>
             <p className="text-sm mb-4 text-gray-200">
-              Subscribe to our newsletter for health tips and hospital updates.
+              Subscribe to our newsletter for health tips and products updates.
             </p>
             <form className="flex flex-col space-y-2">
               <input
@@ -154,7 +150,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-center md:text-left text-gray-300">
-            &copy; {currentYear} Tower of Refuge Hospital. All rights reserved.
+            &copy; {currentYear} Acefoods Global. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0">
             <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
