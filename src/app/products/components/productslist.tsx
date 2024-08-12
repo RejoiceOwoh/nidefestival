@@ -14,60 +14,59 @@
 */
 const products = [
     {
-      id: 1,
-      name: 'AfriGold Palm Oil',
-      href: '#',
-      imageSrc: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218421/GOLD2_wozmcv.png',
-      imageSrc2: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218462/_LUP8385_yy0ku0.png',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '$35',
-      color: 'Black',
+        id: 1,
+        name: 'AfriGold Palm Oil',
+        href: 'https://buy.stripe.com/test_5kAaEWcnF62aau49AA',
+        imageSrc: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218421/GOLD2_wozmcv.png',
+        imageSrc2: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218462/_LUP8385_yy0ku0.png',
+        imageAlt: "Front of men's Basic Tee in black.",
+        price: '$35',
+        color: 'Black',
     },
     // More products...
-  ]
-  
-  export default function ProductsList() {
+]
+
+export default function ProductsList() {
     return (
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Our Products</h2>
-  
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {products.map((product) => (
-              <div key={product.id} className="group relative">
-               <a href={product.href} className="group block overflow-hidden">
-  <div className="relative h-[350px] sm:h-[450px] overflow-hidden">
-    <img
-      src={product.imageSrc}
-      alt=""
-      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
-    />
+        <div className="bg-white">
+            <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">Our Products</h2>
 
-    <img
-      alt={product.imageAlt}
-      src={product.imageSrc2}
-      className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-110"
-    />
-  </div>
+                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                    {products.map((product) => (
+                        <div key={product.id} className="group relative">
+                            <a href={product.href} className="group block overflow-hidden">
+                                <div className="relative h-[350px] sm:h-[450px] overflow-hidden">
+                                    <img
+                                        src={product.imageSrc}
+                                        alt=""
+                                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
+                                    />
 
-  <div className="relative bg-white pt-3">
-    <h3 className="text-sm text-gray-700 transition-all duration-300 ease-in-out group-hover:underline group-hover:underline-offset-4">
-    {product.name}
-    </h3>
+                                    <img
+                                        alt={product.imageAlt}
+                                        src={product.imageSrc2}
+                                        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-110"
+                                    />
+                                </div>
 
-    <div className="mt-1.5 flex items-center justify-between text-gray-900">
-      <p className="tracking-wide">{product.price}</p>
+                                <div className="relative bg-white pt-3">
+                                    <h3 className="text-sm text-gray-700 transition-all duration-300 ease-in-out group-hover:underline group-hover:underline-offset-4">
+                                        {product.name}
+                                    </h3>
 
-      <p className="text-xs uppercase tracking-wide">75 Cl</p>
-    </div>
-  </div>
-</a>
+                                    <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                                        <p className="tracking-wide">{product.price}</p>
 
-              </div>
-            ))}
-          </div>
+                                        <p className="text-xs uppercase tracking-wide">2 Litres</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
-      </div>
     )
-  }
-  
+}
