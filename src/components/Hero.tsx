@@ -84,14 +84,14 @@ const Hero = () => {
                         <div className="flex space-x-4">
                             <Link
                                 href="/products"
-                                className="bg-transparent text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#faba38] hover:text-black border-2 border-[#faba38] transition duration-300 flex items-center"
+                                className="bg-transparent text-white px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#faba38] hover:text-black border-2 border-[#faba38] transition duration-300 flex items-center"
                             >
                                 Explore Products
                                 <ChevronRightIcon className="w-5 h-5 ml-2" />
                             </Link>
                             <Link
                                 href="/contact"
-                                className="bg-[#faba38] text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-transparent hover:text-[#faba38] border-2 border-[#faba38] transition duration-300"
+                                className="bg-[#faba38] text-black px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-transparent hover:text-[#faba38] border-2 border-[#faba38] transition duration-300"
                             >
                                 Buy Now
                             </Link>
