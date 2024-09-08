@@ -24,7 +24,7 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold text-white text-center tracking-tight"
           >
-            Contact Us
+            About Us
           </motion.h1>
         </div>
       </div>
