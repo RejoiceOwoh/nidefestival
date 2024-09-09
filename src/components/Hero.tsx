@@ -57,6 +57,12 @@ const Hero = () => {
 
 
                     <div className="container mx-auto px-4">
+                    <motion.div
+                    className="mb-8"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                >
                     <Image
                         src="/logo.png" // Replace with your logo path
                         alt="Logo"
@@ -64,6 +70,7 @@ const Hero = () => {
                         height={100}
                         className="w-25 h-25 md:w-40 md:h-40 object-contain"
                     />
+                    </motion.div>
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentSlide}
