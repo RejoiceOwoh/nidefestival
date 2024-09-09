@@ -11,7 +11,7 @@ const AboutPage = () => {
       <div className="relative h-[300px] md:h-[400px] overflow-hidden">
         <Image
           src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218624/_LUP8399_qhesh0.png"
-          alt="Hospital Banner"
+          alt="Acefoods Banner"
           layout="fill"
           objectFit="cover"
           objectPosition="bottom"

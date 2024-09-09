@@ -23,8 +23,8 @@ const socialLinks = [
 const quickLinks = [
   { name: "About Us", href: "/about" },
   { name: "Our Services", href: "/services" },
-  { name: "Doctors", href: "/doctors" },
-  { name: "Appointments", href: "/appointments" },
+  { name: "Contact Us", href: "/contact" },
+  { name: "Products", href: "/products" },
   { name: "News & Events", href: "/news" },
 ];
 
