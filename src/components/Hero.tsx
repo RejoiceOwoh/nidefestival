@@ -54,34 +54,38 @@ const Hero = () => {
             {/* Content */}
             <div className="relative z-10 h-full flex items-center">
                 <div className="container mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.5 }}
-                        className="max-w-3xl"
-                    >
-                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
-                            {heroText[currentSlide].title}
-                        </h1>
-                        <p className="text-xl md:text-2xl text-gray-200 mb-8">
-                            {heroText[currentSlide].subtitle}
-                        </p>
-                        <div className="flex space-x-4">
-                            <Link
-                                href="/products"
-                                className="bg-transparent text-white px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#faba38] hover:text-black border-2 border-[#faba38] transition duration-300 flex items-center"
-                            >
-                                Explore Products
-                                <ChevronRightIcon className="w-5 h-5 ml-2" />
-                            </Link>
-                            <Link
-                                href="/products"
-                                className="bg-[#faba38] text-black px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-transparent hover:text-[#faba38] border-2 border-[#faba38] transition duration-300"
-                            >
-                                Buy Now
-                            </Link>
-                        </div>
-                    </motion.div>
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentSlide}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.8 }}
+                            className="max-w-3xl"
+                        >
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
+                                {heroText[currentSlide].title}
+                            </h1>
+                            <p className="text-xl md:text-2xl text-gray-200 mb-8">
+                                {heroText[currentSlide].subtitle}
+                            </p>
+                            <div className="flex space-x-4">
+                                <Link
+                                    href="/products"
+                                    className="bg-transparent text-white px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#faba38] hover:text-black border-2 border-[#faba38] transition duration-300 flex items-center"
+                                >
+                                    Explore Products
+                                    <ChevronRightIcon className="w-5 h-5 ml-2" />
+                                </Link>
+                                <Link
+                                    href="/contact"
+                                    className="bg-[#faba38] text-black px-4 md:px-8 py-3 rounded-full text-lg font-semibold hover:bg-transparent hover:text-[#faba38] border-2 border-[#faba38] transition duration-300"
+                                >
+                                    Buy Now
+                                </Link>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </div>
 
