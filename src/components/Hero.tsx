@@ -9,21 +9,9 @@ import Image from "next/image";
 // Text slideshow content
 const heroText = [
     {
-        title: "Afrigold Palm Oil",
-        subtitle: "Sourced from Nigeria, crafted for you.",
-    },
-    {
-        title: "Rich in Flavor",
-        subtitle: "Experience the essence of Nigeria in every drop.",
-    },
-    {
-        title: "Pure & Authentic",
-        subtitle: "Sustainable farming, premium quality.",
-    },
-    {
-        title: "Versatile & Nutritious",
-        subtitle: "Perfect for all your culinary creations.",
-    },
+        title: "Pure, Premium, Natural!",
+        subtitle: "From Nigeria’s Heart to Your Kitchen, with Care and Excellence",
+    }
 ];
 
 const Hero = () => {
@@ -64,7 +52,7 @@ const Hero = () => {
                     transition={{ duration: 1, ease: "easeInOut" }}
                 >
                     <Image
-                        src="/logo.png" // Replace with your logo path
+                        src="/afrigoldlogowhite.png" // Replace with your logo path
                         alt="Logo"
                         width={100}
                         height={100}

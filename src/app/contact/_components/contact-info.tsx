@@ -22,9 +22,9 @@ const ContactInformation = () => {
             <div>
               <h4 className="font-semibold text-gray-700">Address</h4>
               <p className="text-gray-600">
-                No 3, Refuge Way, Ibute Bypass,
+                26 Greenfern Avenue,
                 <br />
-                123 Baker Street, London, NW1 6XE, United Kingdom
+                Slough, SL1 6AQ United Kingdom
               </p>
             </div>
           </div>
@@ -32,7 +32,7 @@ const ContactInformation = () => {
             <PhoneIcon className="w-6 h-6 text-gray-400 mr-4 flex-shrink-0" />
             <div>
               <h4 className="font-semibold text-gray-700">Phone</h4>
-              <p className="text-gray-600">+44 161 498 7654,  +44 20 7946 0958</p>
+              <p className="text-gray-600">+44 75260 66245</p>
             </div>
           </div>
           <div className="flex items-center">

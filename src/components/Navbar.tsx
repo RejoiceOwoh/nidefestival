@@ -133,7 +133,7 @@ export default function Header() {
                   width={32}
                   className="h-8 w-auto"
                   src="/logo.png"
-                  alt="Hospital Logo"
+                  alt="Afrigold Logo"
                 />
               </Link>
               <button

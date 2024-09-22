@@ -35,24 +35,80 @@ export default function AboutMain() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
         <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <p className="text-base font-semibold leading-7 text-[#faba38]">Our Heritage!</p>
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Afrigold Palm Oil</h1>
-              <p className="mt-6 text-xl leading-8 text-gray-700">
-              AfriGold Palm Oil is a premium UK-based brand that sources its high-quality palm oil directly from Nigeria. 
+      
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Story</h1>
+              <p className="mt-4 text-xl leading-8 text-gray-700">
+              
+              Afrigold Palm Oil is a UK-based brand with deep Nigerian roots. We believe in delivering pure, nutrient-rich palm oil that embodies the richness of Nigeria{"’"}s agricultural heritage. Our journey started with a simple idea: bringing premium, natural palm oil to homes and kitchens worldwide, ensuring every drop contributes to a healthier and tastier cooking experience.
               </p>
+              
+            </div>
+            <div className="lg:max-w-lg">
+      
+              <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Vision</h1>
+              <p className="mt-4 text-xl leading-8 text-gray-700">
+              
+              To become the leading global brand for premium, ethically- sourced palm oil, known for quality and sustainability.
+              </p>
+              
+            </div>
+            <div className="lg:max-w-lg">
+      
+              <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Mission</h1>
+              <p className="mt-4 text-xl leading-8 text-gray-700">
+              
+              To offer high-quality, ethically-sourced palm oil that enriches lives and promotes sustainable agricultural practices.
+              </p>
+              
+            </div>
+            <div className="lg:max-w-lg">
+      
+              <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Choose Us?</h1>
+              <p className="mt-4 text-xl leading-8 text-gray-700">
+              
+              <p>Afri Gold Palm Oil ensures the finest quality through rigorous sourcing and production standards. From local Nigerian farms to our eco-friendly packaging, we take pride in the purity, flavor, and health benefits our palm oil provides.</p>
+              </p>
+              
             </div>
           </div>
         </div>
         <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
           <img
             alt=""
-            src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218467/_LUP8401_nhtjxj.png"
+            src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727034876/afrigoldmodel_fi11yt.png"
             className="w-[48rem] md:max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
           />
         </div>
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+
+        <div className="lg:max-w-lg">
+      
+      <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Core Values</h1>
+      <p className="mt-4 text-xl leading-8 text-gray-700">
+      
+      <ol type='1'>
+        <li>
+        <b>1. Quality Assurance:</b> <br />Committed to delivering pure, premium-grade palm oil with consistent quality in every product.
+        </li>
+        <li>
+        <b>2. Natural Production:</b> <br /> Focused on producing palm oil that is natural, free from additives, and sourced from trusted local farms.
+        </li>
+        <li>
+        <b>3. Health Conscious:</b> <br />Prioritizing the health and well-being of customers by providing nutrient-rich, heart-friendly palm oil.
+        </li>
+        <li>
+        <b>4. Tradition and Heritage:</b> <br /> Honoring the rich agricultural traditions of Nigeria, while maintaining modern production standards.
+        </li>
+        <li>
+        <b>5. Environmental Responsibility:</b> <br />Committed to eco-friendly production methods that respect the environment and ensure long-term sustainability.
+        </li>
+      </ol>
+      </p>
+      
+    </div>
         <div className="lg:pr-4">
-            <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
+           
+            {/* <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
               <p>
               Known for its rich color, robust flavor, and nutritional benefits, AfriGold Palm Oil combines traditional Nigerian methods with modern standards to deliver a product that is both authentic and superior.
               </p>
@@ -80,7 +136,7 @@ export default function AboutMain() {
               The original production process of AfriGold Palm Oil emphasizes purity. Following
               meticulous traditional methods that have been refined over centuries. This process involves selecting the finest palm fruits, which are then carefully processed to extract the oil without losing its essential nutrients. The commitment to quality ensures that AfriGold Palm Oil remains unadulterated and true to its origins.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function CTA() {
                         <div className="bg-[#faba38] p-8 md:p-12 lg:px-16 lg:py-24">
                             <div className="mx-auto max-w-xl text-center">
                                 <h2 className="text-2xl font-bold text-black md:text-3xl">
-                                    Used by the best chefs for tasty, natural and healthy delicacies
+                                    Rich, nutrient-packed palm oil for your everyday cooking needs, with a taste of tradition
                                 </h2>
 
                                 <p className="hidden text-black/90 sm:mt-4 sm:block">
