@@ -21,11 +21,10 @@ const socialLinks = [
 ];
 
 const quickLinks = [
+  { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Our Services", href: "/services" },
   { name: "Contact Us", href: "/contact" },
   { name: "Products", href: "/products" },
-  { name: "News & Events", href: "/news" },
 ];
 
 const legalLinks = [
@@ -105,18 +104,18 @@ export default function Footer() {
               <li className="flex items-center space-x-2 text-sm">
                 <MapPinIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                123 Baker Street, London, NW1 6XE, United Kingdom
+                26 Greenfern Avenue, Slough, SL1 6AQ United Kingdom
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <PhoneIcon className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-200">+44 161 498 7654,  +44 20 7946 0958
+                <span className="text-gray-200"> <a href="tel:+44 75260 66245">+44 75260 66245</a> 
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <EnvelopeIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                  info@acefoods.co.uk
+                 <a href="mailto:info@acefoods.co.uk">info@acefoods.co.uk</a>
                 </span>
               </li>
             </ul>
@@ -128,9 +127,9 @@ export default function Footer() {
               Stay Informed
             </h3>
             <p className="text-sm mb-4 text-gray-200">
-              Subscribe to our newsletter for health tips and products updates.
+              Subscribe to our newsletter for product updates.
             </p>
-            <form className="flex flex-col space-y-2">
+            <form id="contactform" action="https://formsubmit.io/send/acefoodsuk@gmail.com" method="POST" className="flex flex-col space-y-2">
               <input
                 type="email"
                 placeholder="Your email address"
@@ -153,7 +152,7 @@ export default function Footer() {
             &copy; {currentYear} Acefoods Global. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0">
-            <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
+            {/* <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
               {legalLinks.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -164,7 +163,7 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </ul> */}
             <p className="text-xs text-gray-400">
               Designed and developed by{" "}
               <a

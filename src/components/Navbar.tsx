@@ -101,7 +101,7 @@ export default function Header() {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
-              href="https://buy.stripe.com/test_5kAaEWcnF62aau49AA"
+              href="https://buy.stripe.com/4gw6qa27ca1LgmI3cc"
               className="text-sm font-semibold leading-6 text-black bg-[#faba38] px-4 py-2 rounded-full hover:bg-gold/90 transition duration-300 flex items-center space-x-1 shadow-md hover:shadow-lg"
             >
               {/* <Cart className="h-5 w-5 text-black" /> */}
@@ -170,7 +170,7 @@ export default function Header() {
                 </div>
                 <div className="py-6">
                   <Link
-                    href="https://buy.stripe.com/test_5kAaEWcnF62aau49AA"
+                    href="https://buy.stripe.com/4gw6qa27ca1LgmI3cc"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-balck bg-[#faba38] hover:bg-gold/70 transition duration-300 flex items-center space-x-2 shadow-md hover:shadow-lg"
                     onClick={() => setMobileMenuOpen(false)}
                   >
