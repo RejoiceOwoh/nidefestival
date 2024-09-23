@@ -15,13 +15,13 @@
 const products = [
     {
         id: 1,
-        name: 'AfriGold Palm Oil',
-        href: 'https://buy.stripe.com/test_5kAaEWcnF62aau49AA',
+        name: 'Bottle of AfriGold Palm Oil',
+        href: 'https://buy.stripe.com/4gw6qa27ca1LgmI3cc',
         imageSrc: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218421/GOLD2_wozmcv.png',
         imageSrc2: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218462/_LUP8385_yy0ku0.png',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Black',
+        imageAlt: "Bottle of Afrigold Palm Oil",
+        price: '£10.99',
+        color: '',
     },
     // More products...
 ]

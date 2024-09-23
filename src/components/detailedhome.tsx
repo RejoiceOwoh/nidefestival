@@ -5,7 +5,7 @@ export default function DetailedHome() {
                 <div className="mx-auto bg-white w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                     <div className="max-w-3xl">
                         <h2 className="text-3xl font-bold sm:text-4xl">
-                            Afrigold Palm Oil Originality 
+                            Afrigold Palm Oil Originality
                         </h2>
                     </div>
 
@@ -21,14 +21,20 @@ export default function DetailedHome() {
                         <div className="lg:py-16">
                             <article className="space-y-4 text-gray-600">
                                 <p>
-                                AfriGold Palm Oil is not just a product; it{"'"}s a heritage. The palm oil is sourced from the
-                                heart of Nigeria, where palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
+                                    Afrigold Palm Oil is a UK-based brand with deep Nigerian roots. We believe in delivering pure, nutrient-rich palm oil that embodies the richness of Nigeria{"’"}s agricultural heritage. Our journey started with a simple idea: bringing premium, natural palm oil to homes and kitchens worldwide, ensuring every drop contributes to a healthier and tastier cooking experience.
+                                </p>
+                                <p>
+                                    <b>Our Mission</b>
+                                    <br />
+                                    To offer high-quality, ethically-sourced palm oil that enriches lives and promotes sustainable agricultural practices.
+                                </p>
+                                <p>
+                                    <b>Why Choose Us?</b>
+                                    <br />
+                                    Afri Gold Palm Oil ensures the finest quality through rigorous sourcing and production standards. From local Nigerian farms to our eco-friendly packaging, we take pride in the purity, flavor, and health benefits our palm oil provides.
                                 </p>
 
-                                <p>
-                                Following
-                                meticulous traditional methods that have been refined over centuries. This process involves selecting the finest palm fruits, which are then carefully processed to extract the oil without losing its essential nutrients. The commitment to quality ensures that AfriGold Palm Oil remains unadulterated and true to its origins.
-                                </p>
+
                             </article>
                         </div>
                     </div>

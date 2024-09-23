@@ -11,18 +11,16 @@ export default function CTA() {
                         <div className="bg-[#faba38] p-8 md:p-12 lg:px-16 lg:py-24">
                             <div className="mx-auto max-w-xl text-center">
                                 <h2 className="text-2xl font-bold text-black md:text-3xl">
-                                    Rich, nutrient-packed palm oil for your everyday cooking needs, with a taste of tradition
+                                    Oil Produced for Healthy Recipes
                                 </h2>
 
                                 <p className="hidden text-black/90 sm:mt-4 sm:block">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam
-                                    sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet
-                                    volutpat quisque ut interdum tincidunt duis.
+                                    Explore delicious and nutritious recipes made with Afri Gold Palm Oil. From Native Jollof rice and all native soups to modern fusion dishes, discover meals that are both healthy and flavorful.
                                 </p>
 
                                 <div className="mt-4 md:mt-8">
                                     <a
-                                        href="#"
+                                        href="/products"
                                         className="inline-block text-balance text-black rounded-full border-2 border-white bg-white px-12 py-3 text-sm font-medium transition hover:bg-transparent hover:text-white focus:outline-none focus:ring focus:ring-yellow-400"
                                     >
                                         Get Yours Now

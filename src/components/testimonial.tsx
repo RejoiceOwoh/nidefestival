@@ -4,7 +4,7 @@ export default function Testimonial() {
             <section className="bg-white">
                 <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
                     <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                        Your review would definitely be the next here
+                        Customer Stories
                     </h2>
 
                     <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
@@ -70,14 +70,12 @@ export default function Testimonial() {
                                         </svg>
                                     </div>
 
-                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Paul Starr</p>
+                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Blessing, UK</p>
                                 </div>
                             </div>
 
                             <p className="mt-4 text-gray-700">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                                consequuntur recusandae ab saepe illo est quia obcaecati neque quibusdam eius accusamus
-                                error officiis atque voluptates magnam!
+                            The quality is unmatched! It reminds me of home every time I use it
                             </p>
                         </blockquote>
 
@@ -143,14 +141,12 @@ export default function Testimonial() {
                                         </svg>
                                     </div>
 
-                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Paul Starr</p>
+                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Chef Emma</p>
                                 </div>
                             </div>
 
                             <p className="mt-4 text-gray-700">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                                consequuntur recusandae ab saepe illo est quia obcaecati neque quibusdam eius accusamus
-                                error officiis atque voluptates magnam!
+                            Healthy, tasty, and very natural, Afri Gold Palm Oil has transformed my cooking!
                             </p>
                         </blockquote>
 

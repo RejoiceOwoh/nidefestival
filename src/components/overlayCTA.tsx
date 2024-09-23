@@ -9,13 +9,12 @@ export default function OverlayCTA() {
                         <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-5xl">Made for you</h2>
 
                         <p className="max-w-lg text-white/90 md:mt-6 md:block md:text-lg md:leading-relaxed">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore officia corporis quasi
-                            doloribus iure architecto quae voluptatum beatae excepturi dolores.
+                            Pure, unrefined palm oil, ideal for everyday cooking and rich in vitamins and antioxidants. Rich in Vitamin A and E, promotes heart health, supports skin and hair health.
                         </p>
 
                         <div className="mt-4 sm:mt-8">
                             <a
-                                href="#"
+                                href="/products"
                                 className="inline-block rounded-full bg-[#faba38] px-12 py-3 text-sm font-medium text-white transition hover:bg-[#faba38]/70 focus:outline-none focus:ring focus:ring-yellow-400"
                             >
                                 Get Yours Today
