@@ -32,13 +32,13 @@ export default function CTA() {
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
                             <img
                                 alt=""
-                                src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723446598/12978-Egusi-Soup-ddmfs-026-4x3-1-e662479f824b4b54bdc25165ad41c6b6_hoyoax.webp"
+                                src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198510/Egusi_Soup_Recipe_-_How_to_cook_egusi_soup_pd3u7q.jpg"
                                 className="h-40 w-full object-cover sm:h-56 md:h-full"
                             />
 
                             <img
                                 alt=""
-                                src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723446692/2148821538_pbq1fu.jpg"
+                                src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198461/e8ef346971e02b9bd9446c309b5a8472_vddjk7.jpg"
                                 className="h-40 w-full object-cover sm:h-56 md:h-full"
                             />
                         </div>

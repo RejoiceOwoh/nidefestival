@@ -12,6 +12,8 @@ import {
   InstagramIcon,
   LinkedinIcon,
 } from "lucide-react";
+import { FaWhatsapp } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 
 const socialLinks = [
   { name: "Facebook", href: "https://facebook.com/afrigoldpalmoil", icon: FacebookIcon },
@@ -61,7 +63,7 @@ export default function Footer() {
             <p className="mb-4 text-sm text-gray-200">
               Palm Oil at its Originality
             </p>
-            <div className="flex space-x-4">
+            <div className="flex mb-4 space-x-4">
               {socialLinks.map((item) => (
                 <a
                   key={item.name}
@@ -73,6 +75,9 @@ export default function Footer() {
                 </a>
               ))}
             </div>
+            <p className="mb-4 text-sm text-gray-200">
+              <b>PATNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">acefoodsuk@gmail.com</a>
+            </p>
           </div>
 
           {/* Quick Links */}
@@ -115,6 +120,18 @@ export default function Footer() {
                 <EnvelopeIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
                  <a href="mailto:info@acefoods.co.uk">info@acefoods.co.uk</a>
+                </span>
+              </li>
+              <li className="flex items-center space-x-2 text-sm">
+              <FaWhatsapp size={40} className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">
+                <a href="https://wa.me/+447526066245" target="_blank" rel="noopener noreferrer">Chat with us</a>
+                </span>
+              </li>
+              <li className="flex items-center space-x-2 text-sm">
+              <FaStar size={20} className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-200">
+                <a href="/contact" target="_blank" rel="noopener noreferrer">Let{"'"}s hear your review</a>
                 </span>
               </li>
             </ul>
