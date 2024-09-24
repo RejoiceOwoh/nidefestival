@@ -30,16 +30,19 @@ export default function CTA() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
-                            <img
+                            <Image
                                 alt=""
                                 src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198510/Egusi_Soup_Recipe_-_How_to_cook_egusi_soup_pd3u7q.jpg"
                                 className="h-40 w-full object-cover sm:h-56 md:h-full"
+                                width={500} // Set the width as per your design
+                                height={300} // Set the height as per your design
                             />
-
-                            <img
+                            <Image
                                 alt=""
                                 src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198461/e8ef346971e02b9bd9446c309b5a8472_vddjk7.jpg"
                                 className="h-40 w-full object-cover sm:h-56 md:h-full"
+                                width={500} // Set the width as per your design
+                                height={300} // Set the height as per your design
                             />
                         </div>
 
