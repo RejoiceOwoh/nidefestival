@@ -14,10 +14,9 @@ import {
 } from "lucide-react";
 
 const socialLinks = [
-  { name: "Facebook", href: "#", icon: FacebookIcon },
-  { name: "Twitter", href: "#", icon: TwitterIcon },
-  { name: "Instagram", href: "#", icon: InstagramIcon },
-  { name: "LinkedIn", href: "#", icon: LinkedinIcon },
+  { name: "Facebook", href: "https://facebook.com/afrigoldpalmoil", icon: FacebookIcon },
+  { name: "Twitter", href: "https://x.com/afrigoldpalmoil", icon: TwitterIcon },
+  { name: "Instagram", href: "https://instagram.com/afrigoldpalmoil", icon: InstagramIcon },
 ];
 
 const quickLinks = [
@@ -57,7 +56,7 @@ export default function Footer() {
           {/* Hospital Info */}
           <div>
             <h2 className="text-2xl font-bold mb-4 text-[gold]">
-              Acefoods Global
+              Afrigold Palmoil
             </h2>
             <p className="mb-4 text-sm text-gray-200">
               Palm Oil at its Originality

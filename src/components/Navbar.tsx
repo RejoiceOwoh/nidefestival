@@ -152,7 +152,7 @@ export default function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 flex items-center space-x-2 ${pathname === item.href
+                      className={`-mx-3 rounded-lg px-3 py-2 text-base font-semibold leading-7 flex items-center space-x-2 ${pathname === item.href
                           ? "text-primary bg-[#faba38]/20"
                           : "text-foreground hover:bg-[#faba38]/20 hover:text-accent-foreground"
                         }`}
@@ -171,7 +171,7 @@ export default function Header() {
                 <div className="py-6">
                   <Link
                     href="https://buy.stripe.com/4gw6qa27ca1LgmI3cc"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-balck bg-[#faba38] hover:bg-gold/70 transition duration-300 flex items-center space-x-2 shadow-md hover:shadow-lg"
+                    className="-mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-balck bg-[#faba38] hover:bg-gold/70 transition duration-300 flex items-center space-x-2 shadow-md hover:shadow-lg"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <CalendarIcon className="h-6 w-6 text-black" />

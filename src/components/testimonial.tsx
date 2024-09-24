@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Testimonial() {
     return (
         <div>
@@ -10,14 +12,16 @@ export default function Testimonial() {
                     <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
                         <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
                             <div className="flex items-center gap-4">
-                                <img
+                                <Image
                                     alt=""
-                                    src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                                    src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727197854/IMG-20240924-WA0005_y2ivgm.jpg"
+                                    width={1180}
+                                    height={800} // Use the actual width and height of the image for optimization
                                     className="size-14 rounded-full object-cover"
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-[gold]">
+                                    <div className="flex justify-center gap-2.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"
@@ -70,25 +74,28 @@ export default function Testimonial() {
                                         </svg>
                                     </div>
 
-                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Blessing, UK</p>
+                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Kenechukwu Igboanu</p>
                                 </div>
                             </div>
 
                             <p className="mt-4 text-gray-700">
-                            The quality is unmatched! It reminds me of home every time I use it
+                                I had given up on buying adulterated and watered down palm oil since I arrived Uk. But AfriGold has restored my peace and finally I can experience the feel of home. <br />
+                                Best palm oil brand in the UK bar none.
                             </p>
                         </blockquote>
 
                         <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
                             <div className="flex items-center gap-4">
-                                <img
+                                <Image
                                     alt=""
-                                    src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                                    src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727197847/IMG-20240924-WA0004_gcz6dd.jpg"
+                                    width={1180}
+                                    height={800} // Use the actual width and height of the image for optimization
                                     className="size-14 rounded-full object-cover"
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-[gold]">
+                                    <div className="flex justify-center gap-2.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"
@@ -141,25 +148,28 @@ export default function Testimonial() {
                                         </svg>
                                     </div>
 
-                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Chef Emma</p>
+                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Ifeanyi Aneke     </p>
                                 </div>
                             </div>
 
                             <p className="mt-4 text-gray-700">
-                            Healthy, tasty, and very natural, Afri Gold Palm Oil has transformed my cooking!
+                                Delivery was perfect, product was received ontime and am glad with my oder as I got what I expected. The oil was just perfect and fresh. <br />
+                                Much recommended 👌. Thanks to afrigold oil.
                             </p>
                         </blockquote>
 
                         <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
                             <div className="flex items-center gap-4">
-                                <img
+                                <Image
                                     alt=""
-                                    src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                                    src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727197848/IMG-20240924-WA0009_djt81h.jpg"
+                                    width={1180}
+                                    height={800} // Use the actual width and height of the image for optimization
                                     className="size-14 rounded-full object-cover"
                                 />
 
                                 <div>
-                                    <div className="flex justify-center gap-0.5 text-[gold]">
+                                    <div className="flex justify-center gap-2.5 text-[gold]">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-5 w-5"
@@ -212,14 +222,12 @@ export default function Testimonial() {
                                         </svg>
                                     </div>
 
-                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Paul Starr</p>
+                                    <p className="mt-0.5 text-lg font-medium text-gray-900">Stephanie Chinenye</p>
                                 </div>
                             </div>
 
                             <p className="mt-4 text-gray-700">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                                consequuntur recusandae ab saepe illo est quia obcaecati neque quibusdam eius accusamus
-                                error officiis atque voluptates magnam!
+                                I just made soup with this palm oil based on recommendation by friend and this is real undiluted native oil. With better original palm oil taste. No sour gummy taste nor any mixture. Frankly the best palm oil I have used since I came to this UK
                             </p>
                         </blockquote>
                     </div>
