@@ -40,7 +40,7 @@ export default function HeroProducts() {
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-6xl">
-              Discover Our Premium Palm Oil Range
+              Discover Our Premium Red Palm Oil Range
             </h1>
             <p className="mt-4 text-xl text-gray-500">
               Pure, unrefined palm oil, ideal for everyday cooking, rich in Vitamin A and E, promotes heart health, and perfect for creating traditional dishes.
