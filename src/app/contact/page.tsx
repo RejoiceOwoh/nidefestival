@@ -13,7 +13,7 @@ const ContactPage = () => {
       <div className="relative h-[300px] md:h-[400px] overflow-hidden">
         <Image
           src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218410/_LUP8406_gguzww.png"
-          alt="Hospital Banner"
+          alt="About Us Banner"
           layout="fill"
           objectFit="cover"
           priority
@@ -38,7 +38,7 @@ const ContactPage = () => {
           className="bg-white rounded-xl shadow-2xl p-8 md:p-12"
         >
           <p className="text-xl text-gray-600 text-center mb-12 leading-relaxed">
-            We&apos;re can{"'"}t wait to hear from you. Kindly send us a message below
+            We can{"'"}t wait to hear from you. Kindly send us a message below
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
