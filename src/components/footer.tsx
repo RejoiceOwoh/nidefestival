@@ -79,6 +79,9 @@ export default function Footer() {
             <p className="mb-4 text-sm text-gray-200">
               <b>PATNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">acefoodsuk@gmail.com</a>
             </p>
+            <p className="mb-4 text-sm text-gray-200">
+              <b>NAFDAC REG. NO: A8-108803L</b> 
+            </p>
           </div>
 
           {/* Quick Links */}
