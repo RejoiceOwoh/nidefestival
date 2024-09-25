@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -32,6 +32,8 @@ const formSchema = z.object({
 });
 
 const ContactForm = () => {
+  const [submitted, setSubmitted] = useState(false);  // New submission state
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,32 +44,39 @@ const ContactForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+  const currentURL = typeof window !== "undefined" ? window.location.href : "/";
 
-      if (response.ok) {
-        toast.success("Message sent successfully!", {
-          description: "We'll get back to you as soon as possible.",
-        });
-        form.reset();
-      } else {
-        throw new Error("Failed to send message");
-      }
-    } catch (error) {
-      toast.error("Failed to send message", {
-        description: "Please try again later.",
-      });
-    }
-  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setSubmitted(true);  // Set form to submitted
+
+    // Optionally trigger success toast
+    toast.success("Message sent successfully!", {
+      description: "You'll be redirected shortly.",
+    });
+
+    // Allow FormSubmit.co to handle actual form submission and redirect
+  };
 
   return (
     <Form {...form}>
-      <form id="contactform" action="https://formsubmit.io/send/acefoodsuk@gmail.com" method="POST" className="space-y-6">
+      <form
+        id="contactform"
+        action="https://formsubmit.co/acefoodsuk@gmail.com"
+        method="POST"
+        className="space-y-6"
+        onSubmit={handleSubmit}
+      >
+        {/* Hidden input to handle the redirect */}
+        <input type="hidden" name="_next" value={currentURL} />
+        <input type="hidden" name="_captcha" value="false" />
+
+        {/* Conditional success message */}
+        {submitted && (
+          <div className="text-center text-green-600 font-bold mb-4">
+            🎉 Your message has been sent! Redirecting...
+          </div>
+        )}
+
         <FormField
           control={form.control}
           name="name"

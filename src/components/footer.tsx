@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { FaWhatsapp } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
+import FooterForm from "./footerForm";
 
 const socialLinks = [
   { name: "Facebook", href: "https://facebook.com/afrigoldpalmoil", icon: FacebookIcon },
@@ -145,20 +146,7 @@ export default function Footer() {
             <p className="text-sm mb-4 text-gray-200">
               Subscribe to our newsletter for product updates.
             </p>
-            <form id="contactform" action="https://formsubmit.io/send/acefoodsuk@gmail.com" method="POST" className="flex flex-col space-y-2">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-4 py-2 bg-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-white/50 text-sm text-white placeholder-gray-400"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 bg-white text-primary font-semibold rounded-md hover:bg-gray-100 transition duration-300 text-sm flex items-center justify-center"
-              >
-                <CalendarDaysIcon className="h-5 w-5 mr-2" />
-                Subscribe
-              </button>
-            </form>
+            <FooterForm />
           </div>
         </div>
 
