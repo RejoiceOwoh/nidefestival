@@ -14,7 +14,7 @@ const PricingTable: React.FC = () => {
         <div className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12">
           <div className="text-center">
             <h2 className="text-lg font-medium text-gray-900">
-              1 - 11 Bottles
+              Bottles
               <span className="sr-only">Plan</span>
             </h2>
 
