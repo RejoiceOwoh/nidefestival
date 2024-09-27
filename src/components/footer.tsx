@@ -112,7 +112,7 @@ export default function Footer() {
               <li className="flex items-center space-x-2 text-sm">
                 <MapPinIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                26 Greenfern Avenue, Slough, SL1 6AQ United Kingdom
+                United Kingdom
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">

@@ -22,9 +22,7 @@ const ContactInformation = () => {
             <div>
               <h4 className="font-semibold text-gray-700">Address</h4>
               <p className="text-gray-600">
-                26 Greenfern Avenue,
-                <br />
-                Slough, SL1 6AQ United Kingdom
+                United Kingdom
               </p>
             </div>
           </div>
