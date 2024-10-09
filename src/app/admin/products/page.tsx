@@ -1,8 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+// Define the shape of a product using TypeScript
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  baseShippingCost?: number;
+  discountPricePerUnit?: number;
+  bulkThreshold?: number;
+  bulkShippingCost?: number;
+  palletShippingCost?: number;
+  maxCap?: number;
+  soldOut: boolean;
+};
 
 export default function AdminProducts() {
+  const [formVisible, setFormVisible] = useState(false);
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -17,149 +34,151 @@ export default function AdminProducts() {
     soldOut: false,
   });
 
-  // Specify event type as React.FormEvent<HTMLFormElement>
+  const [products, setProducts] = useState<Product[]>([]);  // Specify the type for products array
+
+  // Fetch products from the backend
+  const fetchProducts = async () => {
+    const response = await fetch('/api/products', {
+      method: 'GET',
+    });
+    const data = await response.json();
+    setProducts(data);  // This data is assumed to be an array of Product objects
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();  // Prevent the default form submission behavior
+    e.preventDefault();
 
     const response = await fetch('/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(form),  // Convert form data to JSON
+      body: JSON.stringify(form),
     });
 
-    const data = await response.json();
-    console.log(data);  // Log response for debugging
+    if (response.ok) {
+      setForm({
+        name: '',
+        description: '',
+        price: '',
+        stock: '',
+        baseShippingCost: '',
+        discountPricePerUnit: '',
+        bulkThreshold: '',
+        bulkShippingCost: '',
+        palletShippingCost: '',
+        maxCap: '',
+        soldOut: false,
+      });
+
+      setFormVisible(false);
+      const newProduct = await response.json();
+      setProducts([...products, newProduct]);  // Add new product to the list
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
     <div>
-      <h1>Create or Edit a Product</h1>
+      <h1>Admin Product Management</h1>
 
-      <form onSubmit={handleSubmit}>
-        {/* Product Name */}
-        <div>
-          <label>Product Name:</label>
-          <input
-            type="text"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            required
-          />
-        </div>
+      <button onClick={() => setFormVisible(!formVisible)}>
+        {formVisible ? 'Cancel' : 'Add Product'}
+      </button>
 
-        {/* Product Description */}
-        <div>
-          <label>Description:</label>
-          <input
-            type="text"
-            value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
-          />
-        </div>
-
-        {/* Product Price */}
-        <div>
-          <label>Price (per unit):</label>
-          <input
-            type="number"
-            step="0.01"
-            value={form.price}
-            onChange={(e) => setForm({ ...form, price: e.target.value })}
-            required
-          />
-        </div>
-
-        {/* Product Stock */}
-        <div>
-          <label>Stock:</label>
-          <input
-            type="number"
-            value={form.stock}
-            onChange={(e) => setForm({ ...form, stock: e.target.value })}
-            required
-          />
-        </div>
-
-        {/* Base Shipping Cost */}
-        <div>
-          <label>Base Shipping Cost (per unit):</label>
-          <input
-            type="number"
-            step="0.01"
-            value={form.baseShippingCost}
-            onChange={(e) => setForm({ ...form, baseShippingCost: e.target.value })}
-          />
-        </div>
-
-        {/* Discounted Price for Bulk Orders */}
-        <div>
-          <label>Discounted Price (for bulk purchases):</label>
-          <input
-            type="number"
-            step="0.01"
-            value={form.discountPricePerUnit}
-            onChange={(e) => setForm({ ...form, discountPricePerUnit: e.target.value })}
-          />
-        </div>
-
-        {/* Bulk Purchase Threshold */}
-        <div>
-          <label>Bulk Purchase Threshold:</label>
-          <input
-            type="number"
-            value={form.bulkThreshold}
-            onChange={(e) => setForm({ ...form, bulkThreshold: e.target.value })}
-          />
-        </div>
-
-        {/* Bulk Shipping Cost */}
-        <div>
-          <label>Bulk Shipping Cost (for large orders):</label>
-          <input
-            type="number"
-            step="0.01"
-            value={form.bulkShippingCost}
-            onChange={(e) => setForm({ ...form, bulkShippingCost: e.target.value })}
-          />
-        </div>
-
-        {/* Pallet Shipping Cost */}
-        <div>
-          <label>Pallet Shipping Cost (for orders over 50 boxes):</label>
-          <input
-            type="number"
-            step="0.01"
-            value={form.palletShippingCost}
-            onChange={(e) => setForm({ ...form, palletShippingCost: e.target.value })}
-          />
-        </div>
-
-        {/* Max Quantity Cap */}
-        <div>
-          <label>Max Cap (Maximum Quantity Allowed):</label>
-          <input
-            type="number"
-            value={form.maxCap}
-            onChange={(e) => setForm({ ...form, maxCap: e.target.value })}
-          />
-        </div>
-
-        {/* Mark as Sold Out */}
-        <div>
-          <label>
+      {formVisible && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Product Name:</label>
             <input
-              type="checkbox"
-              checked={form.soldOut}
-              onChange={(e) => setForm({ ...form, soldOut: e.target.checked })}
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleInputChange}
+              required
             />
-            Mark as Sold Out
-          </label>
-        </div>
+          </div>
 
-        <button type="submit">Submit</button>
-      </form>
+          <div>
+            <label>Description:</label>
+            <input
+              type="text"
+              name="description"
+              value={form.description}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div>
+            <label>Price (per unit):</label>
+            <input
+              type="number"
+              step="0.01"
+              name="price"
+              value={form.price}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div>
+            <label>Stock:</label>
+            <input
+              type="number"
+              name="stock"
+              value={form.stock}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          {/* Additional fields here */}
+
+          <div>
+            <label>Max Cap (Maximum Quantity Allowed):</label>
+            <input
+              type="number"
+              name="maxCap"
+              value={form.maxCap}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="soldOut"
+                checked={form.soldOut}
+                onChange={(e) =>
+                  setForm({ ...form, soldOut: e.target.checked })
+                }
+              />
+              Mark as Sold Out
+            </label>
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      )}
+
+      {/* Display list of existing products */}
+      <h2>Product List</h2>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name} - £{product.price} (Stock: {product.stock})
+            <button>Edit</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

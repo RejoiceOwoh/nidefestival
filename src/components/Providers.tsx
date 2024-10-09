@@ -1,6 +1,6 @@
 'use client';
 
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -21,7 +21,6 @@ export default function Providers({ children }: { children: ReactNode }) {
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UserButton />
           </SignedIn>
         </>
       )}

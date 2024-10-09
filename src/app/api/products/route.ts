@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
+// Fetch all products (GET)
+export async function GET() {
+  try {
+    const products = await prisma.product.findMany();
+    return NextResponse.json(products);
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+  }
+}
+
+// Add a new product (POST)
 export async function POST(req: Request) {
   try {
     const {
@@ -29,13 +41,13 @@ export async function POST(req: Request) {
         bulkShippingCost: bulkShippingCost ? parseFloat(bulkShippingCost) : null,
         palletShippingCost: palletShippingCost ? parseFloat(palletShippingCost) : null,
         maxCap: maxCap ? parseInt(maxCap, 10) : null,
-        soldOut
+        soldOut,
       },
     });
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error(error);
+    console.error('Failed to create product:', error);
     return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
   }
 }
