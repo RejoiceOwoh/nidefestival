@@ -22,26 +22,44 @@ model User {
 
 // Product model
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  imageUrl    String
-  stock       Int
-  createdAt   DateTime @default(now())
+  id                  Int      @id @default(autoincrement())
+  name                String
+  description         String?
+  pricePerBottle      Float    @default(10.99)  // Price for one bottle
+  pricePerBox         Float    @default(48.0)   // Price for one box (6 bottles)
+  discountedPricePerBox Float?                  // Discounted price per box for orders above 9 boxes
+  stock               Int      @default(100)    // Total available stock
+  soldOut             Boolean  @default(false)  // If true, the product is sold out
+  maxCap              Int      @default(100)    // Max quantity a user can order
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
-  // Add this relation to reference the Order model
-  orders      Order[]  // A product can be part of multiple orders
+  // Only keep base shipping cost; calculate discounted shipping in the backend
+  baseShippingCost    Float    @default(8.75)
+
+  // Relation to the OrderProduct model
+  orderProducts       OrderProduct[] 
 }
 
 // Order model
 model Order {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  productId   Int
-  product     Product  @relation(fields: [productId], references: [id])
-  totalPrice  Float
-  createdAt   DateTime @default(now())
-  status      String   @default("pending")  // pending, shipped, delivered
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
+
+  products        OrderProduct[] // An order can have multiple products
+  createdAt       DateTime @default(now())
+  status          String   @default("pending")  // pending, shipped, delivered
+}
+
+// Join table between Order and Product
+model OrderProduct {
+  id              Int      @id @default(autoincrement())
+  orderId         Int
+  productId       Int
+  quantity        Int      @default(1)  // Quantity of product in the order
+
+  // Relations
+  order           Order    @relation(fields: [orderId], references: [id])
+  product         Product  @relation(fields: [productId], references: [id])
 }
