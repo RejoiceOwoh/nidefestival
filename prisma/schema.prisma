@@ -1,5 +1,3 @@
-// prisma/schema.prisma
-
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -12,54 +10,55 @@ generator client {
 
 // User model
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String?
-  role      String   @default("user")  // user or admin
-  orders    Order[]
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String?
+  password String?
+  role     String  @default("user") // user or admin
+  orders   Order[]
 }
 
 // Product model
 model Product {
-  id                  Int      @id @default(autoincrement())
-  name                String
-  description         String?
-  pricePerBottle      Float    @default(10.99)  // Price for one bottle
-  pricePerBox         Float    @default(48.0)   // Price for one box (6 bottles)
-  discountedPricePerBox Float?                  // Discounted price per box for orders above 9 boxes
-  stock               Int      @default(100)    // Total available stock
-  soldOut             Boolean  @default(false)  // If true, the product is sold out
-  maxCap              Int      @default(100)    // Max quantity a user can order
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                   Int     @id @default(autoincrement())
+  name                 String
+  description          String?
+  price                Float // Price for one bottle
+  stock                Int     @default(100) // Total available stock
+  baseShippingCost     Float? // Only keeping base shipping cost; calculate discounted shipping in the backend
+  discountPricePerUnit Float? // Discounted price unit
+  bulkThreshold        Int?
+  bulkShippingCost     Float?
+  palletShippingCost   Float?
+  maxCap               Int?    @default(100) // Max quantity a user can order
+  soldOut              Boolean @default(false) // If true, the product is sold out
 
-  // Only keep base shipping cost; calculate discounted shipping in the backend
-  baseShippingCost    Float    @default(8.75)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // Relation to the OrderProduct model
-  orderProducts       OrderProduct[] 
+  // Back relation to OrderProduct
+  orderProducts OrderProduct[] // A product can be in multiple orders
 }
 
 // Order model
 model Order {
-  id              Int      @id @default(autoincrement())
-  userId          Int
-  user            User     @relation(fields: [userId], references: [id])
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
-  products        OrderProduct[] // An order can have multiple products
-  createdAt       DateTime @default(now())
-  status          String   @default("pending")  // pending, shipped, delivered
+  products  OrderProduct[] // An order can have multiple products
+  createdAt DateTime       @default(now())
+  status    String         @default("pending") // pending, shipped, delivered
 }
 
 // Join table between Order and Product
 model OrderProduct {
-  id              Int      @id @default(autoincrement())
-  orderId         Int
-  productId       Int
-  quantity        Int      @default(1)  // Quantity of product in the order
+  id        Int @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int @default(1) // Quantity of product in the order
 
   // Relations
-  order           Order    @relation(fields: [orderId], references: [id])
-  product         Product  @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
