@@ -1,6 +1,3 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -62,32 +59,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { AdminNav } from "../components/main-nav"
-
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  baseShippingCost?: number;
-  discountPricePerUnit?: number;
-  bulkThreshold?: number;
-  bulkShippingCost?: number;
-  palletShippingCost?: number;
-  maxCap?: number;
-  soldOut: boolean;
-};
 
 export const description =
   "An products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions."
 
 export default function AdminProducts() {
-
-
-
-  
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <AdminNav />
