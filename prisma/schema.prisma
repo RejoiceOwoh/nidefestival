@@ -23,16 +23,17 @@ model Product {
   id                   Int     @id @default(autoincrement())
   name                 String
   description          String?
-  price                Float // Price for one bottle
+  price                Float   // Price for one bottle
   stock                Int     @default(100) // Total available stock
-  baseShippingCost     Float? // Only keeping base shipping cost; calculate discounted shipping in the backend
-  discountPricePerUnit Float? // Discounted price unit
-  bulkThreshold        Int?
-  bulkShippingCost     Float?
-  palletShippingCost   Float?
+  baseShippingCost     Float?  // Base shipping cost
+  discountPricePerUnit Float?  // Discounted price unit for bulk orders
+  bulkThreshold        Int?    // Threshold to apply bulk pricing and bulk shipping
+  bulkShippingCost     Float?  // Shipping cost when bulk threshold is met
+  palletThreshold      Int?    // Threshold to apply pallet shipping
+  palletShippingCost   Float?  // Shipping cost when pallet threshold is met
   maxCap               Int?    @default(100) // Max quantity a user can order
   soldOut              Boolean @default(false) // If true, the product is sold out
-  imageUrl             String  @default("") // Default is an empty string for existing products
+  imageUrl             String  @default("")    // Cloudinary image URL
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -40,6 +41,7 @@ model Product {
   // Back relation to OrderProduct
   orderProducts OrderProduct[] // A product can be in multiple orders
 }
+
 
 // Order model
 model Order {

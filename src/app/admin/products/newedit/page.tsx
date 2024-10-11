@@ -76,6 +76,14 @@ import {
 import { AdminNav } from "../../components/main-nav"
 
 import { useRouter, useSearchParams } from 'next/navigation'; // Add useSearchParams
+import BreadcrumbComponent from '../components/breadcrumb';
+import { UserButton } from '@clerk/nextjs';
+import SearchInput from '../../components/SearchInput';
+import SidebarSheet from '../../components/MobileSidebarSheet';
+import BackButton from '../../components/BackButton';
+import ProductTitle from '../components/ProductTitle';
+import StockBadge from '../components/StockBadge';
+import DiscardButton from '../../components/DiscardButton';
 
 
 
@@ -102,13 +110,13 @@ export default function NewEdit() {
     discountPricePerUnit: 0,
     maxCap: 0,
   });
-  
+
   // State for image preview
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const productId = searchParams.get('id');
-  
+
   // Prefetch product details for editing
   useEffect(() => {
     if (productId) {
@@ -138,7 +146,7 @@ export default function NewEdit() {
       fetchProduct();
     }
   }, [productId]);
-  
+
   // Handle image upload with Cloudinary
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -146,7 +154,7 @@ export default function NewEdit() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '');
-  
+
       try {
         const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
           method: 'POST',
@@ -160,15 +168,15 @@ export default function NewEdit() {
       }
     }
   };
-  
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
-  
+
     try {
       const method = productId ? 'PUT' : 'POST'; // Determine request method
       const endpoint = productId ? `/api/products/${productId}` : '/api/products'; // Determine API endpoint
-  
+
       const body = JSON.stringify({
         name: form.name,
         description: form.description,
@@ -186,154 +194,56 @@ export default function NewEdit() {
         discountPricePerUnit: form.discountPricePerUnit,
         maxCap: form.maxCap,
       });
-  
+
       const response = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body,
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
-  
+
       router.push('/admin/products'); // Redirect after success
     } catch (error) {
       console.error('Error submitting form:', error); // Error handling
     }
   };
 
+  const handleSearch = (query: string) => {
+    console.log('Searching for:', query);
+    // Add search logic here
+  };
 
-  
+
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <AdminNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button size="icon" variant="outline" className="sm:hidden">
-                <PanelLeft className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="sm:max-w-xs">
-              <nav className="grid gap-6 text-lg font-medium">
-                <Link
-                  href="#"
-                  className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                >
-                  <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-                  <span className="sr-only">Acme Inc</span>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Products
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                  <Users2 className="h-5 w-5" />
-                  Customers
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="h-5 w-5" />
-                  Settings
-                </Link>
-              </nav>
-            </SheetContent>
-          </Sheet>
-          <Breadcrumb className="hidden md:flex">
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="#">Dashboard</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="#">Products</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Edit Product</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div className="relative ml-auto flex-1 md:grow-0">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-            />
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="overflow-hidden rounded-full"
-              >
-                <Image
-                  src="/placeholder-user.jpg"
-                  width={36}
-                  height={36}
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <SidebarSheet />
+
+
+          {/* Breadcrumb */}
+          <BreadcrumbComponent current="Edit Product" />
+
+
+          <SearchInput placeholder="Search Products..." onSearch={handleSearch} />
+          <UserButton />
+
+
+
         </header>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
             <div className="flex items-center gap-4">
-              <Button variant="outline" size="icon" className="h-7 w-7">
-                <ChevronLeft className="h-4 w-4" />
-                <span className="sr-only">Back</span>
-              </Button>
-              <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                Pro Controller
-              </h1>
-              <Badge variant="outline" className="ml-auto sm:ml-0">
-                In stock
-              </Badge>
+              <BackButton />
+              <ProductTitle />
+              <StockBadge />
               <div className="hidden items-center gap-2 md:ml-auto md:flex">
-                <Button variant="outline" size="sm">
-                  Discard
-                </Button>
+                <DiscardButton />
                 <Button size="sm">Save Product</Button>
               </div>
             </div>
@@ -343,7 +253,7 @@ export default function NewEdit() {
                   <CardHeader>
                     <CardTitle>Product Details</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      {productId ? "Update the details of your product and ensure everything is accurate before saving." : "Fill in the necessary details to add a new product to your inventory."}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
