@@ -1,3 +1,7 @@
+"use client"
+
+import { useState, useEffect } from 'react';
+
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -71,10 +75,136 @@ import {
 } from "@/components/ui/tooltip"
 import { AdminNav } from "../../components/main-nav"
 
+import { useRouter, useSearchParams } from 'next/navigation'; // Add useSearchParams
+
+
+
+
 export const description =
   "A product edit page. The product edit page has a form to edit the product details, stock, product category, product status, and product images. The product edit page has a sidebar navigation and a main content area. The main content area has a form to edit the product details, stock, product category, product status, and product images. The sidebar navigation has links to product details, stock, product category, product status, and product images."
 
 export default function NewEdit() {
+
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    price: '',
+    stock: '',
+    status: 'draft',
+    category: '',
+    subcategory: '',
+    imageUrl: '',
+    soldOut: false,
+    bulkThreshold: 0,
+    bulkShippingCost: 0,
+    palletShippingCost: 0,
+    baseShippingCost: 0,
+    discountPricePerUnit: 0,
+    maxCap: 0,
+  });
+  
+  // State for image preview
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const productId = searchParams.get('id');
+  
+  // Prefetch product details for editing
+  useEffect(() => {
+    if (productId) {
+      const fetchProduct = async () => {
+        const response = await fetch(`/api/products/${productId}`);
+        const data = await response.json();
+        setForm({
+          ...form,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          stock: data.stock,
+          status: data.status,
+          category: data.category || '',
+          subcategory: data.subcategory || '',
+          imageUrl: data.imageUrl,
+          soldOut: data.soldOut,
+          bulkThreshold: data.bulkThreshold || 0,
+          bulkShippingCost: data.bulkShippingCost || 0,
+          palletShippingCost: data.palletShippingCost || 0,
+          baseShippingCost: data.baseShippingCost || 0,
+          discountPricePerUnit: data.discountPricePerUnit || 0,
+          maxCap: data.maxCap || 0,
+        });
+        setImagePreview(data.imageUrl); // Set existing image preview
+      };
+      fetchProduct();
+    }
+  }, [productId]);
+  
+  // Handle image upload with Cloudinary
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '');
+  
+      try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+        setForm({ ...form, imageUrl: data.secure_url });
+        setImagePreview(data.secure_url); // Set image preview
+      } catch (error) {
+        console.error('Error uploading image:', error); // Error handling
+      }
+    }
+  };
+  
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission
+  
+    try {
+      const method = productId ? 'PUT' : 'POST'; // Determine request method
+      const endpoint = productId ? `/api/products/${productId}` : '/api/products'; // Determine API endpoint
+  
+      const body = JSON.stringify({
+        name: form.name,
+        description: form.description,
+        price: form.price,
+        stock: form.stock,
+        status: form.status,
+        category: form.category,
+        subcategory: form.subcategory,
+        imageUrl: form.imageUrl,
+        soldOut: form.soldOut,
+        bulkThreshold: form.bulkThreshold,
+        bulkShippingCost: form.bulkShippingCost,
+        palletShippingCost: form.palletShippingCost,
+        baseShippingCost: form.baseShippingCost,
+        discountPricePerUnit: form.discountPricePerUnit,
+        maxCap: form.maxCap,
+      });
+  
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit the form');
+      }
+  
+      router.push('/admin/products'); // Redirect after success
+    } catch (error) {
+      console.error('Error submitting form:', error); // Error handling
+    }
+  };
+
+
+  
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <AdminNav />

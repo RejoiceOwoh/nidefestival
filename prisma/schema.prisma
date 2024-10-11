@@ -32,6 +32,7 @@ model Product {
   palletShippingCost   Float?
   maxCap               Int?    @default(100) // Max quantity a user can order
   soldOut              Boolean @default(false) // If true, the product is sold out
+  imageUrl             String  @default("") // Default is an empty string for existing products
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
