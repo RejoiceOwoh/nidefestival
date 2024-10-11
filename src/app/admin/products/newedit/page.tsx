@@ -93,7 +93,24 @@ export const description =
 
 export default function NewEdit() {
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    name: string;
+    description: string;
+    price: string | number;
+    stock: string | number;
+    status: string;
+    category: string;
+    subcategory: string;
+    imageUrl: string;
+    soldOut: boolean;
+    bulkThreshold: string | number;
+    bulkShippingCost: string | number;
+    palletThreshold: string | number;
+    palletShippingCost: string | number;
+    baseShippingCost: string | number;
+    discountPricePerUnit: string | number;
+    maxCap: string | number;
+  }>({
     name: '',
     description: '',
     price: '',
@@ -105,11 +122,13 @@ export default function NewEdit() {
     soldOut: false,
     bulkThreshold: 0,
     bulkShippingCost: 0,
+    palletThreshold: 0,
     palletShippingCost: 0,
     baseShippingCost: 0,
     discountPricePerUnit: 0,
     maxCap: 0,
   });
+
 
   // State for image preview
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -173,6 +192,13 @@ export default function NewEdit() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
 
+    // Validate groups
+    const { valid, message } = validateGroups();
+    if (!valid) {
+      alert(message); // Show error to user
+      return;
+    }
+
     try {
       const method = productId ? 'PUT' : 'POST'; // Determine request method
       const endpoint = productId ? `/api/products/${productId}` : '/api/products'; // Determine API endpoint
@@ -216,6 +242,40 @@ export default function NewEdit() {
     // Add search logic here
   };
 
+  // Helper function to check if all fields in a group are filled
+  const isGroupComplete = (group: Record<string, string | number | null>) => {
+    return Object.values(group).every((value) => value !== null && value !== '');
+  };
+
+  // Helper function to check if any field in a group is filled
+  const isGroupPartiallyFilled = (group: Record<string, string | number | null>) => {
+    return Object.values(group).some((value) => value !== null && value !== '') &&
+      !isGroupComplete(group);
+  };
+
+  // Validation logic for each group
+  const validateGroups = () => {
+    const group1 = { name: form.name, description: form.description, price: form.price, stock: form.stock, baseShippingCost: form.baseShippingCost };
+    const group2 = { bulkThreshold: form.bulkThreshold, discountPricePerUnit: form.discountPricePerUnit, bulkShippingCost: form.bulkShippingCost };
+    const group3 = { palletThreshold: form.palletThreshold, palletShippingCost: form.palletShippingCost };
+
+    if (isGroupPartiallyFilled(group1)) {
+      return { valid: false, message: 'Please fill out all fields in Product Details (Group 1) or leave them empty.' };
+    }
+
+    if (isGroupPartiallyFilled(group2)) {
+      return { valid: false, message: 'Please fill out all fields in Bulk Pricing & Shipping (Group 2) or leave them empty.' };
+    }
+
+    if (isGroupPartiallyFilled(group3)) {
+      return { valid: false, message: 'Please fill out all fields in Pallet Shipping (Group 3) or leave them empty.' };
+    }
+
+    return { valid: true };
+  };
+
+
+
 
 
   return (
@@ -249,35 +309,296 @@ export default function NewEdit() {
             </div>
             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
               <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                <Card x-chunk="dashboard-07-chunk-0">
+
+                <Card>
                   <CardHeader>
                     <CardTitle>Product Details</CardTitle>
                     <CardDescription>
-                      {productId ? "Update the details of your product and ensure everything is accurate before saving." : "Fill in the necessary details to add a new product to your inventory."}
+                      {productId
+                        ? "Update the basic details of your product."
+                        : "Provide the necessary details to add a new product."}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-6">
+                      {/* Name */}
                       <div className="grid gap-3">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Name <span className="text-red-500">*</span></Label>
                         <Input
                           id="name"
                           type="text"
+                          placeholder="Enter the product name"
+                          defaultValue={form.name || ""}
+                          required
                           className="w-full"
-                          defaultValue="Gamer Gear Pro Controller"
                         />
                       </div>
+
+                      {/* Description */}
                       <div className="grid gap-3">
                         <Label htmlFor="description">Description</Label>
                         <Textarea
                           id="description"
-                          defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
+                          placeholder="Describe the product briefly (optional)"
+                          defaultValue={form.description || ""}
                           className="min-h-32"
+                        />
+                      </div>
+
+                      {/* Price */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="price">Price (£) <span className="text-red-500">*</span></Label>
+                        <Input
+                          id="price"
+                          type="text"
+                          inputMode="decimal"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          placeholder="£ 99.99"
+                          value={form.price || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d*(\.\d{0,2})?$/;
+                            if (regex.test(value)) {
+                              setForm({ ...form, price: value });
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseFloat(e.target.value || "0").toFixed(2);
+                            setForm({ ...form, price: value });
+                          }}
+                          required
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+                      {/* Stock */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="stock">Stock <span className="text-red-500">*</span></Label>
+                        <Input
+                          id="stock"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="^[0-9]*$"
+                          placeholder="Enter stock quantity (e.g., 100)"
+                          value={form.stock || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^[0-9]*$/.test(value)) {
+                              setForm({ ...form, stock: value });
+                            }
+                          }}
+                          required
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+                      {/* Base Shipping Cost */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="baseShippingCost">Base Shipping Cost (£)</Label>
+                        <Input
+                          id="baseShippingCost"
+                          type="text"
+                          inputMode="decimal"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          placeholder="£ 3.50"
+                          value={form.baseShippingCost || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                            if (regex.test(value)) {
+                              setForm({ ...form, baseShippingCost: value });
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                            setForm({ ...form, baseShippingCost: value });
+                          }}
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Bulk Pricing & Shipping</CardTitle>
+                    <CardDescription>
+                      Provide details for bulk orders. These apply when the bulk threshold is met.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      {/* Bulk Threshold */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="bulkThreshold">Bulk Threshold</Label>
+                        <Input
+                          id="bulkThreshold"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="^[0-9]*$"
+                          placeholder="Enter the bulk threshold"
+                          value={form.bulkThreshold}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^[0-9]*$/.test(value)) {
+                              setForm({ ...form, bulkThreshold: parseInt(value, 10) || 0 });
+                            }
+                          }}
+                        />
+                      </div>
+
+                      {/* Discounted Price per Unit */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="discountPricePerUnit">Discount Price Per Unit (£)</Label>
+                        <Input
+                          id="discountPricePerUnit"
+                          type="text"
+                          inputMode="decimal"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          placeholder="£ 8.50"
+                          value={form.discountPricePerUnit || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                            if (regex.test(value)) {
+                              setForm({ ...form, discountPricePerUnit: value });
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                            setForm({ ...form, discountPricePerUnit: value });
+                          }}
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+
+                      {/* Bulk Shipping Cost */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="bulkShippingCost">Bulk Shipping Cost (£)</Label>
+                        <Input
+                          id="bulkShippingCost"
+                          type="text"
+                          inputMode="decimal"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          placeholder="£ 2.00"
+                          value={form.bulkShippingCost || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                            if (regex.test(value)) {
+                              setForm({ ...form, bulkShippingCost: value });
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                            setForm({ ...form, bulkShippingCost: value });
+                          }}
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Pallet Shipping</CardTitle>
+                    <CardDescription>
+                      Define pallet shipping details for larger orders.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      {/* Pallet Threshold */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="palletThreshold">Pallet Threshold</Label>
+
+                        <Input
+                          id="palletThreshold"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="^[0-9]*$"
+                          placeholder="Enter the pallet threshold"
+                          value={form.palletThreshold}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^[0-9]*$/.test(value)) {
+                              setForm({ ...form, palletThreshold: parseInt(value, 10) || 0 });
+                            }
+                          }}
+                        />
+
+                      </div>
+
+                      {/* Pallet Shipping Cost */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="palletShippingCost">Pallet Shipping Cost (£)</Label>
+                        <Input
+                          id="palletShippingCost"
+                          type="text"
+                          inputMode="decimal"
+                          pattern="^\d*(\.\d{0,2})?$"
+                          placeholder="£ 10.00"
+                          value={form.palletShippingCost || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                            if (regex.test(value)) {
+                              setForm({ ...form, palletShippingCost: value });
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                            setForm({ ...form, palletShippingCost: value });
+                          }}
+                          className="w-full remove-arrows"
+                        />
+                      </div>
+
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Order Restrictions</CardTitle>
+                    <CardDescription>
+                      Set a maximum number of units a customer can order at once.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      {/* Max Cap */}
+                      <div className="grid gap-3">
+                        <Label htmlFor="maxCap">Maximum Order Quantity</Label>
+                        <Input
+                          id="maxCap"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="^[0-9]*$"
+                          placeholder="Enter max order quantity (e.g., 100)"
+                          value={form.maxCap || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^[0-9]*$/.test(value)) {
+                              setForm({ ...form, maxCap: parseInt(value) || 0 });
+                            }
+                          }}
+                          className="w-full remove-arrows"
                         />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
+
+
+
+
+
                 <Card x-chunk="dashboard-07-chunk-1">
                   <CardHeader>
                     <CardTitle>Stock</CardTitle>
