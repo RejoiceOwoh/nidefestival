@@ -3,32 +3,9 @@
 import { useState, useEffect } from 'react';
 
 import Image from "next/image"
-import Link from "next/link"
 import {
-  ChevronLeft,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  Settings,
-  ShoppingCart,
   Upload,
-  Users2,
 } from "lucide-react"
-
-import { Badge } from "@/components/ui/badge"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -85,6 +62,7 @@ import ProductTitle from '../components/ProductTitle';
 import StockBadge from '../components/StockBadge';
 import DiscardButton from '../../components/DiscardButton';
 import SaveButton from '../../components/SaveButton';
+import MobileAdminNav from '../../components/MobileAdminNav';
 
 
 
@@ -351,7 +329,7 @@ export default function NewEdit() {
       <AdminNav />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-          <SidebarSheet />
+          <MobileAdminNav />
 
 
           {/* Breadcrumb */}
@@ -387,7 +365,7 @@ export default function NewEdit() {
                         ? "Update the basic details of your product."
                         : "Provide the necessary details to add a new product."}
                     </CardDescription>
-                    <CardDescription>
+                    <CardFooter>
                       {
                         globalError && (
                           <div className="text-red-700 text-sm">
@@ -395,7 +373,7 @@ export default function NewEdit() {
                           </div>
                         )
                       }
-                    </CardDescription>
+                    </CardFooter>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-6">
