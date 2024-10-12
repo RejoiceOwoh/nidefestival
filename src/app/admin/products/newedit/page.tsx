@@ -84,6 +84,7 @@ import BackButton from '../../components/BackButton';
 import ProductTitle from '../components/ProductTitle';
 import StockBadge from '../components/StockBadge';
 import DiscardButton from '../../components/DiscardButton';
+import SaveButton from '../../components/SaveButton';
 
 
 
@@ -92,7 +93,7 @@ export const description =
   "A product edit page. The product edit page has a form to edit the product details, stock, product category, product status, and product images. The product edit page has a sidebar navigation and a main content area. The main content area has a form to edit the product details, stock, product category, product status, and product images. The sidebar navigation has links to product details, stock, product category, product status, and product images."
 
 export default function NewEdit() {
-
+  // State for form data
   const [form, setForm] = useState<{
     name: string;
     description: string;
@@ -129,44 +130,29 @@ export default function NewEdit() {
     maxCap: 0,
   });
 
-
   // State for image preview
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // State for form errors and validity
+  const [errors, setErrors] = useState<any>({});
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [globalError, setGlobalError] = useState<string | null>(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+
+  // Router and search params for product ID (edit mode)
   const router = useRouter();
   const searchParams = useSearchParams();
-  const productId = searchParams.get('id');
+  const productId = searchParams.get("id") || undefined; // Product ID if in edit mode
 
-  // Prefetch product details for editing
-  useEffect(() => {
-    if (productId) {
-      const fetchProduct = async () => {
-        const response = await fetch(`/api/products/${productId}`);
-        const data = await response.json();
-        setForm({
-          ...form,
-          name: data.name,
-          description: data.description,
-          price: data.price,
-          stock: data.stock,
-          status: data.status,
-          category: data.category || '',
-          subcategory: data.subcategory || '',
-          imageUrl: data.imageUrl,
-          soldOut: data.soldOut,
-          bulkThreshold: data.bulkThreshold || 0,
-          bulkShippingCost: data.bulkShippingCost || 0,
-          palletShippingCost: data.palletShippingCost || 0,
-          baseShippingCost: data.baseShippingCost || 0,
-          discountPricePerUnit: data.discountPricePerUnit || 0,
-          maxCap: data.maxCap || 0,
-        });
-        setImagePreview(data.imageUrl); // Set existing image preview
-      };
-      fetchProduct();
-    }
-  }, [productId]);
+  const handleSearch = (query: string) => {
+    console.log('Searching for:', query);
+    // Add your search logic here
+  };
 
-  // Handle image upload with Cloudinary
+
+  // Cloudinary file upload handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -180,29 +166,139 @@ export default function NewEdit() {
           body: formData,
         });
         const data = await res.json();
-        setForm({ ...form, imageUrl: data.secure_url });
-        setImagePreview(data.secure_url); // Set image preview
+        setForm((prev) => ({ ...prev, imageUrl: data.secure_url }));
+        setImagePreview(data.secure_url);
       } catch (error) {
-        console.error('Error uploading image:', error); // Error handling
+        console.error('Error uploading image:', error);
       }
     }
   };
 
+  // Fetch product details if editing an existing product
+  useEffect(() => {
+    if (productId) {
+      const fetchProduct = async () => {
+        try {
+          const response = await fetch(`/api/products/${productId}`);
+          const data = await response.json();
+          setForm({
+            ...form,
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            stock: data.stock,
+            status: data.status,
+            category: data.category || '',
+            subcategory: data.subcategory || '',
+            imageUrl: data.imageUrl,
+            soldOut: data.soldOut,
+            bulkThreshold: data.bulkThreshold || 0,
+            bulkShippingCost: data.bulkShippingCost || 0,
+            palletShippingCost: data.palletShippingCost || 0,
+            baseShippingCost: data.baseShippingCost || 0,
+            discountPricePerUnit: data.discountPricePerUnit || 0,
+            maxCap: data.maxCap || 0,
+          });
+          setImagePreview(data.imageUrl);
+        } catch (error) {
+          console.error('Error fetching product:', error);
+        }
+      };
+      fetchProduct();
+    }
+  }, [productId]);
+
+  // Form input change handler
+  const handleInputChange = (field: string, value: string | number) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    // Clear field-specific error when user starts typing
+    setErrors((prevErrors: any) => ({
+      ...prevErrors,
+      [field]: undefined,
+    }));
+  };
+
+  // Form validation function
+  const validateGroups = () => {
+    const group1 = {
+      name: form.name,
+      price: form.price,
+      stock: form.stock,
+      baseShippingCost: form.baseShippingCost,
+    };
+    const group2 = {
+      bulkThreshold: form.bulkThreshold,
+      discountPricePerUnit: form.discountPricePerUnit,
+      bulkShippingCost: form.bulkShippingCost,
+    };
+    const group3 = {
+      palletThreshold: form.palletThreshold,
+      palletShippingCost: form.palletShippingCost,
+    };
+
+    if (!form.name || !form.price || !form.stock) {
+      return { valid: false, message: "Please fill all required fields." };
+    }
+
+    if (isGroupPartiallyFilled(group1)) {
+      return { valid: false, message: "Please complete all fields in Product Details (Group 1)." };
+    }
+
+    if (isGroupPartiallyFilled(group2)) {
+      return { valid: false, message: "Please complete all fields in Bulk Pricing & Shipping (Group 2)." };
+    }
+
+    if (isGroupPartiallyFilled(group3)) {
+      return { valid: false, message: "Please complete all fields in Pallet Shipping (Group 3)." };
+    }
+
+    return { valid: true, message: "" };
+  };
+
+  // Check if group is partially filled
+  const isGroupPartiallyFilled = (group: Record<string, string | number | null>) => {
+    return Object.values(group).some((value) => value !== null && value !== "") &&
+      !Object.values(group).every((value) => value !== null && value !== "");
+  };
+
+  // Validate form when form state changes
+  useEffect(() => {
+    const { valid, message } = validateGroups();
+    setIsFormValid(valid);
+    if (!valid) setGlobalError(message);
+  }, [form]);
+
+  // Clear global error after a timeout
+  useEffect(() => {
+    if (globalError) {
+      const timer = setTimeout(() => setGlobalError(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [globalError]);
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
-
-    // Validate groups
-    const { valid, message } = validateGroups();
-    if (!valid) {
-      alert(message); // Show error to user
-      return;
+  
+    // Disable the button once the submission starts
+    setIsSubmitting(true); 
+  
+    // Validate the form
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      setIsSubmitting(false); // Re-enable the button if there are errors
+      return; // Prevent form submission if there are errors
     }
-
+  
     try {
-      const method = productId ? 'PUT' : 'POST'; // Determine request method
-      const endpoint = productId ? `/api/products/${productId}` : '/api/products'; // Determine API endpoint
-
+      const method = productId ? 'PUT' : 'POST'; // 'PUT' for update, 'POST' for add
+      const endpoint = productId ? `/api/products/${productId}` : `/api/products`; // Ensure correct endpoint
+  
       const body = JSON.stringify({
         name: form.name,
         description: form.description,
@@ -220,62 +316,34 @@ export default function NewEdit() {
         discountPricePerUnit: form.discountPricePerUnit,
         maxCap: form.maxCap,
       });
-
+  
       const response = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body,
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
-
+  
       router.push('/admin/products'); // Redirect after success
     } catch (error) {
-      console.error('Error submitting form:', error); // Error handling
+      console.error('Error submitting form:', error); // Handle errors
+    } finally {
+      setIsSubmitting(false); // Re-enable the button after the process completes (in case of failure)
     }
   };
+  
 
-  const handleSearch = (query: string) => {
-    console.log('Searching for:', query);
-    // Add search logic here
+  // Form-level validation logic
+  const validateForm = () => {
+    const newErrors: any = {};
+    if (!form.name) newErrors.name = 'Product name is required';
+    if (!form.price) newErrors.price = 'Price is required';
+    if (!form.stock) newErrors.stock = 'Stock is required';
+    return newErrors;
   };
-
-  // Helper function to check if all fields in a group are filled
-  const isGroupComplete = (group: Record<string, string | number | null>) => {
-    return Object.values(group).every((value) => value !== null && value !== '');
-  };
-
-  // Helper function to check if any field in a group is filled
-  const isGroupPartiallyFilled = (group: Record<string, string | number | null>) => {
-    return Object.values(group).some((value) => value !== null && value !== '') &&
-      !isGroupComplete(group);
-  };
-
-  // Validation logic for each group
-  const validateGroups = () => {
-    const group1 = { name: form.name, description: form.description, price: form.price, stock: form.stock, baseShippingCost: form.baseShippingCost };
-    const group2 = { bulkThreshold: form.bulkThreshold, discountPricePerUnit: form.discountPricePerUnit, bulkShippingCost: form.bulkShippingCost };
-    const group3 = { palletThreshold: form.palletThreshold, palletShippingCost: form.palletShippingCost };
-
-    if (isGroupPartiallyFilled(group1)) {
-      return { valid: false, message: 'Please fill out all fields in Product Details (Group 1) or leave them empty.' };
-    }
-
-    if (isGroupPartiallyFilled(group2)) {
-      return { valid: false, message: 'Please fill out all fields in Bulk Pricing & Shipping (Group 2) or leave them empty.' };
-    }
-
-    if (isGroupPartiallyFilled(group3)) {
-      return { valid: false, message: 'Please fill out all fields in Pallet Shipping (Group 3) or leave them empty.' };
-    }
-
-    return { valid: true };
-  };
-
-
-
 
 
   return (
@@ -304,11 +372,12 @@ export default function NewEdit() {
               <StockBadge />
               <div className="hidden items-center gap-2 md:ml-auto md:flex">
                 <DiscardButton />
-                <Button size="sm">Save Product</Button>
+                <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting}  />
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
               <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+
 
                 <Card>
                   <CardHeader>
@@ -317,6 +386,15 @@ export default function NewEdit() {
                       {productId
                         ? "Update the basic details of your product."
                         : "Provide the necessary details to add a new product."}
+                    </CardDescription>
+                    <CardDescription>
+                      {
+                        globalError && (
+                          <div className="text-red-700 text-sm">
+                            {globalError}
+                          </div>
+                        )
+                      }
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -328,10 +406,12 @@ export default function NewEdit() {
                           id="name"
                           type="text"
                           placeholder="Enter the product name"
+                          onChange={(e) => setForm({ ...form, name: e.target.value })}
                           defaultValue={form.name || ""}
                           required
                           className="w-full"
                         />
+                        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                       </div>
 
                       {/* Description */}
@@ -343,6 +423,7 @@ export default function NewEdit() {
                           defaultValue={form.description || ""}
                           className="min-h-32"
                         />
+                        {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
                       </div>
 
                       {/* Price */}
@@ -369,6 +450,7 @@ export default function NewEdit() {
                           required
                           className="w-full remove-arrows"
                         />
+                        {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
                       </div>
 
                       {/* Stock */}
@@ -390,6 +472,7 @@ export default function NewEdit() {
                           required
                           className="w-full remove-arrows"
                         />
+                        {errors.stock && <p className="text-red-500 text-sm">{errors.stock}</p>}
                       </div>
 
                       {/* Base Shipping Cost */}
@@ -599,193 +682,11 @@ export default function NewEdit() {
 
 
 
-                <Card x-chunk="dashboard-07-chunk-1">
-                  <CardHeader>
-                    <CardTitle>Stock</CardTitle>
-                    <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[100px]">SKU</TableHead>
-                          <TableHead>Stock</TableHead>
-                          <TableHead>Price</TableHead>
-                          <TableHead className="w-[100px]">Size</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="font-semibold">
-                            GGPC-001
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="stock-1" className="sr-only">
-                              Stock
-                            </Label>
-                            <Input
-                              id="stock-1"
-                              type="number"
-                              defaultValue="100"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="price-1" className="sr-only">
-                              Price
-                            </Label>
-                            <Input
-                              id="price-1"
-                              type="number"
-                              defaultValue="99.99"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <ToggleGroup
-                              type="single"
-                              defaultValue="s"
-                              variant="outline"
-                            >
-                              <ToggleGroupItem value="s">S</ToggleGroupItem>
-                              <ToggleGroupItem value="m">M</ToggleGroupItem>
-                              <ToggleGroupItem value="l">L</ToggleGroupItem>
-                            </ToggleGroup>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-semibold">
-                            GGPC-002
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="stock-2" className="sr-only">
-                              Stock
-                            </Label>
-                            <Input
-                              id="stock-2"
-                              type="number"
-                              defaultValue="143"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="price-2" className="sr-only">
-                              Price
-                            </Label>
-                            <Input
-                              id="price-2"
-                              type="number"
-                              defaultValue="99.99"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <ToggleGroup
-                              type="single"
-                              defaultValue="m"
-                              variant="outline"
-                            >
-                              <ToggleGroupItem value="s">S</ToggleGroupItem>
-                              <ToggleGroupItem value="m">M</ToggleGroupItem>
-                              <ToggleGroupItem value="l">L</ToggleGroupItem>
-                            </ToggleGroup>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-semibold">
-                            GGPC-003
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="stock-3" className="sr-only">
-                              Stock
-                            </Label>
-                            <Input
-                              id="stock-3"
-                              type="number"
-                              defaultValue="32"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Label htmlFor="price-3" className="sr-only">
-                              Stock
-                            </Label>
-                            <Input
-                              id="price-3"
-                              type="number"
-                              defaultValue="99.99"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <ToggleGroup
-                              type="single"
-                              defaultValue="s"
-                              variant="outline"
-                            >
-                              <ToggleGroupItem value="s">S</ToggleGroupItem>
-                              <ToggleGroupItem value="m">M</ToggleGroupItem>
-                              <ToggleGroupItem value="l">L</ToggleGroupItem>
-                            </ToggleGroup>
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                  <CardFooter className="justify-center border-t p-4">
-                    <Button size="sm" variant="ghost" className="gap-1">
-                      <PlusCircle className="h-3.5 w-3.5" />
-                      Add Variant
-                    </Button>
-                  </CardFooter>
-                </Card>
-                <Card x-chunk="dashboard-07-chunk-2">
-                  <CardHeader>
-                    <CardTitle>Product Category</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid gap-6 sm:grid-cols-3">
-                      <div className="grid gap-3">
-                        <Label htmlFor="category">Category</Label>
-                        <Select>
-                          <SelectTrigger
-                            id="category"
-                            aria-label="Select category"
-                          >
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="clothing">Clothing</SelectItem>
-                            <SelectItem value="electronics">
-                              Electronics
-                            </SelectItem>
-                            <SelectItem value="accessories">
-                              Accessories
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="grid gap-3">
-                        <Label htmlFor="subcategory">
-                          Subcategory (optional)
-                        </Label>
-                        <Select>
-                          <SelectTrigger
-                            id="subcategory"
-                            aria-label="Select subcategory"
-                          >
-                            <SelectValue placeholder="Select subcategory" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                            <SelectItem value="hoodies">Hoodies</SelectItem>
-                            <SelectItem value="sweatshirts">
-                              Sweatshirts
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+
               </div>
+
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+
                 <Card x-chunk="dashboard-07-chunk-3">
                   <CardHeader>
                     <CardTitle>Product Status</CardTitle>
@@ -793,87 +694,73 @@ export default function NewEdit() {
                   <CardContent>
                     <div className="grid gap-6">
                       <div className="grid gap-3">
-                        <Label htmlFor="status">Status</Label>
-                        <Select>
-                          <SelectTrigger id="status" aria-label="Select status">
+                        <Label htmlFor="soldOut">Is this product sold out?</Label>
+                        <Select
+                          value={form.soldOut ? 'yes' : 'no'}
+                          onValueChange={(value) => setForm({ ...form, soldOut: value === 'yes' })}
+                        >
+                          <SelectTrigger id="soldOut" aria-label="Select product status">
                             <SelectValue placeholder="Select status" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="draft">Draft</SelectItem>
-                            <SelectItem value="published">Active</SelectItem>
-                            <SelectItem value="archived">Archived</SelectItem>
+                            <SelectItem value="no">No</SelectItem>
+                            <SelectItem value="yes">Yes</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card
-                  className="overflow-hidden" x-chunk="dashboard-07-chunk-4"
-                >
+
+
+
+                <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
                   <CardHeader>
-                    <CardTitle>Product Images</CardTitle>
+                    <CardTitle>Product Image</CardTitle>
                     <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit
+                      Upload the main image for your product.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-2">
+                      {/* Display the current image or placeholder if none exists */}
                       <Image
                         alt="Product image"
                         className="aspect-square w-full rounded-md object-cover"
                         height="300"
-                        src="/placeholder.svg"
+                        src={form.imageUrl || "/image-placeholder2.jpg"}
                         width="300"
                       />
+
+                      {/* Image upload button */}
                       <div className="grid grid-cols-3 gap-2">
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="/placeholder.svg"
-                            width="84"
-                          />
-                        </button>
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="/placeholder.svg"
-                            width="84"
-                          />
-                        </button>
-                        <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                        <button
+                          className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                          onClick={() => document.getElementById('file-upload')?.click()} // Trigger hidden file input
+                        >
                           <Upload className="h-4 w-4 text-muted-foreground" />
                           <span className="sr-only">Upload</span>
                         </button>
+
+                        {/* Hidden file input */}
+                        <input
+                          id="file-upload"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleImageUpload} // Cloudinary upload handler
+                        />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card x-chunk="dashboard-07-chunk-5">
-                  <CardHeader>
-                    <CardTitle>Archive Product</CardTitle>
-                    <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div></div>
-                    <Button size="sm" variant="secondary">
-                      Archive Product
-                    </Button>
-                  </CardContent>
-                </Card>
+
+
               </div>
             </div>
             <div className="flex items-center justify-center gap-2 md:hidden">
-              <Button variant="outline" size="sm">
-                Discard
-              </Button>
-              <Button size="sm">Save Product</Button>
+              <DiscardButton />
+              <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting}  />
             </div>
           </div>
         </main>
