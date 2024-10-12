@@ -34,7 +34,8 @@ model Product {
   maxCap               Int?    @default(100) // Max quantity a user can order
   soldOut              Boolean @default(false) // If true, the product is sold out
   imageUrl             String  @default("")    // Cloudinary image URL
-
+  quantityPerBox        Int?      // <-- New field to specify quantity per box
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

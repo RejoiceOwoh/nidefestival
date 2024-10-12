@@ -49,6 +49,7 @@ export async function POST(req: Request) {
       maxCap,
       soldOut,
       imageUrl, // Add imageUrl here
+      quantityPerBox,
     } = await req.json();
 
     const product = await prisma.product.create({
@@ -66,6 +67,7 @@ export async function POST(req: Request) {
         maxCap: maxCap ? parseInt(maxCap, 10) : null,
         soldOut,
         imageUrl, // Ensure this is included here as well
+        quantityPerBox: quantityPerBox ? parseInt(quantityPerBox, 10) : null, // <-- Update quantityPerBox
       },
     });
 
@@ -94,6 +96,7 @@ export async function PUT(req: Request) {
       maxCap,
       soldOut,
       imageUrl, // Add imageUrl here
+      quantityPerBox,
     } = await req.json();
 
     const product = await prisma.product.update({
@@ -112,6 +115,7 @@ export async function PUT(req: Request) {
         maxCap: maxCap ? parseInt(maxCap, 10) : null,
         soldOut,
         imageUrl, // Ensure this is included here as well
+        quantityPerBox: quantityPerBox ? parseInt(quantityPerBox, 10) : null, // <-- Update quantityPerBox
       },
     });
 

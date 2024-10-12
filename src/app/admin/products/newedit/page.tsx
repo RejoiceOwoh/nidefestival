@@ -14,14 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -31,32 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { AdminNav } from "../../components/main-nav"
 
 import { useRouter, useSearchParams } from 'next/navigation'; // Add useSearchParams
 import BreadcrumbComponent from '../components/breadcrumb';
 import { UserButton } from '@clerk/nextjs';
 import SearchInput from '../../components/SearchInput';
-import SidebarSheet from '../../components/MobileSidebarSheet';
 import BackButton from '../../components/BackButton';
 import ProductTitle from '../components/ProductTitle';
 import StockBadge from '../components/StockBadge';
@@ -77,9 +50,6 @@ export default function NewEdit() {
     description: string;
     price: string | number;
     stock: string | number;
-    status: string;
-    category: string;
-    subcategory: string;
     imageUrl: string;
     soldOut: boolean;
     bulkThreshold: string | number;
@@ -89,14 +59,12 @@ export default function NewEdit() {
     baseShippingCost: string | number;
     discountPricePerUnit: string | number;
     maxCap: string | number;
+    quantityPerBox: string | number;
   }>({
     name: '',
     description: '',
     price: '',
     stock: '',
-    status: 'draft',
-    category: '',
-    subcategory: '',
     imageUrl: '',
     soldOut: false,
     bulkThreshold: 0,
@@ -106,6 +74,7 @@ export default function NewEdit() {
     baseShippingCost: 0,
     discountPricePerUnit: 0,
     maxCap: 0,
+    quantityPerBox: 0,
   });
 
   // State for image preview
@@ -165,17 +134,16 @@ export default function NewEdit() {
             description: data.description,
             price: data.price,
             stock: data.stock,
-            status: data.status,
-            category: data.category || '',
-            subcategory: data.subcategory || '',
             imageUrl: data.imageUrl,
             soldOut: data.soldOut,
             bulkThreshold: data.bulkThreshold || 0,
             bulkShippingCost: data.bulkShippingCost || 0,
+            palletThreshold: data.palletThreshold || 0,
             palletShippingCost: data.palletShippingCost || 0,
             baseShippingCost: data.baseShippingCost || 0,
             discountPricePerUnit: data.discountPricePerUnit || 0,
             maxCap: data.maxCap || 0,
+            quantityPerBox: data.quantityPerBox || 0,
           });
           setImagePreview(data.imageUrl);
         } catch (error) {
@@ -261,10 +229,10 @@ export default function NewEdit() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
-  
+
     // Disable the button once the submission starts
-    setIsSubmitting(true); 
-  
+    setIsSubmitting(true);
+
     // Validate the form
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
@@ -272,39 +240,38 @@ export default function NewEdit() {
       setIsSubmitting(false); // Re-enable the button if there are errors
       return; // Prevent form submission if there are errors
     }
-  
+
     try {
       const method = productId ? 'PUT' : 'POST'; // 'PUT' for update, 'POST' for add
       const endpoint = productId ? `/api/products/${productId}` : `/api/products`; // Ensure correct endpoint
-  
+
       const body = JSON.stringify({
         name: form.name,
         description: form.description,
         price: form.price,
         stock: form.stock,
-        status: form.status,
-        category: form.category,
-        subcategory: form.subcategory,
         imageUrl: form.imageUrl,
         soldOut: form.soldOut,
         bulkThreshold: form.bulkThreshold,
         bulkShippingCost: form.bulkShippingCost,
+        palletThreshold: form.palletThreshold,
         palletShippingCost: form.palletShippingCost,
         baseShippingCost: form.baseShippingCost,
         discountPricePerUnit: form.discountPricePerUnit,
         maxCap: form.maxCap,
+        quantityPerBox: form.quantityPerBox,
       });
-  
+
       const response = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body,
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
-  
+
       router.push('/admin/products'); // Redirect after success
     } catch (error) {
       console.error('Error submitting form:', error); // Handle errors
@@ -312,7 +279,7 @@ export default function NewEdit() {
       setIsSubmitting(false); // Re-enable the button after the process completes (in case of failure)
     }
   };
-  
+
 
   // Form-level validation logic
   const validateForm = () => {
@@ -350,7 +317,7 @@ export default function NewEdit() {
               <StockBadge />
               <div className="hidden items-center gap-2 md:ml-auto md:flex">
                 <DiscardButton />
-                <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting}  />
+                <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting} />
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -398,6 +365,7 @@ export default function NewEdit() {
                         <Textarea
                           id="description"
                           placeholder="Describe the product briefly (optional)"
+                          onChange={(e) => setForm({ ...form, description: e.target.value })}
                           defaultValue={form.description || ""}
                           className="min-h-32"
                         />
@@ -475,6 +443,24 @@ export default function NewEdit() {
                             setForm({ ...form, baseShippingCost: value });
                           }}
                           className="w-full remove-arrows"
+                        />
+                      </div>
+
+                      <div className="grid gap-3">
+                        <Label htmlFor="quantityPerBox">Quantity Per Box</Label>
+                        <Input
+                          id="quantityPerBox"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="^[0-9]*$"
+                          placeholder="Enter quantity per box(Only if it applies)"
+                          value={form.quantityPerBox || ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^[0-9]*$/.test(value)) {
+                              setForm({ ...form, quantityPerBox: parseInt(value, 10) || 0 });
+                            }
+                          }}
                         />
                       </div>
 
@@ -577,7 +563,6 @@ export default function NewEdit() {
                       {/* Pallet Threshold */}
                       <div className="grid gap-3">
                         <Label htmlFor="palletThreshold">Pallet Threshold</Label>
-
                         <Input
                           id="palletThreshold"
                           type="text"
@@ -592,7 +577,6 @@ export default function NewEdit() {
                             }
                           }}
                         />
-
                       </div>
 
                       {/* Pallet Shipping Cost */}
@@ -738,7 +722,7 @@ export default function NewEdit() {
             </div>
             <div className="flex items-center justify-center gap-2 md:hidden">
               <DiscardButton />
-              <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting}  />
+              <SaveButton form={form} productId={productId} disabled={!isFormValid || isSubmitting} />
             </div>
           </div>
         </main>

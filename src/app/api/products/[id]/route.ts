@@ -50,6 +50,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       maxCap,
       soldOut,
       imageUrl,
+      quantityPerBox,
     } = await req.json();
 
     const product = await prisma.product.update({
@@ -68,6 +69,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         maxCap: maxCap ? parseInt(maxCap, 10) : null,
         soldOut,
         imageUrl,
+        quantityPerBox: quantityPerBox ? parseInt(quantityPerBox, 10) : null, // <-- Update quantityPerBox
       },
     });
 
