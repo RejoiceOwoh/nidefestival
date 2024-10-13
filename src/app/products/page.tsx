@@ -1,6 +1,7 @@
 import HeroProducts from "./components/heroproducts";
 import PricingTable from "./components/pricingTable";
 import ProductsList from "./components/productslist";
+import ProductsList2 from "./components/productslist copy";
 
 /* eslint-disable @next/next/no-img-element */
 export default function Products() {
@@ -8,6 +9,7 @@ export default function Products() {
       <div>
         <HeroProducts />
         <ProductsList />
+        <ProductsList2 />
         <PricingTable />
       </div>
     )

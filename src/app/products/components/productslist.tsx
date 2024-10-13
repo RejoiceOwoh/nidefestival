@@ -1,17 +1,10 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+"use client"
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Cart from "./cart";
+
 const products = [
     {
         id: 1,
@@ -26,7 +19,39 @@ const products = [
     // More products...
 ]
 
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+}
+
 export default function ProductsList() {
+
+    const [products, setProducts] = useState<Product[]>([]);
+    const [cart, setCart] = useState<Product[]>([]);
+
+    // Fetch products from the API
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch("/api/products");
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    // Add product to the cart
+    const addToCart = (product: Product) => {
+        setCart((prevCart) => [...prevCart, product]);
+    };
+
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -35,18 +60,16 @@ export default function ProductsList() {
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                     {products.map((product) => (
                         <div key={product.id} className="group relative">
-                            <a href={product.href} className="group block overflow-hidden">
+                            <div className="group block overflow-hidden">
                                 <div className="relative h-[350px] sm:h-[450px] overflow-hidden">
-                                    <img
-                                        src={product.imageSrc}
-                                        alt=""
-                                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
-                                    />
-
-                                    <img
-                                        alt={product.imageAlt}
-                                        src={product.imageSrc2}
-                                        className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-110"
+                                    {/* First Image */}
+                                    <Image
+                                        src={product.imageUrl}
+                                        alt={product.name}
+                                        width={500}   // Provide appropriate width
+                                        height={500}  // Provide appropriate height
+                                        layout="responsive" // Makes image responsive
+                                        className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-500 ease-in-out group-hover:opacity-80 group-hover:scale-110"
                                     />
                                 </div>
 
@@ -56,12 +79,16 @@ export default function ProductsList() {
                                     </h3>
 
                                     <div className="mt-1.5 flex items-center justify-between text-gray-900">
-                                        <p className="tracking-wide">{product.price}</p>
+                                        <p className="tracking-wide">£{product.price}</p>
 
-                                        <p className="text-xs uppercase tracking-wide">2 Litres</p>
+                                        <p className="text-xs uppercase tracking-wide">{product.description}</p>
                                     </div>
                                 </div>
-                            </a>
+                                <div className="pt-3 text-center object-center">
+                                <Button onClick={() => addToCart(product)}>Add to Cart</Button>
+                                <Cart />
+                                </div>
+                            </div>
 
                         </div>
                     ))}
