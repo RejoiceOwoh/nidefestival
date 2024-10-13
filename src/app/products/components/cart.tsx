@@ -46,6 +46,7 @@ export default function Cart() {
         <SheetContent side="right" className="w-screen max-w-md">
           <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
             {/* Sheet Header */}
+            
             <SheetHeader>
               <SheetTitle>Shopping Cart</SheetTitle>
               <SheetClose asChild>
