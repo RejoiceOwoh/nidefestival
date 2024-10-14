@@ -1,20 +1,14 @@
-'use client';
+"use client"
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
   File,
-  Home,
   ListFilter,
   MoreHorizontal,
-  Package,
-  Package2,
-  PanelLeft,
   PlusCircle,
   Search,
-  ShoppingCart,
-  Users2,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -43,7 +37,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Table,
   TableBody,
@@ -53,9 +46,9 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
 import { AdminNav } from '../components/main-nav';
 import MobileAdminNav from '../components/MobileAdminNav';
+import DeleteProductDialog from './components/alertdialogue'; // Import the new DeleteProductDialog component
 
 type Product = {
   id: number;
@@ -65,11 +58,8 @@ type Product = {
   stock: number;
   soldOut: boolean;
   createdAt: string;
-  imageUrl: string; // Added a placeholder for product images
+  imageUrl: string;
 };
-
-export const description =
-  'A products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions.';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -85,6 +75,11 @@ export default function AdminProducts() {
     };
     fetchProducts();
   }, []);
+
+  // Function to refresh the product list after a successful deletion
+  const handleDeleteSuccess = (deletedProductId: number) => {
+    setProducts(products.filter(product => product.id !== deletedProductId));
+  };
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -143,14 +138,12 @@ export default function AdminProducts() {
                     <DropdownMenuItem>Archived</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button size="sm" variant="outline" className="h-8 gap-1">
-                  <File className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
-                </Button>
+                <Link href={'/admin/products/newedit'}>
                 <Button size="sm" className="h-8 gap-1">
                   <PlusCircle className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Product</span>
                 </Button>
+                </Link>
               </div>
             </div>
 
@@ -191,21 +184,18 @@ export default function AdminProducts() {
                           <TableCell className="hidden md:table-cell">0</TableCell>
                           <TableCell className="hidden md:table-cell">{new Date(product.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button aria-haspopup="true" size="icon" variant="ghost">
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem asChild>
-                                  <Link href={`/admin/products/newedit?id=${product.id}`}>Edit</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>Delete</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
+                            <div className="flex space-x-2">
+                              {/* Edit Product Link */}
+                              <Link href={`/admin/products/newedit?id=${product.id}`}>
+                                <Button variant="outline" size="sm">Edit</Button>
+                              </Link>
+                              {/* DeleteProductDialog */}
+                              <DeleteProductDialog 
+                                productId={product.id} 
+                                productName={product.name} 
+                                onDeleteSuccess={() => handleDeleteSuccess(product.id)} 
+                              />
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}

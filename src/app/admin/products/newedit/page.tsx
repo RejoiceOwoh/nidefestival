@@ -680,7 +680,7 @@ export default function NewEdit() {
                   <CardHeader>
                     <CardTitle>Product Image</CardTitle>
                     <CardDescription>
-                      Upload the main image for your product.
+                      Upload the main image for your product. Ensure size 1:1 and less than 300kb for better user experience
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

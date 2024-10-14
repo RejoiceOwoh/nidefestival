@@ -79,3 +79,24 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
   }
 }
+
+
+// Delete product by dynamic id (DELETE)
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+  const productId = parseInt(params.id, 10);
+
+  if (isNaN(productId)) {
+    return NextResponse.json({ error: 'Invalid product ID' }, { status: 400 });
+  }
+
+  try {
+    await prisma.product.delete({
+      where: { id: productId },
+    });
+
+    return NextResponse.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Failed to delete product:', error);
+    return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
+  }
+}

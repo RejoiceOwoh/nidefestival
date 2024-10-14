@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import Image from "next/image"
 
 interface Product {
   id: number;
@@ -41,9 +42,15 @@ export default function ProductsList2() {
           {products.map((product) => (
             <div key={product.id} className="group relative">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img
-                  src={product.imageUrl} alt={product.name}
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={500}  // You need to provide width
+                  height={500} // You need to provide height
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  layout="responsive" // Optional: to make it responsive
+                  placeholder="blur"  // Optional: for blur-up placeholder effect
+                  blurDataURL="/path-to-blur-placeholder" // Optional: blur image placeholder
                 />
               </div>
               <div className="mt-4 flex justify-between">

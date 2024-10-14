@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '@/components/footer';
 import Providers from '@/components/Providers'; // Client-side component
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata = {
   title: 'AfriGold Palm Oil',
@@ -23,6 +24,7 @@ export default function RootLayout({
           <main className="pt-16">
             {children}
           </main>
+          <Toaster position="top-right" richColors />
           <Footer />
         </Providers>
       </body>
