@@ -3,21 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Cart from "./cart";
 
-const products = [
-    {
-        id: 1,
-        name: 'Bottle of AfriGold Palm Oil',
-        href: 'https://buy.stripe.com/4gw6qa27ca1LgmI3cc',
-        imageSrc: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218421/GOLD2_wozmcv.png',
-        imageSrc2: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218462/_LUP8385_yy0ku0.png',
-        imageAlt: "Bottle of Afrigold Palm Oil",
-        price: '£10.99',
-        color: '',
-    },
-    // More products...
-]
 
 interface Product {
     id: number;
@@ -86,7 +72,7 @@ export default function ProductsList() {
                                 </div>
                                 <div className="pt-3 text-center object-center">
                                 <Button onClick={() => addToCart(product)}>Add to Cart</Button>
-                                <Cart />
+                                
                                 </div>
                             </div>
 

@@ -9,7 +9,6 @@ export default function Products() {
       <div>
         <HeroProducts />
         <ProductsList />
-        <ProductsList2 />
         <PricingTable />
       </div>
     )
