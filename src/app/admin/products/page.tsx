@@ -4,9 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  File,
   ListFilter,
-  MoreHorizontal,
   PlusCircle,
   Search,
 } from 'lucide-react';
@@ -49,6 +47,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AdminNav } from '../components/main-nav';
 import MobileAdminNav from '../components/MobileAdminNav';
 import DeleteProductDialog from './components/alertdialogue'; // Import the new DeleteProductDialog component
+import { UserButton } from '@clerk/nextjs';
 
 type Product = {
   id: number;
@@ -112,6 +111,7 @@ export default function AdminProducts() {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input type="search" placeholder="Search..." className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]" />
           </div>
+          <UserButton />
         </header>
 
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">

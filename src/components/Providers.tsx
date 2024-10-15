@@ -1,6 +1,6 @@
 'use client';
 
-import { ClerkProvider, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -10,21 +10,26 @@ export default function Providers({ children }: { children: ReactNode }) {
   // Define routes where authentication is required
   const adminRoutes = ['/admin', '/dashboard'];
 
-  // Conditionally render auth buttons only for admin-related pages
-  const showAuthButtons = adminRoutes.some((route) => pathname.startsWith(route));
+  // Conditionally check if the current path requires authentication
+  const requiresAuth = adminRoutes.some((route) => pathname.startsWith(route));
 
   return (
     <ClerkProvider>
-      {showAuthButtons && (
+      {requiresAuth ? (
         <>
           <SignedOut>
-            <SignInButton />
+            {/* Automatically redirect to sign-in page if the user is signed out */}
+            <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
+            {/* Render children if the user is signed in */}
+            {children}
           </SignedIn>
         </>
+      ) : (
+        // If no auth required, render children directly
+        children
       )}
-      {children}
     </ClerkProvider>
   );
 }

@@ -1,26 +1,22 @@
+// src/app/products/components/quantity-selector.tsx
+
 'use client'
 
 import { useState, ChangeEvent } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function QuantitySelector() {
-  const [quantity, setQuantity] = useState(1)
-
-  const increment = () => setQuantity(prev => prev + 1)
-  const decrement = () => setQuantity(prev => Math.max(1, prev - 1))
+export default function QuantitySelector({ quantity, onQuantityChange }: { quantity: number, onQuantityChange: (newQuantity: number) => void }) {
+  const increment = () => onQuantityChange(quantity + 1);
+  const decrement = () => onQuantityChange(Math.max(1, quantity - 1));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    if (value === '') {
-      setQuantity(1)
-    } else {
-      const newQuantity = parseInt(value, 10)
-      if (!isNaN(newQuantity) && newQuantity >= 1) {
-        setQuantity(newQuantity)
-      }
+    const value = e.target.value;
+    const newQuantity = parseInt(value, 10);
+    if (!isNaN(newQuantity) && newQuantity >= 1) {
+      onQuantityChange(newQuantity);
     }
-  }
+  };
 
   return (
     <div className="inline-flex items-center rounded-full border border-gray-200 bg-white shadow-sm">
@@ -52,7 +48,6 @@ export default function QuantitySelector() {
     </div>
   )
 }
-
 
 function MinusIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
