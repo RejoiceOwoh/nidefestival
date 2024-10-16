@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ShoppingCart, Eye, Check } from "lucide-react"
+import { ShoppingCart, Eye, Check, Package, Truck, Users, Scale } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -11,7 +11,6 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -19,7 +18,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
 import { useCart } from "@/lib/useCart"
-import Cart from "@/app/products/components/Cart"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface Product {
     id: number
@@ -112,6 +111,42 @@ export default function ProductsList() {
         return productDate > thirtyDaysAgo
     }
 
+    const renderPricingTier = (label: string, price: number | null, shippingCost: number | null, quantityPerUnit: number | null, threshold: number | null) => {
+        if (price === null) return null;
+        
+        return (
+            <div className="rounded-lg border border-gray-200 p-4 shadow-sm">
+                <div className="text-center">
+                    <h3 className="text-sm font-medium text-gray-900">{label}</h3>
+                    <p className="mt-1">
+                        <strong className="text-lg font-bold text-gray-900">£{price.toFixed(2)}</strong>
+                        <span className="text-xs text-gray-500">{quantityPerUnit ? '/unit' : ''}</span>
+                    </p>
+                </div>
+                <ul className="mt-4 space-y-2 text-xs">
+                    {shippingCost !== null && (
+                        <li className="flex items-center gap-2">
+                            <Truck className="h-4 w-4 text-primary" />
+                            <span className="text-gray-600">£{shippingCost.toFixed(2)} delivery{quantityPerUnit ? '/unit' : ''}</span>
+                        </li>
+                    )}
+                    {quantityPerUnit && (
+                        <li className="flex items-center gap-2">
+                            <Package className="h-4 w-4 text-primary" />
+                            <span className="text-gray-600">{quantityPerUnit} items/unit</span>
+                        </li>
+                    )}
+                    {threshold && (
+                        <li className="flex items-center gap-2">
+                            <Scale className="h-4 w-4 text-primary" />
+                            <span className="text-gray-600">Min. {threshold} units</span>
+                        </li>
+                    )}
+                </ul>
+            </div>
+        )
+    }
+
     return (
         <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
             <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24">
@@ -182,43 +217,62 @@ export default function ProductsList() {
                                             <p className="mt-2 text-sm text-gray-600 line-clamp-2">{product.description}</p>
                                             <div className="mt-3 flex items-center justify-between">
                                                 <p className="text-xl font-bold text-primary">£{product.price.toFixed(2)}</p>
-                                                <Dialog open={openDialog === product.id} onOpenChange={(open) => setOpenDialog(open ? product.id : null)}>
+                                                <Dialog>
                                                     <DialogTrigger asChild>
                                                         <Button variant="outline" size="icon" className="rounded-full">
                                                             <Eye className="h-4 w-4" />
                                                             <span className="sr-only">Quick view</span>
                                                         </Button>
                                                     </DialogTrigger>
-                                                    <DialogContent className="sm:max-w-[425px]">
-                                                        <DialogHeader>
+                                                    <DialogContent className="sm:max-w-[550px] max-h-[90vh] flex flex-col">
+                                                        <DialogHeader className="flex-shrink-0">
                                                             <DialogTitle>{product.name}</DialogTitle>
                                                             <DialogDescription>Product Details</DialogDescription>
                                                         </DialogHeader>
-                                                        <div className="grid gap-4 py-4">
-                                                            <div className="relative h-64 w-full">
-                                                                <Image
-                                                                    src={product.imageUrl}
-                                                                    alt={product.name}
-                                                                    fill
-                                                                    sizes="(max-width: 425px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                                    className="object-cover rounded-lg"
-                                                                />
+                                                        <ScrollArea className="flex-grow overflow-y-auto">
+                                                            <div className="space-y-4 pr-4">
+                                                                <div className="relative h-64 w-full">
+                                                                    <Image
+                                                                        src={product.imageUrl}
+                                                                        alt={product.name}
+                                                                        fill
+                                                                        sizes="(max-width: 550px) 100vw, 550px"
+                                                                        className="object-cover rounded-lg"
+                                                                    />
+                                                                </div>
+                                                                <p className="text-sm text-gray-500">{product.description}</p>
+                                                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                                                    {renderPricingTier(
+                                                                        "Single Item", 
+                                                                        product.price, 
+                                                                        product.baseShippingCost, 
+                                                                        null, 
+                                                                        null
+                                                                    )}
+                                                                    {product.bulkThreshold && renderPricingTier(
+                                                                        `Bulk (${product.bulkThreshold}+ units)`, 
+                                                                        product.discountPricePerUnit, 
+                                                                        product.bulkShippingCost, 
+                                                                        product.quantityPerBox, 
+                                                                        product.bulkThreshold
+                                                                    )}
+                                                                    {product.palletThreshold && renderPricingTier(
+                                                                        `Pallet (${product.palletThreshold}+ units)`, 
+                                                                        product.discountPricePerUnit, 
+                                                                        product.palletShippingCost, 
+                                                                        product.quantityPerBox, 
+                                                                        product.palletThreshold
+                                                                    )}
+                                                                </div>
+                                                                {product.maxCap && (
+                                                                    <div className="flex items-center gap-2 text-xs text-gray-600">
+                                                                        <Users className="h-4 w-4 text-primary" />
+                                                                        <span>Maximum order: {product.maxCap} units</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
-                                                            <p className="text-sm text-gray-500">{product.description}</p>
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="font-semibold">Price:</span>
-                                                                <span>£{product.price.toFixed(2)}</span>
-                                                            </div>
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="font-semibold">Base Shipping:</span>
-                                                                <span>£{(product.baseShippingCost ?? 0).toFixed(2)}</span>
-                                                            </div>
-                                                            <div className="flex justify-between items-center">
-                                                                <span className="font-semibold">Status:</span>
-                                                                <span>{product.soldOut ? "Sold Out" : "In Stock"}</span>
-                                                            </div>
-                                                        </div>
-                                                        <DialogFooter>
+                                                        </ScrollArea>
+                                                        <div className="flex-shrink-0 mt-6 pt-4 border-t">
                                                             <Button
                                                                 onClick={() => handleAddToCart(product)}
                                                                 disabled={product.soldOut || addingToCart === product.id}
@@ -245,7 +299,7 @@ export default function ProductsList() {
                                                                     </>
                                                                 )}
                                                             </Button>
-                                                        </DialogFooter>
+                                                        </div>
                                                     </DialogContent>
                                                 </Dialog>
                                             </div>
