@@ -8,8 +8,6 @@ import { Button } from '@/components/ui/button'
 import QuantitySelector from './quantity-selector'
 import { useCart } from '@/lib/useCart'
 import { calculateItemPrice, calculateShipping, calculateTotalPrice, calculateTotalShipping, formatPrice } from '@/lib/cartUtils'
-import { ShoppingBag } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
     throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined")
@@ -74,10 +72,12 @@ const Cart = () => {
                                             </button>
                                         </div>
                                     </div>
-                                    <QuantitySelector
-                                        quantity={item.quantity}
-                                        onQuantityChange={(newQuantity) => updateQuantity(item.product.id, newQuantity)}
-                                    />
+                                    <div className="mt-2 flex items-center justify-between">
+                                        <QuantitySelector
+                                            quantity={item.quantity}
+                                            onQuantityChange={(newQuantity) => updateQuantity(item.product.id, newQuantity)}
+                                        />
+                                    </div>
                                 </div>
                             </li>
                         ))}

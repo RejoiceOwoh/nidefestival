@@ -27,7 +27,6 @@ export default function RootLayout({
             <main className="pt-16">
               {children}
             </main>
-            <Cart />
             <Toaster position="top-right" richColors />
             <Footer />
           </CartProvider>
