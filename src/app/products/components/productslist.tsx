@@ -74,6 +74,8 @@ export default function ProductsList() {
         // Simulate an API call
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
+        console.log("Adding to cart:", product)  // Add this line
+
         addToCart({
             id: product.id,
             name: product.name,
@@ -93,6 +95,8 @@ export default function ProductsList() {
             createdAt: new Date(product.createdAt),
             updatedAt: product.updatedAt
         })
+
+        console.log("After addToCart call")  // Add this line
 
         setAddingToCart(null)
         setOpenDialog(null)

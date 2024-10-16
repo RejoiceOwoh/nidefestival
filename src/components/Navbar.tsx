@@ -24,6 +24,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const { cart } = useCart()
+  console.log("Current cart in Navbar:", cart)
   useEffect(() => {
     const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 10)

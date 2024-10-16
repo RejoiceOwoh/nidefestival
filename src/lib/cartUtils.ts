@@ -7,16 +7,17 @@ interface CartItem {
 
 export function calculateItemPrice(item: CartItem): number {
   const { product, quantity } = item;
-  const boxQuantity = Math.floor(quantity / product.quantityPerBox!);
-  const bottleQuantity = quantity % product.quantityPerBox!;
+  const quantityPerBox = product.quantityPerBox ?? 1;
+  const boxQuantity = Math.floor(quantity / quantityPerBox);
+  const bottleQuantity = quantity % quantityPerBox;
 
   let totalPrice = 0;
 
-  if (boxQuantity >= product.bulkThreshold!) {
+  if (product.bulkThreshold && boxQuantity >= product.bulkThreshold) {
     totalPrice +=
-      boxQuantity * (product.discountPricePerUnit! * product.quantityPerBox!);
+      boxQuantity * ((product.discountPricePerUnit ?? product.price) * quantityPerBox);
   } else {
-    totalPrice += boxQuantity * (product.price * product.quantityPerBox!);
+    totalPrice += boxQuantity * (product.price * quantityPerBox);
   }
 
   totalPrice += bottleQuantity * product.price;
@@ -47,6 +48,9 @@ export function calculateTotalShipping(items: CartItem[]): number {
   return items.reduce((total, item) => total + calculateShipping(item), 0);
 }
 
-export function formatPrice(price: number): string {
+export function formatPrice(price: number | undefined | null): string {
+  if (typeof price !== 'number') {
+    return '£0.00';
+  }
   return `£${price.toFixed(2)}`;
 }
