@@ -54,3 +54,16 @@ export function formatPrice(price: number | undefined | null): string {
   }
   return `£${price.toFixed(2)}`;
 }
+
+export function calculateOriginalPrice(item: CartItem): number {
+  const { product, quantity } = item;
+  const quantityPerBox = product.quantityPerBox ?? 1;
+  const totalPrice = quantity * product.price;
+  return Number(totalPrice.toFixed(2));
+}
+
+export function calculateOriginalShipping(item: CartItem): number {
+  const { product, quantity } = item;
+  const boxQuantity = Math.ceil(quantity / product.quantityPerBox!);
+  return boxQuantity * product.baseShippingCost!;
+}
