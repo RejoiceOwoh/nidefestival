@@ -21,9 +21,11 @@ const navigation = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const { cart } = useCart()
+
   useEffect(() => {
     const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 10)
@@ -31,6 +33,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const handleViewCart = () => {
+    setMobileMenuOpen(false)
+    setIsCartOpen(true)
+  }
 
   return (
     <>
@@ -193,12 +200,53 @@ export default function Navbar() {
                     variant="outline"
                     size="lg"
                     className="w-full relative"
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={handleViewCart}
                   >
                     <ShoppingBag className="h-5 w-5 mr-2" />
                     <span>View Cart</span>
+                    {cart.length > 0 && (
+                      <Badge
+                        variant="destructive"
+                        className="absolute -top-2 -right-2 flex items-center justify-center"
+                      >
+                        {cart.length}
+                      </Badge>
+                    )}
                   </Button>
                 </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isCartOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-background shadow-xl"
+          >
+            <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+              <div className="px-4 sm:px-6">
+                <div className="flex items-start justify-between">
+                  <h2 className="text-lg font-medium text-gray-900">Shopping Cart</h2>
+                  <div className="ml-3 flex h-7 items-center">
+                    <button
+                      type="button"
+                      className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      onClick={() => setIsCartOpen(false)}
+                    >
+                      <span className="sr-only">Close panel</span>
+                      <X className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                <Cart />
               </div>
             </div>
           </motion.div>
