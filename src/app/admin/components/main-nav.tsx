@@ -10,7 +10,7 @@ import {
     Users2,
   } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../../lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export function AdminNav({

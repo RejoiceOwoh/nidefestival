@@ -115,17 +115,17 @@ export default function AboutMain() {
               <p>
               <strong className="font-semibold text-gray-900">Authenticity and Tradition</strong>
               <br />AfriGold Palm Oil is not just a product; it{"'"}s a heritage. The palm oil is sourced from the
-              heart of Nigeria, where palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
+              heart of Nigeria, primary palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
               </p>
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
-                  <EyeIcon aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-[#faba38]" />
+                  <EyeIcon aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-primary" />
                   <span>
                     <strong className="font-semibold text-gray-900">Our Vision:</strong> To become the leading global brand for premium, ethically- sourced palm oil, known for quality and sustainability. 
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <Award aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-[#faba38]" />
+                  <Award aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-primary" />
                   <span>
                     <strong className="font-semibold text-gray-900">Our Mission:</strong> To provide consumers with the purest, highest-quality palm oil while supporting sustainable farming practices and empowering local Nigerian communities
                   </span>
@@ -172,7 +172,7 @@ export default function AboutMain() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <p className="text-base font-semibold leading-7 text-[#faba38]">Our Heritage!</p>
+              <p className="text-base font-semibold leading-7 text-primary">Our Heritage!</p>
               <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Afrigold Palm Oil</h1>
               <p className="mt-6 text-xl leading-8 text-gray-700">
               AfriGold Palm Oil is a premium UK-based brand that sources its high-quality palm oil directly from Nigeria. 
@@ -196,17 +196,17 @@ export default function AboutMain() {
               <p>
               <strong className="font-semibold text-gray-900">Authenticity and Tradition</strong>
               <br />AfriGold Palm Oil is not just a product; it{"'"}s a heritage. The palm oil is sourced from the
-              heart of Nigeria, where palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
+              heart of Nigeria, primary palm oil production is deeply rooted in tradition. For generations, Nigerian communities have perfected the art of extracting palm oil, ensuring that each drop retains its natural richness and flavor. This deep connection to traditional methods sets AfriGold apart, providing consumers with an authentic taste of Nigeria.
               </p>
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
-                  <EyeIcon aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-[#faba38]" />
+                  <EyeIcon aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-primary" />
                   <span>
                     <strong className="font-semibold text-gray-900">Our Vision:</strong> To become the leading global brand for premium, ethically- sourced palm oil, known for quality and sustainability. 
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <Award aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-[#faba38]" />
+                  <Award aria-hidden="true" className="mt-1 h-5 w-5 flex-none text-primary" />
                   <span>
                     <strong className="font-semibold text-gray-900">Our Mission:</strong> To provide consumers with the purest, highest-quality palm oil while supporting sustainable farming practices and empowering local Nigerian communities
                   </span>

@@ -61,7 +61,7 @@ export default function HeroProducts() {
               <div className="relative z-10 mt-5 md:mt-5 ">
                 <Link
                   href="https://buy.stripe.com/4gw6qa27ca1LgmI3cc"
-                  className="inline-block rounded-md border border-transparent bg-[#faba38] px-8 py-3 text-center font-medium text-black hover:bg-[#faba38]/80"
+                  className="inline-block rounded-md border border-transparent bg-primary px-8 py-3 text-center font-medium text-white hover:bg-primary/80"
                 >
                   Order Now
                 </Link>

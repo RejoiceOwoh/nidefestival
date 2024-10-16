@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Image from "next/image"
 import {
@@ -152,7 +152,7 @@ export default function NewEdit() {
       };
       fetchProduct();
     }
-  }, [productId]);
+  }, [form, productId]);
 
   // Form input change handler
   const handleInputChange = (field: string, value: string | number) => {
@@ -169,7 +169,7 @@ export default function NewEdit() {
   };
 
   // Form validation function
-  const validateGroups = () => {
+  const validateGroups = useCallback(() => {
     const group1 = {
       name: form.name,
       price: form.price,
@@ -203,7 +203,7 @@ export default function NewEdit() {
     }
 
     return { valid: true, message: "" };
-  };
+  }, [form]);
 
   // Check if group is partially filled
   const isGroupPartiallyFilled = (group: Record<string, string | number | null>) => {
@@ -216,7 +216,7 @@ export default function NewEdit() {
     const { valid, message } = validateGroups();
     setIsFormValid(valid);
     if (!valid) setGlobalError(message);
-  }, [form]);
+  }, [validateGroups]);
 
   // Clear global error after a timeout
   useEffect(() => {

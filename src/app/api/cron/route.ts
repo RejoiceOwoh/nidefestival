@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import prisma from '../../../lib/prisma';
 
 // Keep-Alive API route that pings the database with a lightweight query
 export async function GET() {
