@@ -14,20 +14,19 @@ export default function Providers({ children }: { children: ReactNode }) {
   const requiresAuth = adminRoutes.some((route) => pathname.startsWith(route));
 
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInFallbackRedirectUrl="/admin"
+    >
       {requiresAuth ? (
         <>
           <SignedOut>
-            {/* Automatically redirect to sign-in page if the user is signed out */}
-            <RedirectToSignIn />
+            <RedirectToSignIn redirectUrl={pathname} />
           </SignedOut>
           <SignedIn>
-            {/* Render children if the user is signed in */}
             {children}
           </SignedIn>
         </>
       ) : (
-        // If no auth required, render children directly
         children
       )}
     </ClerkProvider>

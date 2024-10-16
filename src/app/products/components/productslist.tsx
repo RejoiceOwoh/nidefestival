@@ -74,7 +74,6 @@ export default function ProductsList() {
         // Simulate an API call
         await new Promise((resolve) => setTimeout(resolve, 1000))
 
-        console.log("Adding to cart:", product)  // Add this line
 
         addToCart({
             id: product.id,
@@ -96,7 +95,6 @@ export default function ProductsList() {
             updatedAt: product.updatedAt
         })
 
-        console.log("After addToCart call")  // Add this line
 
         setAddingToCart(null)
         setOpenDialog(null)
@@ -161,9 +159,9 @@ export default function ProductsList() {
                                             <Image
                                                 src={product.imageUrl}
                                                 alt={product.name}
-                                                layout="fill"
-                                                objectFit="cover"
-                                                className="transition-transform duration-300 group-hover:scale-110"
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                className="object-cover transition-transform duration-300 group-hover:scale-110"
                                             />
                                             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                             {isNewArrival(product.createdAt) && !product.soldOut && (
@@ -201,9 +199,9 @@ export default function ProductsList() {
                                                                 <Image
                                                                     src={product.imageUrl}
                                                                     alt={product.name}
-                                                                    layout="fill"
-                                                                    objectFit="cover"
-                                                                    className="rounded-lg"
+                                                                    fill
+                                                                    sizes="(max-width: 425px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                                    className="object-cover rounded-lg"
                                                                 />
                                                             </div>
                                                             <p className="text-sm text-gray-500">{product.description}</p>

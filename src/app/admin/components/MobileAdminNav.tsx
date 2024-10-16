@@ -22,11 +22,11 @@ export default function MobileAdminNav(){
                   className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                 >
                   <Image
-                    height={40}
-                    width={40}
-                    className="h-10 w-auto"
                     src="/logo.png"
                     alt="Afrigold Logo"
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 object-contain"
                   />
                   <span className="sr-only">Acefoods</span>
                 </Link>

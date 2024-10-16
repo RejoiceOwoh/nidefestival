@@ -18,7 +18,6 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
 const Cart = () => {
     const { cart, removeFromCart, updateQuantity } = useCart()
-    console.log("Cart component received cart:", cart)
     const [isCheckingOut, setIsCheckingOut] = useState(false)
 
 

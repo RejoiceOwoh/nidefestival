@@ -24,7 +24,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
   const { cart } = useCart()
-  console.log("Current cart in Navbar:", cart)
   useEffect(() => {
     const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 10)
@@ -50,11 +49,11 @@ export default function Navbar() {
             <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Acefoods Global</span>
               <Image
-                height={40}
-                width={40}
-                className="h-10 w-auto"
                 src="/logo.png"
                 alt="Afrigold Logo"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
               />
             </Link>
           </div>
@@ -153,11 +152,11 @@ export default function Navbar() {
               >
                 <span className="sr-only">Acefoods Global</span>
                 <Image
-                  height={32}
-                  width={32}
-                  className="h-8 w-auto"
                   src="/logo.png"
                   alt="Afrigold Logo"
+                  width={32}
+                  height={32}
+                  style={{ height: '32px', width: 'auto' }}
                 />
               </Link>
               <Button
