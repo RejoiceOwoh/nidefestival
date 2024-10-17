@@ -6,17 +6,36 @@ import { useState, ChangeEvent } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function QuantitySelector({ quantity, onQuantityChange }: { quantity: number, onQuantityChange: (newQuantity: number) => void }) {
-  const increment = () => onQuantityChange(quantity + 1);
+export default function QuantitySelector({ 
+  quantity, 
+  onQuantityChange, 
+  maxCap 
+}: { 
+  quantity: number, 
+  onQuantityChange: (newQuantity: number) => void,
+  maxCap?: number | null
+}) {
+  const increment = () => {
+    if (maxCap === undefined || maxCap === null || quantity < maxCap) {
+      onQuantityChange(quantity + 1);
+    }
+  };
+
   const decrement = () => onQuantityChange(Math.max(1, quantity - 1));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const newQuantity = parseInt(value, 10);
     if (!isNaN(newQuantity) && newQuantity >= 1) {
-      onQuantityChange(newQuantity);
+      if (maxCap === undefined || maxCap === null || newQuantity <= maxCap) {
+        onQuantityChange(newQuantity);
+      } else {
+        onQuantityChange(maxCap);
+      }
     }
   };
+
+  const isIncrementDisabled = maxCap !== undefined && maxCap !== null && quantity >= maxCap;
 
   return (
     <div className="inline-flex items-center rounded-full border border-gray-200 bg-white shadow-sm">
@@ -42,6 +61,7 @@ export default function QuantitySelector({ quantity, onQuantityChange }: { quant
         onClick={increment}
         aria-label="Increase quantity"
         className="h-8 w-8 rounded-r-full"
+        disabled={isIncrementDisabled}
       >
         <PlusIcon className="h-3 w-3" />
       </Button>

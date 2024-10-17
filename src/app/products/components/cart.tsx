@@ -120,6 +120,7 @@ const Cart = () => {
                                                 <QuantitySelector
                                                     quantity={item.quantity}
                                                     onQuantityChange={(newQuantity) => updateQuantity(item.product.id, newQuantity)}
+                                                    maxCap={item.product.maxCap}
                                                 />
                                                 <button
                                                     type="button"
