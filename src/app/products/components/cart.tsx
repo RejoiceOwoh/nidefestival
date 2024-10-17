@@ -22,9 +22,36 @@ const Cart = () => {
     const [isCheckingOut, setIsCheckingOut] = useState(false)
 
     const handleCheckout = async () => {
-        setIsCheckingOut(true)
-        // Implement checkout logic here
-        setIsCheckingOut(false)
+        setIsCheckingOut(true);
+        try {
+            const stripe = await stripePromise;
+            if (!stripe) throw new Error("Stripe failed to initialize");
+
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items: cart }),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const { sessionId } = await response.json();
+
+            const result = await stripe.redirectToCheckout({
+                sessionId,
+            });
+
+            if (result.error) {
+                throw new Error(result.error.message);
+            }
+        } catch (error) {
+            console.error('Error in checkout:', error);
+            // Here you might want to show an error message to the user
+        } finally {
+            setIsCheckingOut(false);
+        }
     }
 
     const renderPrice = (currentPrice: number, originalPrice: number) => {
