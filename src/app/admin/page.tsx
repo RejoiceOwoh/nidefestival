@@ -1,33 +1,17 @@
-import Image from "next/image"
-import Link from "next/link"
+"use client"
+
 import {
   ChevronLeft,
   ChevronRight,
   Copy,
   CreditCard,
   File,
-  Home,
-  LineChart,
   ListFilter,
   MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
   Truck,
-  Users2,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -46,7 +30,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
   Pagination,
   PaginationContent,
@@ -54,7 +37,6 @@ import {
 } from "@/components/ui/pagination"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Table,
   TableBody,
@@ -69,22 +51,54 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { AdminNav } from "./components/main-nav"
 import MobileAdminNav from "./components/MobileAdminNav"
 import { AdminBreadcrumb } from "./components/AdminBreadcrumb"
 import { SearchInput } from "./components/SearchInput"
 import { UserButton } from "@clerk/nextjs"
+import { DashboardSummaryCard } from "./components/DashboardSummaryCard"
+import { SummaryCard } from "./components/SummaryCard"
+import { useEffect, useState } from "react"
 
 export const description =
   "An orders dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. The main area has a list of recent orders with a filter and export button. The main area also has a detailed view of a single order with order details, shipping information, billing information, customer information, and payment information."
 
 export default function Admin() {
+  const [weeklyData, setWeeklyData] = useState<{ total: number; percentageChange: number } | null>(null)
+  const [monthlyData, setMonthlyData] = useState<{ total: number; percentageChange: number } | null>(null)
+
+  useEffect(() => {
+    const fetchWeeklyData = async () => {
+      const response = await fetch("/api/weekly-transactions");
+      if (!response.ok) {
+        const errorText = await response.text(); // Get the error message
+        console.error("Error fetching weekly data:", errorText);
+        return; // Exit the function if there's an error
+      }
+      const data = await response.json();
+      setWeeklyData({
+        total: data.currentWeekTotal / 100, // Convert from cents to dollars
+        percentageChange: data.percentageChange,
+      });
+    };
+
+    const fetchMonthlyData = async () => {
+      const response = await fetch("/api/monthly-transactions");
+      if (!response.ok) {
+        console.error("Error fetching monthly data:", await response.text());
+        return;
+      }
+      const data = await response.json();
+      setMonthlyData({
+        total: data.currentMonthTotal / 100,
+        percentageChange: data.percentageChange,
+      });
+    };
+
+    fetchWeeklyData();
+    fetchMonthlyData();
+  }, [])
+
   const breadcrumbItems = [
     { label: "Dashboard" },
   ];
@@ -99,51 +113,33 @@ export default function Admin() {
           <SearchInput className="ml-auto" />
           <UserButton />
         </header>
+
+
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-              <Card
-                className="sm:col-span-2" x-chunk="dashboard-05-chunk-0"
-              >
-                <CardHeader className="pb-3">
-                  <CardTitle>Your Orders</CardTitle>
-                  <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Introducing Our Dynamic Orders Dashboard for Seamless
-                    Management and Insightful Analysis.
-                  </CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <Button>Create New Order</Button>
-                </CardFooter>
-              </Card>
-              <Card x-chunk="dashboard-05-chunk-1">
-                <CardHeader className="pb-2">
-                  <CardDescription>This Week</CardDescription>
-                  <CardTitle className="text-4xl">$1,329</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">
-                    +25% from last week
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Progress value={25} aria-label="25% increase" />
-                </CardFooter>
-              </Card>
-              <Card x-chunk="dashboard-05-chunk-2">
-                <CardHeader className="pb-2">
-                  <CardDescription>This Month</CardDescription>
-                  <CardTitle className="text-4xl">$5,329</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">
-                    +10% from last month
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Progress value={12} aria-label="12% increase" />
-                </CardFooter>
-              </Card>
+              <DashboardSummaryCard
+                title="Your Orders"
+                description="Introducing Our Dynamic Product Dashboard for Seamless Management and Insightful Analysis."
+                buttonText="Create New Product"
+                buttonLink="/admin/products/newedit"
+              />
+              <SummaryCard
+                title="This Week"
+                amount={weeklyData ? `$${weeklyData.total.toFixed(2)}` : "$0.00"}
+                percentageChange={weeklyData ? weeklyData.percentageChange : 0}
+                comparisonPeriod="week"
+                className="x-chunk='dashboard-05-chunk-1'"
+              />
+              <SummaryCard
+                title="This Month"
+                amount={monthlyData ? `$${monthlyData.total.toFixed(2)}` : "$0.00"}
+                percentageChange={monthlyData ? monthlyData.percentageChange : 0}
+                comparisonPeriod="month"
+                className="x-chunk='dashboard-05-chunk-2'"
+              />
+
+              
             </div>
             <Tabs defaultValue="week">
               <div className="flex items-center">
