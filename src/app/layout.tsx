@@ -1,15 +1,24 @@
 import '../styles/globals.css';
 import { ReactNode } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/footer';
-import Providers from '@/components/Providers'; // Client-side component
+import Providers from '@/components/Providers';
 import { Toaster } from '@/components/ui/sonner';
-import { CartProvider } from '@/components/CartProvider';
-import Cart from '@/app/products/components/Cart';
+import ClientLayout from './ClientLayout';
 
 export const metadata = {
-  title: 'AfriGold Palm Oil',
+  title: {
+    default: 'Acefoods UK',
+    template: '%s | Acefoods UK'
+  },
   description: 'Premium, authentic palm oil sourced from Nigeria',
+  keywords: ['palm oil', 'Nigerian palm oil', 'AfriGold', 'authentic palm oil'],
+  authors: [{ name: 'AfriGold' }],
+  creator: 'AfriGold',
+  publisher: 'AfriGold',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 };
 
 export default function RootLayout({
@@ -17,19 +26,14 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
-
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <Providers> {/* Wrapping in the client-side Providers */}
-          <CartProvider>
-            <Navbar />
-            <main className="pt-16">
-              {children}
-            </main>
-            <Toaster position="top-right" richColors />
-            <Footer />
-          </CartProvider>
+        <Providers>
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+          <Toaster position="top-right" richColors />
         </Providers>
       </body>
     </html>
