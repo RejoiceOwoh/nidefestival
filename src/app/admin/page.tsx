@@ -18,54 +18,74 @@ import { Badge } from "@/components/ui/badge";
 import { DashboardSummaryCard } from "./components/DashboardSummaryCard";
 import { SummaryCard } from "./components/SummaryCard";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
-import { ListFilter, File } from "lucide-react";
+import { File, ListFilter } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Admin() {
   const [weeklyData, setWeeklyData] = useState<{ total: number; percentageChange: number } | null>(null);
   const [monthlyData, setMonthlyData] = useState<{ total: number; percentageChange: number } | null>(null);
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [timeFilter, setTimeFilter] = useState("week");
+  const [statusFilter, setStatusFilter] = useState<string[]>(["All"]);
 
   useEffect(() => {
-    const fetchWeeklyData = async () => {
-      const response = await fetch("/api/weekly-transactions");
-      if (!response.ok) {
-        console.error("Error fetching weekly data:", await response.text());
-        return;
-      }
-      const data = await response.json();
-      setWeeklyData({
-        total: data.currentWeekTotal / 100,
-        percentageChange: data.percentageChange,
-      });
+    const fetchData = async () => {
+      setIsLoading(true);
+      const fetchWeeklyData = async () => {
+        const response = await fetch("/api/weekly-transactions");
+        if (!response.ok) {
+          console.error("Error fetching weekly data:", await response.text());
+          return;
+        }
+        const data = await response.json();
+        setWeeklyData({
+          total: data.currentWeekTotal / 100,
+          percentageChange: data.percentageChange,
+        });
+      };
+
+      const fetchMonthlyData = async () => {
+        const response = await fetch("/api/monthly-transactions");
+        if (!response.ok) {
+          console.error("Error fetching monthly data:", await response.text());
+          return;
+        }
+        const data = await response.json();
+        setMonthlyData({
+          total: data.currentMonthTotal / 100,
+          percentageChange: data.percentageChange,
+        });
+      };
+
+      const fetchRecentOrders = async () => {
+        const response = await fetch("/api/recent-orders?timeFilter=" + timeFilter + "&statusFilter=" + statusFilter.join(','));
+        if (!response.ok) {
+          console.error("Error fetching recent orders:", await response.text());
+          return;
+        }
+        const data = await response.json();
+        setRecentOrders(data.orders);
+      };
+
+      await Promise.all([fetchWeeklyData(), fetchMonthlyData(), fetchRecentOrders()]);
+      setIsLoading(false);
     };
 
-    const fetchMonthlyData = async () => {
-      const response = await fetch("/api/monthly-transactions");
-      if (!response.ok) {
-        console.error("Error fetching monthly data:", await response.text());
-        return;
-      }
-      const data = await response.json();
-      setMonthlyData({
-        total: data.currentMonthTotal / 100,
-        percentageChange: data.percentageChange,
-      });
-    };
+    fetchData();
+  }, [timeFilter, statusFilter]);
 
-    const fetchRecentOrders = async () => {
-      const response = await fetch("/api/recent-orders");
-      if (!response.ok) {
-        console.error("Error fetching recent orders:", await response.text());
-        return;
+  const handleStatusFilterChange = (status: string) => {
+    setStatusFilter(prev => {
+      if (status === "All") {
+        return ["All"];
       }
-      const data = await response.json();
-      setRecentOrders(data.orders);
-    };
-
-    fetchWeeklyData();
-    fetchMonthlyData();
-    fetchRecentOrders();
-  }, []);
+      const newFilter = prev.includes(status)
+        ? prev.filter(s => s !== status)
+        : [...prev.filter(s => s !== "All"), status];
+      return newFilter.length ? newFilter : ["All"];
+    });
+  };
 
   return (
     <div className="flex mt-5 min-h-screen w-full flex-col bg-muted/40">
@@ -92,7 +112,7 @@ export default function Admin() {
         />
       </div>
 
-      <Tabs defaultValue="week">
+      <Tabs value={timeFilter} onValueChange={setTimeFilter}>
         <div className="flex items-center">
           <TabsList>
             <TabsTrigger value="week">Week</TabsTrigger>
@@ -114,14 +134,23 @@ export default function Admin() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem checked>
-                  Fulfilled
+                <DropdownMenuCheckboxItem 
+                  checked={statusFilter.includes("All")}
+                  onCheckedChange={() => handleStatusFilterChange("All")}
+                >
+                  All
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>
-                  Declined
+                <DropdownMenuCheckboxItem 
+                  checked={statusFilter.includes("Succeeded")}
+                  onCheckedChange={() => handleStatusFilterChange("Succeeded")}
+                >
+                  Succeeded
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>
-                  Refunded
+                <DropdownMenuCheckboxItem 
+                  checked={statusFilter.includes("Failed")}
+                  onCheckedChange={() => handleStatusFilterChange("Failed")}
+                >
+                  Failed
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -135,8 +164,8 @@ export default function Admin() {
             </Button>
           </div>
         </div>
-        <TabsContent value="week">
-          <Card x-chunk="dashboard-05-chunk-3">
+        <TabsContent value={timeFilter}>
+          <Card>
             <CardHeader className="px-7">
               <CardTitle>Recent Orders</CardTitle>
               <CardDescription>Recent orders from your store.</CardDescription>
@@ -146,7 +175,7 @@ export default function Admin() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Customer</TableHead>
-                    <TableHead className="hidden sm:table-cell">Type</TableHead>
+                    <TableHead className="hidden sm:table-cell">Payment Method</TableHead>
                     <TableHead className="hidden sm:table-cell">Status</TableHead>
                     <TableHead className="hidden md:table-cell">Date</TableHead>
                     <TableHead className="text-right">Amount</TableHead>
@@ -154,29 +183,57 @@ export default function Admin() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {recentOrders.slice(0, 7).map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell>
-                        <div className="font-medium">{order.customerName}</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          {order.customerEmail}
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">{order.type}</TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant={order.status === "Fulfilled" ? "secondary" : "outline"}>
-                          {order.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                      <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
-                      <TableCell className="text-right">
-                        <Link href={`/admin/orders/${order.id}`}>
-                          <Button size="sm">View Now</Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {isLoading ? (
+                    // Loading skeletons
+                    Array(7).fill(0).map((_, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Skeleton className="h-4 w-[150px]" />
+                          <Skeleton className="h-3 w-[100px] mt-2" />
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                          <Skeleton className="h-4 w-[100px]" />
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                          <Skeleton className="h-6 w-[80px]" />
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          <Skeleton className="h-4 w-[80px]" />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Skeleton className="h-4 w-[60px] ml-auto" />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Skeleton className="h-8 w-[80px] ml-auto" />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    // Actual data
+                    recentOrders.slice(0, 7).map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell>
+                          <div className="font-medium">{order.customerName}</div>
+                          <div className="hidden text-sm text-muted-foreground md:inline">
+                            {order.customerEmail}
+                          </div>
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                          <Badge className="text-xs" variant={order.status === "Succeeded" ? "secondary" : "outline"}>
+                            {order.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">{order.date}</TableCell>
+                        <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
+                        <TableCell className="text-right">
+                          <Link href={`/admin/orders/${order.id}`}>
+                            <Button size="sm">View Now</Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </CardContent>

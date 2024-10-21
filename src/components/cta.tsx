@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
@@ -8,19 +8,20 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 export default function CTA() {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = React.useState(0)
   const recipes = [
     { name: 'Native African Salad', image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1729520905/SAVE_20241021_152540_qj2jyo.jpg' },
     { name: 'Egusi Soup', image: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198510/Egusi_Soup_Recipe_-_How_to_cook_egusi_soup_pd3u7q.jpg' },
   ]
 
-  const nextRecipe = () => setActiveIndex((prevIndex) => (prevIndex + 1) % recipes.length)
-  const prevRecipe = () => setActiveIndex((prevIndex) => (prevIndex - 1 + recipes.length) % recipes.length)
+  const nextRecipe = useCallback(() => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % recipes.length)
+  }, [recipes.length])
 
   useEffect(() => {
-    const timer = setInterval(nextRecipe, 5000) // Change slide every 5 seconds
-    return () => clearInterval(timer)
-  }, [])
+    const intervalId = setInterval(nextRecipe, 5000)
+    return () => clearInterval(intervalId)
+  }, [nextRecipe])
 
   return (
     <section className="relative overflow-hidden bg-accent py-12">
@@ -91,7 +92,7 @@ export default function CTA() {
               </CardContent>
             </Card>
             <div className="absolute bottom-4 right-4 flex space-x-2">
-              <Button size="icon" variant="secondary" onClick={prevRecipe}>
+              <Button size="icon" variant="secondary" onClick={() => setActiveIndex((prevIndex) => (prevIndex - 1 + recipes.length) % recipes.length)}>
                 <ChevronLeft className="h-4 w-4" />
               </Button>
               <Button size="icon" variant="secondary" onClick={nextRecipe}>

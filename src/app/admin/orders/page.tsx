@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Card,
@@ -14,32 +14,52 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
+import { ListFilter } from "lucide-react";
 
 export default function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [timeFilter, setTimeFilter] = useState("week");
+  const [statusFilter, setStatusFilter] = useState<string[]>(["All"]);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      const response = await fetch(`/api/orders?page=${currentPage}`);
+    fetchOrders();
+  }, [currentPage, timeFilter, statusFilter]);
+
+  const fetchOrders = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/orders?page=${currentPage}&timeFilter=${timeFilter}&statusFilter=${statusFilter.join(',')}`);
       if (!response.ok) {
-        console.error("Error fetching orders:", await response.text());
-        setLoading(false);
-        return;
+        throw new Error('Failed to fetch orders');
       }
       const data = await response.json();
       setOrders(data.orders);
       setTotalPages(data.totalPages);
-      setLoading(false);
-    };
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchOrders();
-  }, [currentPage]);
+  const handleStatusFilterChange = (status: string) => {
+    setStatusFilter(prev => {
+      if (status === "All") {
+        return ["All"];
+      }
+      const newFilter = prev.includes(status)
+        ? prev.filter(s => s !== status)
+        : [...prev.filter(s => s !== "All"), status];
+      return newFilter.length ? newFilter : ["All"];
+    });
+  };
 
   return (
     <div className="flex mt-5 min-h-screen w-full flex-col bg-muted/40">
@@ -49,22 +69,87 @@ export default function Orders() {
           <CardDescription>All orders from your store.</CardDescription>
         </CardHeader>
         <CardContent>
-          {loading ? (
-            <Skeleton className="h-64 w-full" />
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden sm:table-cell">Type</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
-                  <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orders.map((order) => (
+          <Tabs value={timeFilter} onValueChange={setTimeFilter}>
+            <div className="flex items-center mb-4">
+              <TabsList>
+                <TabsTrigger value="week">Week</TabsTrigger>
+                <TabsTrigger value="month">Month</TabsTrigger>
+                <TabsTrigger value="year">Year</TabsTrigger>
+              </TabsList>
+              <div className="ml-auto">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="h-8 gap-1 text-sm">
+                      <ListFilter className="h-4 w-4" />
+                      <span className="sr-only sm:not-sr-only">Filter</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem 
+                      checked={statusFilter.includes("All")}
+                      onCheckedChange={() => handleStatusFilterChange("All")}
+                    >
+                      All
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem 
+                      checked={statusFilter.includes("Succeeded")}
+                      onCheckedChange={() => handleStatusFilterChange("Succeeded")}
+                    >
+                      Succeeded
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem 
+                      checked={statusFilter.includes("Failed")}
+                      onCheckedChange={() => handleStatusFilterChange("Failed")}
+                    >
+                      Failed
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </Tabs>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Customer</TableHead>
+                <TableHead className="hidden sm:table-cell">Payment Method</TableHead>
+                <TableHead className="hidden sm:table-cell">Status</TableHead>
+                <TableHead className="hidden md:table-cell">Date</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                // Loading skeletons
+                Array(10).fill(0).map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Skeleton className="h-4 w-[150px]" />
+                      <Skeleton className="h-3 w-[100px] mt-2" />
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <Skeleton className="h-4 w-[100px]" />
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <Skeleton className="h-6 w-[80px]" />
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <Skeleton className="h-4 w-[80px]" />
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Skeleton className="h-4 w-[60px] ml-auto" />
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Skeleton className="h-8 w-[80px] ml-auto" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                // Actual data
+                orders.map((order) => (
                   <TableRow key={order.id}>
                     <TableCell>
                       <div className="font-medium">{order.customerName}</div>
@@ -72,9 +157,9 @@ export default function Orders() {
                         {order.customerEmail}
                       </div>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">{order.type}</TableCell>
+                    <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
                     <TableCell className="hidden sm:table-cell">
-                      <Badge className="text-xs" variant={order.status === "Fulfilled" ? "secondary" : "outline"}>
+                      <Badge className="text-xs" variant={order.status === "Succeeded" ? "secondary" : "outline"}>
                         {order.status}
                       </Badge>
                     </TableCell>
@@ -86,17 +171,17 @@ export default function Orders() {
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+                ))
+              )}
+            </TableBody>
+          </Table>
         </CardContent>
         <CardFooter>
           <Pagination>
             <PaginationContent>
               {Array.from({ length: totalPages }, (_, i) => (
                 <PaginationItem key={i} onClick={() => setCurrentPage(i + 1)}>
-                  <Button size="icon" variant="outline" className="h-6 w-6">
+                  <Button size="icon" variant={currentPage === i + 1 ? "default" : "outline"} className="h-8 w-8">
                     {i + 1}
                   </Button>
                 </PaginationItem>
