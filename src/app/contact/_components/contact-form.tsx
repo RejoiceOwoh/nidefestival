@@ -167,7 +167,7 @@ const ContactForm = () => {
         >
           <Button
             type="submit"
-            className="w-full bg-[#faba38]  text-black font-semibold hover:text-black hover:bg-transparent hover:border-2 hover:border-[#faba38] py-3 px-6 rounded-md transition duration-300 flex items-center justify-center"
+            className="w-full bg-primary  text-accent font-semibold hover:text-primary hover:bg-accent hover:border-2 hover:border-primary py-3 px-6 rounded-md transition duration-300 flex items-center justify-center"
           >
             <PaperAirplaneIcon className="h-5 w-5 mr-2" />
             Send Message

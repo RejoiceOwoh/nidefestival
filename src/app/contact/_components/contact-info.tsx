@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const ContactInformation = () => {
   return (
     <Card className="shadow-lg border-0 bg-white">
-      <CardHeader className="bg-[#faba38]/30 border-b border-primary/10">
+      <CardHeader className="bg-accent/30 border-b border-primary/10">
         <CardTitle className="text-2xl font-semibold text-primary">
           Contact Information
         </CardTitle>

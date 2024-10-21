@@ -30,6 +30,7 @@ const quickLinks = [
   { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact" },
   { name: "Products", href: "/products" },
+  { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 const legalLinks = [
