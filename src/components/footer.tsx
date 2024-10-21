@@ -12,7 +12,7 @@ import {
   InstagramIcon,
   LinkedinIcon,
 } from "lucide-react";
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaTiktok, FaWhatsapp } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 import FooterForm from "./footerForm";
 
@@ -20,7 +20,10 @@ const socialLinks = [
   { name: "Facebook", href: "https://facebook.com/afrigoldpalmoil", icon: FacebookIcon },
   { name: "Twitter", href: "https://x.com/afrigoldpalmoil", icon: TwitterIcon },
   { name: "Instagram", href: "https://instagram.com/afrigoldpalmoil", icon: InstagramIcon },
+  { name: "Tiktok", href: "https://tiktok.com/@afrigoldpalmoil", icon: FaTiktok },
 ];
+
+
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -55,10 +58,10 @@ export default function Footer() {
       </svg>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Hospital Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Website Info */}
           <div>
-            <h2 className="text-2xl font-bold mb-4 text-[gold]">
+            <h2 className="text-2xl font-bold mb-4 text-primary">
               Afrigold Palmoil
             </h2>
             <p className="mb-4 text-sm text-gray-200">
@@ -77,7 +80,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="mb-4 text-sm text-gray-200">
-              <b>PATNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">acefoodsuk@gmail.com</a>
+              <b>PARTNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">acefoodsuk@gmail.com</a>
             </p>
             <p className="mb-4 text-sm text-gray-200">
               <b>NAFDAC REG. NO: A8-108803L</b> 
@@ -142,7 +145,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter Signup */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4 text-white">
               Stay Informed
             </h3>
@@ -150,7 +153,7 @@ export default function Footer() {
               Subscribe to our newsletter for product updates.
             </p>
             <FooterForm />
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar */}
@@ -172,7 +175,7 @@ export default function Footer() {
               ))}
             </ul> */}
             <p className="text-xs text-gray-400">
-              Designed and developed by{" "}
+              The Media Guy.ng Project in Partnership with {" "}
               <a
                 href="https://mytechteam.ng"
                 className="text-gray-300 hover:text-white transition duration-300"

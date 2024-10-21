@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -14,23 +14,28 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton
 
 export default function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setLoading(true);
       const response = await fetch(`/api/orders?page=${currentPage}`);
       if (!response.ok) {
         console.error("Error fetching orders:", await response.text());
+        setLoading(false);
         return;
       }
       const data = await response.json();
       setOrders(data.orders);
       setTotalPages(data.totalPages);
+      setLoading(false);
     };
 
     fetchOrders();
@@ -44,43 +49,47 @@ export default function Orders() {
           <CardDescription>All orders from your store.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead className="hidden sm:table-cell">Type</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell>
-                    <div className="font-medium">{order.customerName}</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">
-                      {order.customerEmail}
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden sm:table-cell">{order.type}</TableCell>
-                  <TableCell className="hidden sm:table-cell">
-                    <Badge className="text-xs" variant={order.status === "Fulfilled" ? "secondary" : "outline"}>
-                      {order.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                  <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">
-                    <Button size="sm" onClick={() => router.push(`/admin/orders/${order.id}`)}>
-                      View Now
-                    </Button>
-                  </TableCell>
+          {loading ? (
+            <Skeleton className="h-64 w-full" />
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Customer</TableHead>
+                  <TableHead className="hidden sm:table-cell">Type</TableHead>
+                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Date</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {orders.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell>
+                      <div className="font-medium">{order.customerName}</div>
+                      <div className="hidden text-sm text-muted-foreground md:inline">
+                        {order.customerEmail}
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">{order.type}</TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <Badge className="text-xs" variant={order.status === "Fulfilled" ? "secondary" : "outline"}>
+                        {order.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">{order.date}</TableCell>
+                    <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">
+                      <Button size="sm" onClick={() => router.push(`/admin/orders/${order.id}`)}>
+                        View Now
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
         <CardFooter>
           <Pagination>

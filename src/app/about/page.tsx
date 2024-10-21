@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import AboutMain from "../about/_components/aboutmain";
+import AboutUs from "./AboutUs";
 
 const AboutPage = () => {
   return (
@@ -22,7 +23,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-white text-center tracking-tight"
+            className="text-5xl md:text-7xl font-bold text-accent text-center tracking-tight"
           >
             About Us
           </motion.h1>
@@ -36,8 +37,8 @@ const AboutPage = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-white rounded-xl shadow-2xl p-8 md:p-12"
         >
-          <AboutMain />
-              </motion.div>
+          <AboutUs />
+        </motion.div>
       </div>
     </div>
   );

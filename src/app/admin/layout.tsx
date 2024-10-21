@@ -16,12 +16,20 @@ export const metadata: Metadata = {
     return (
       <div className="flex min-h-screen">
         <AdminNav />
-        <div className="flex flex-1 flex-col sm:ml-14"> {/* Add left margin on larger screens */}
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background px-4 sm:px-6">
-            <MobileAdminNav />
-            <AdminBreadcrumb />
-            <SearchInput className="ml-auto" />
-            <UserButton />
+        <div className="flex flex-1 flex-col sm:ml-14">
+          <header className="sticky top-0 z-30 flex h-16 items-center bg-background border-b">
+            <div className="flex items-center justify-between w-full px-4 sm:px-6">
+              <div className="flex items-center">
+                <MobileAdminNav />
+                <div className="hidden sm:block max-w-[50vw] overflow-hidden">
+                  <AdminBreadcrumb />
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <SearchInput className="hidden sm:block" />
+                <UserButton />
+              </div>
+            </div>
           </header>
           <main className="flex-1 p-4">
             {children}

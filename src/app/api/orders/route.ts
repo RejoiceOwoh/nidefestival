@@ -10,10 +10,7 @@ export async function GET(req: NextRequest) {
   const limit = 10; // Number of orders per page
 
   try {
-    // Fetch the list of charges
     const charges = await stripe.charges.list({ limit });
-
-    // Map the charges to a more usable format
     const orders = charges.data.map(charge => ({
       id: charge.id,
       customerName: charge.billing_details.name,

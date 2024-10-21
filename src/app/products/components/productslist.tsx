@@ -149,7 +149,7 @@ export default function ProductsList() {
 
     return (
         <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
-            <div className="container mx-auto px-4 py-16 sm:px-6 sm:py-24">
+            <div className="container max-w-7xl mx-auto px-4 py-16 sm:px-6 sm:py-24">
                 <h2 className="text-4xl font-extrabold text-gray-900 mb-8 text-center">
                     Discover Our <span className="text-primary">Premium</span> Collection
                 </h2>

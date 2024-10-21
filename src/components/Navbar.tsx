@@ -48,98 +48,99 @@ export default function Navbar() {
             : "bg-background"
         }`}
       >
-        <nav
-          className="mx-auto flex w-full items-center justify-between p-4 lg:px-8"
-          aria-label="Global"
-        >
-          <div className="flex lg:flex-1">
-            <Link href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Acefoods Global</span>
-              <Image
-                src="/logo.png"
-                alt="Afrigold Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
-              />
-            </Link>
-          </div>
-          <div className="flex items-center gap-4 lg:hidden">
-            
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="relative"
-                >
-                  <ShoppingBag className="h-5 w-5" />
-                  {cart.length > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="absolute -top-2 -right-2 flex items-center justify-center"
-                    >
-                      {cart.length}
-                    </Badge>
-                  )}
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <Cart />
-              </SheetContent>
-            </Sheet>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMobileMenuOpen(true)}
-              className="text-foreground"
-            >
-              <span className="sr-only">Open menu</span>
-              <Menu className="h-6 w-6" aria-hidden="true" />
-            </Button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-sm font-semibold leading-6 flex items-center space-x-2 px-4 py-2 rounded-full transition duration-300 ${
-                  pathname === item.href
-                    ? "text-white bg-primary"
-                    : "text-foreground hover:bg-primary/10 hover:text-primary"
-                }`}
-              >
-                <item.icon className="h-5 w-5" />
-                <span>{item.name}</span>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <nav
+            className="flex w-full items-center justify-between p-4 lg:px-8"
+            aria-label="Global"
+          >
+            <div className="flex lg:flex-1">
+              <Link href="/" className="-m-1.5 p-1.5">
+                <span className="sr-only">Acefoods Global</span>
+                <Image
+                  src="/logo.png"
+                  alt="Afrigold Logo"
+                  width={40}
+                  height={40}
+                  className="h-10 w-auto"
+                />
               </Link>
-            ))}
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="relative"
+            </div>
+            <div className="flex items-center gap-4 lg:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="relative"
+                  >
+                    <ShoppingBag className="h-5 w-5" />
+                    {cart.length > 0 && (
+                      <Badge
+                        variant="destructive"
+                        className="absolute -top-2 -right-2 flex items-center justify-center"
+                      >
+                        {cart.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <Cart />
+                </SheetContent>
+              </Sheet>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMobileMenuOpen(true)}
+                className="text-foreground"
+              >
+                <span className="sr-only">Open menu</span>
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              </Button>
+            </div>
+            <div className="hidden lg:flex lg:gap-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm font-semibold leading-6 flex items-center space-x-2 px-4 py-2 rounded-full transition duration-300 ${
+                    pathname === item.href
+                      ? "text-white bg-primary"
+                      : "text-foreground hover:bg-primary/10 hover:text-primary"
+                  }`}
                 >
-                  <ShoppingBag className="h-5 w-5 mr-2" />
-                  <span>Cart</span>
-                  {cart.length > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="absolute -top-2 -right-2 flex items-center justify-center"
-                    >
-                      {cart.length}
-                    </Badge>
-                  )}
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <Cart />
-              </SheetContent>
-            </Sheet>
-          </div>
-        </nav>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="default"
+                    className="relative"
+                  >
+                    <ShoppingBag className="h-5 w-5 mr-2" />
+                    <span>Cart</span>
+                    {cart.length > 0 && (
+                      <Badge
+                        variant="destructive"
+                        className="absolute -top-2 -right-2 flex items-center justify-center"
+                      >
+                        {cart.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <Cart />
+                </SheetContent>
+              </Sheet>
+            </div>
+          </nav>
+        </div>
       </header>
 
       <AnimatePresence>
