@@ -15,8 +15,6 @@ export default function MobileAdminNav() {
     { href: "/admin", icon: Home, label: "Dashboard" },
     { href: "/admin/orders", icon: ShoppingCart, label: "Orders" },
     { href: "/admin/products", icon: Package, label: "Products" },
-    { href: "/admin/customers", icon: Users2, label: "Customers" },
-    { href: "/admin/settings", icon: LineChart, label: "Settings" },
   ];
 
   return (
