@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   Card,
@@ -28,11 +28,7 @@ export default function Orders() {
   const [statusFilter, setStatusFilter] = useState<string[]>(["All"]);
   const router = useRouter();
 
-  useEffect(() => {
-    fetchOrders();
-  }, [currentPage, timeFilter, statusFilter]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/orders?page=${currentPage}&timeFilter=${timeFilter}&statusFilter=${statusFilter.join(',')}`);
@@ -47,7 +43,11 @@ export default function Orders() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentPage, timeFilter, statusFilter]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleStatusFilterChange = (status: string) => {
     setStatusFilter(prev => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Upload, Loader2, AlertCircle, CheckCircle2, ArrowLeft } from 'lucide-react';
@@ -73,21 +73,7 @@ export default function NewEdit() {
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
 
-  useEffect(() => {
-    if (productId) {
-      fetchProduct();
-    } else {
-      setIsLoading(false);
-    }
-  }, [productId]);
-
-  useEffect(() => {
-    const newErrors = validateForm();
-    setErrors(newErrors);
-    setIsFormValid(Object.keys(newErrors).length === 0);
-  }, [form]);
-
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       const response = await fetch(`/api/products/${productId}`);
       if (!response.ok) throw new Error('Failed to fetch product');
@@ -112,7 +98,30 @@ export default function NewEdit() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [productId]);
+
+  useEffect(() => {
+    if (productId) {
+      fetchProduct();
+    } else {
+      setIsLoading(false);
+    }
+  }, [productId, fetchProduct]);
+
+  const validateForm = useCallback((): Partial<ProductForm> => {
+    const newErrors: Partial<ProductForm> = {};
+    if (!form.name) newErrors.name = 'Product name is required';
+    if (!form.price || isNaN(parseFloat(form.price))) newErrors.price = 'Valid price is required';
+    if (!form.stock || isNaN(parseInt(form.stock, 10))) newErrors.stock = 'Valid stock quantity is required';
+    // Add more validations as needed
+    return newErrors;
+  }, [form]);
+
+  useEffect(() => {
+    const newErrors = validateForm();
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  }, [validateForm]);
 
   const handleInputChange = (field: keyof ProductForm, value: string | boolean) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -187,15 +196,6 @@ export default function NewEdit() {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const validateForm = (): Partial<ProductForm> => {
-    const newErrors: Partial<ProductForm> = {};
-    if (!form.name) newErrors.name = 'Product name is required';
-    if (!form.price || isNaN(parseFloat(form.price))) newErrors.price = 'Valid price is required';
-    if (!form.stock || isNaN(parseInt(form.stock, 10))) newErrors.stock = 'Valid stock quantity is required';
-    // Add more validations as needed
-    return newErrors;
   };
 
   const handleDeleteSuccess = () => {

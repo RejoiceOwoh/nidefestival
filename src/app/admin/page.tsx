@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import {
   Card,
@@ -35,7 +35,7 @@ export default function Admin() {
   const [customerData, setCustomerData] = useState<{ totalCustomersThisMonth: number; percentageChange: number } | null>(null);
   const [productStats, setProductStats] = useState<{ totalProducts: number; newProducts: number; percentageChange: number } | null>(null);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     setIsLoading(true);
     const fetchWeeklyData = async () => {
       try {
@@ -150,11 +150,11 @@ export default function Admin() {
       fetchCustomerData()
     ]);
     setIsLoading(false);
-  };
+  }, [timeFilter, statusFilter]);
 
   useEffect(() => {
     fetchDashboardData();
-  }, [timeFilter, statusFilter]);
+  }, [fetchDashboardData]);
 
   const handleStatusFilterChange = (status: string) => {
     setStatusFilter(prev => {

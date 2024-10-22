@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -62,11 +62,7 @@ export default function AdminProducts() {
   const [statusFilter, setStatusFilter] = useState<string[]>(["All"]);
   const [stockFilter, setStockFilter] = useState("all");
 
-  useEffect(() => {
-    fetchProducts();
-  }, [currentPage, statusFilter, stockFilter]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/products?page=${currentPage}&statusFilter=${statusFilter.join(',')}&stockFilter=${stockFilter}`);
@@ -81,7 +77,11 @@ export default function AdminProducts() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentPage, statusFilter, stockFilter]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleStatusFilterChange = (status: string) => {
     setStatusFilter(prev => {
