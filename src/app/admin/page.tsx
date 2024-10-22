@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { DashboardSummaryCard } from "./components/DashboardSummaryCard";
 import { SummaryCard } from "./components/SummaryCard";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
-import { ListFilter } from "lucide-react";
+import { ArrowRight, ListFilter } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Admin() {
@@ -250,9 +250,15 @@ export default function Admin() {
                 </TableBody>
               </Table>
             </CardContent>
-            <CardFooter>
-              <Link href="/admin/orders">
-                <Button>See More</Button>
+            <CardFooter className="flex justify-center">
+              <Link href="/admin/orders" passHref>
+                <Button
+                  className="transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+                  variant="outline"
+                >
+                  See More Orders
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </Link>
             </CardFooter>
           </Card>
