@@ -16,7 +16,7 @@ export async function GET() {
     });
 
     // Calculate total for the current month
-    const currentMonthTotal = currentMonthCharges.data.reduce((sum, charge) => sum + charge.amount, 0);
+    const currentMonthTotal = currentMonthCharges.data.reduce((sum, charge) => sum + charge.amount, 0) / 100; // Convert cents to dollars
 
     // Fetch charges for the previous month
     const previousMonthStart = monthStart - 30 * 24 * 60 * 60; // 60 days ago
@@ -28,7 +28,7 @@ export async function GET() {
     });
 
     // Calculate total for the previous month
-    const previousMonthTotal = previousMonthCharges.data.reduce((sum, charge) => sum + charge.amount, 0);
+    const previousMonthTotal = previousMonthCharges.data.reduce((sum, charge) => sum + charge.amount, 0) / 100; // Convert cents to dollars
 
     // Calculate percentage change
     const percentageChange = previousMonthTotal > 0
@@ -36,9 +36,9 @@ export async function GET() {
       : 0;
 
     return NextResponse.json({
-      currentMonthTotal,
-      previousMonthTotal,
-      percentageChange,
+      total: currentMonthTotal || 0, // Return 0 if currentMonthTotal is falsy
+      previousTotal: previousMonthTotal || 0,
+      percentageChange: isFinite(percentageChange) ? percentageChange : 0, // Handle potential Infinity
     });
   } catch (error) {
     console.error("Error fetching transactions:", error);

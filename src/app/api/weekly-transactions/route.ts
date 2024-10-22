@@ -16,7 +16,7 @@ export async function GET() {
     });
 
     // Calculate total for the current week
-    const currentWeekTotal = currentWeekCharges.data.reduce((sum, charge) => sum + charge.amount, 0);
+    const currentWeekTotal = currentWeekCharges.data.reduce((sum, charge) => sum + charge.amount, 0) / 100; // Convert cents to dollars
 
     // Fetch charges for the previous week
     const previousWeekStart = weekStart - 7 * 24 * 60 * 60; // 14 days ago
@@ -28,7 +28,7 @@ export async function GET() {
     });
 
     // Calculate total for the previous week
-    const previousWeekTotal = previousWeekCharges.data.reduce((sum, charge) => sum + charge.amount, 0);
+    const previousWeekTotal = previousWeekCharges.data.reduce((sum, charge) => sum + charge.amount, 0) / 100; // Convert cents to dollars
 
     // Calculate percentage change
     const percentageChange = previousWeekTotal > 0
@@ -36,9 +36,9 @@ export async function GET() {
       : 0;
 
     return NextResponse.json({
-      currentWeekTotal,
-      previousWeekTotal,
-      percentageChange,
+      total: currentWeekTotal || 0, // Return 0 if currentWeekTotal is falsy
+      previousTotal: previousWeekTotal || 0,
+      percentageChange: isFinite(percentageChange) ? percentageChange : 0, // Handle potential Infinity
     });
   } catch (error) {
     console.error("Error fetching transactions:", error);
