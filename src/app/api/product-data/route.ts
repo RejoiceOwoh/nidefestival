@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const topProducts = await prisma.product.findMany({
       take: 5,
@@ -19,9 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       value: product.stock,
     }));
 
-    res.status(200).json(productData);
+    return NextResponse.json(productData);
   } catch (error) {
     console.error('Error fetching product data:', error);
-    res.status(500).json({ error: 'Failed to fetch product data' });
+    return NextResponse.json({ error: 'Failed to fetch product data' }, { status: 500 });
   }
 }

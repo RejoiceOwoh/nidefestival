@@ -19,7 +19,7 @@ import { SummaryCard } from "./components/SummaryCard";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 import { ArrowRight, ListFilter } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
 
 export default function Admin() {
   const [weeklyData, setWeeklyData] = useState<{ total: number; percentageChange: number } | null>(null);
@@ -92,13 +92,16 @@ export default function Admin() {
     };
 
     const fetchProductData = async () => {
-      const response = await fetch("/api/product-data");
-      if (!response.ok) {
-        console.error("Error fetching product data:", await response.text());
-        return;
+      try {
+        const response = await fetch("/api/product-data");
+        if (!response.ok) {
+          throw new Error("Failed to fetch product data");
+        }
+        const data = await response.json();
+        setProductData(data);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
       }
-      const data = await response.json();
-      setProductData(data);
     };
 
     const fetchTotalProducts = async () => {
@@ -365,24 +368,24 @@ export default function Admin() {
           </Tabs>
         </div>
 
-        <div className="w-full lg:w-1/3 mt-4 lg:mt-0">
-          <Card className="mb-4">
+        <div className="w-full lg:w-1/3 mt-4 lg:mt-0 space-y-4">
+          <Card>
             <CardHeader>
               <CardTitle>Sales Overview</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] sm:h-[400px]">
               {isLoading ? (
                 <Skeleton className="h-full w-full" />
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={salesData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
+                  <LineChart data={salesData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="date" stroke="hsl(var(--foreground))" tick={{ fontSize: 12 }} />
+                    <YAxis stroke="hsl(var(--foreground))" tick={{ fontSize: 12 }} />
                     <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="profit" stroke="#82ca9d" />
+                    <Legend wrapperStyle={{ fontSize: '12px' }} />
+                    <Line type="monotone" dataKey="sales" stroke="hsl(var(--chart-1))" strokeWidth={2} activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="profit" stroke="hsl(var(--chart-2))" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               )}
@@ -393,24 +396,24 @@ export default function Admin() {
             <CardHeader>
               <CardTitle>Top Products</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] sm:h-[400px]">
               {isLoading ? (
                 <Skeleton className="h-full w-full" />
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
+                  <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                     <Pie
                       data={productData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={80}
-                      fill="#8884d8"
+                      outerRadius="80%"
+                      fill="hsl(var(--chart-1))"
                       dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      // label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     >
                       {productData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${index}`} fill={`hsl(var(--chart-${(index % 5) + 1}))`} />
                       ))}
                     </Pie>
                     <Tooltip />

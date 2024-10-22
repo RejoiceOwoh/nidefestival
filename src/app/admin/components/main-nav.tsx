@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "../../../lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import React from "react"
+import { UserButton } from "@clerk/nextjs"
 
 interface NavItem {
   href: string
@@ -30,7 +31,6 @@ const defaultNavItems: NavItem[] = [
   { href: "/admin", icon: "Home", label: "Dashboard" },
   { href: "/admin/orders", icon: "ShoppingCart", label: "Orders" },
   { href: "/admin/products", icon: "Package", label: "Products" },
-  { href: "/admin/analytics", icon: "LineChart", label: "Analytics" },
 ]
 
 const MotionLink = motion(Link)
@@ -173,8 +173,7 @@ export function AdminNav({
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Settings className="h-5 w-5" />
-                  <span className="sr-only">Settings</span>
+                  <UserButton />
                 </MotionLink>
               </TooltipTrigger>
               <TooltipContent side="right">Settings</TooltipContent>
