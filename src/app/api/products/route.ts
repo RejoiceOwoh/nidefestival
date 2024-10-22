@@ -4,28 +4,39 @@ import prisma from '../../../lib/prisma';
 // Fetch all products (GET)
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const productId = url.searchParams.get('id');
-
-  if (productId) {
-    try {
-      const product = await prisma.product.findUnique({
-        where: { id: parseInt(productId, 10) },
-      });
-
-      if (!product) {
-        return NextResponse.json({ error: 'Product not found' }, { status: 404 });
-      }
-
-      return NextResponse.json(product);
-    } catch (error) {
-      console.error('Failed to fetch product:', error);
-      return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
-    }
-  }
+  const page = parseInt(url.searchParams.get('page') || '1', 10);
+  const statusFilter = url.searchParams.get('statusFilter')?.split(',') || ['All'];
+  const stockFilter = url.searchParams.get('stockFilter') || 'all';
+  const limit = 10; // Number of products per page
 
   try {
-    const products = await prisma.product.findMany();
-    return NextResponse.json(products);
+    let whereClause: any = {};
+
+    if (!statusFilter.includes('All')) {
+      whereClause.soldOut = statusFilter.includes('Sold Out');
+    }
+
+    switch (stockFilter) {
+      case 'low':
+        whereClause.stock = { lte: 25, gt: 0 }; // Low stock is now defined as 25 or fewer items
+        break;
+      case 'out':
+        whereClause.stock = 0;
+        break;
+      // 'all' case doesn't need any additional filter
+    }
+
+    const products = await prisma.product.findMany({
+      where: whereClause,
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const totalProducts = await prisma.product.count({ where: whereClause });
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    return NextResponse.json({ products, totalPages });
   } catch (error) {
     console.error('Failed to fetch products:', error);
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
@@ -44,11 +55,11 @@ export async function POST(req: Request) {
       discountPricePerUnit,
       bulkThreshold,
       bulkShippingCost,
-      palletThreshold, // Added palletThreshold here
+      palletThreshold,
       palletShippingCost,
       maxCap,
       soldOut,
-      imageUrl, // Add imageUrl here
+      imageUrl,
       quantityPerBox,
     } = await req.json();
 
@@ -62,12 +73,12 @@ export async function POST(req: Request) {
         discountPricePerUnit: discountPricePerUnit ? parseFloat(discountPricePerUnit) : null,
         bulkThreshold: bulkThreshold ? parseInt(bulkThreshold, 10) : null,
         bulkShippingCost: bulkShippingCost ? parseFloat(bulkShippingCost) : null,
-        palletThreshold: palletThreshold ? parseInt(palletThreshold, 10) : null, // Include palletThreshold
+        palletThreshold: palletThreshold ? parseInt(palletThreshold, 10) : null,
         palletShippingCost: palletShippingCost ? parseFloat(palletShippingCost) : null,
         maxCap: maxCap ? parseInt(maxCap, 10) : null,
         soldOut,
-        imageUrl, // Ensure this is included here as well
-        quantityPerBox: quantityPerBox ? parseInt(quantityPerBox, 10) : null, // <-- Update quantityPerBox
+        imageUrl,
+        quantityPerBox: quantityPerBox ? parseInt(quantityPerBox, 10) : null,
       },
     });
 

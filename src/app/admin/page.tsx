@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { DashboardSummaryCard } from "./components/DashboardSummaryCard";
 import { SummaryCard } from "./components/SummaryCard";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
-import { File, ListFilter } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Admin() {
@@ -154,14 +154,6 @@ export default function Admin() {
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-7 gap-1 text-sm"
-            >
-              <File className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only">Export</span>
-            </Button>
           </div>
         </div>
         <TabsContent value={timeFilter}>

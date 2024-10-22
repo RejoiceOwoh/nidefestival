@@ -159,7 +159,18 @@ export default function Orders() {
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
                     <TableCell className="hidden sm:table-cell">
-                      <Badge className="text-xs" variant={order.status === "Succeeded" ? "secondary" : "outline"}>
+                      <Badge 
+                        className="text-xs" 
+                        variant={
+                          order.status === "Succeeded" ? "secondary" : 
+                          order.status === "Failed" ? "destructive" : 
+                          "outline"
+                        }
+                        style={{
+                          backgroundColor: order.status === "Succeeded" ? "green" : undefined,
+                          color: order.status === "Succeeded" ? "white" : undefined
+                        }}
+                      >
                         {order.status}
                       </Badge>
                     </TableCell>
