@@ -90,26 +90,36 @@ export default function Admin() {
   return (
     <div className="flex mt-5 min-h-screen w-full flex-col bg-muted/40">
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-        <DashboardSummaryCard
-          title="Your Orders"
-          description="Introducing Our Dynamic Product Dashboard for Seamless Management and Insightful Analysis."
-          buttonText="Create New Product"
-          buttonLink="/admin/products/newedit"
-        />
-        <SummaryCard
-          title="This Week"
-          amount={weeklyData ? `$${weeklyData.total.toFixed(2)}` : "$0.00"}
-          percentageChange={weeklyData ? weeklyData.percentageChange : 0}
-          comparisonPeriod="week"
-          className="x-chunk='dashboard-05-chunk-1'"
-        />
-        <SummaryCard
-          title="This Month"
-          amount={monthlyData ? `$${monthlyData.total.toFixed(2)}` : "$0.00"}
-          percentageChange={monthlyData ? monthlyData.percentageChange : 0}
-          comparisonPeriod="month"
-          className="x-chunk='dashboard-05-chunk-2'"
-        />
+        {isLoading ? (
+          <>
+            <Skeleton className="h-[180px] w-full" />
+            <Skeleton className="h-[180px] w-full" />
+            <Skeleton className="h-[180px] w-full" />
+          </>
+        ) : (
+          <>
+            <DashboardSummaryCard
+              title="Your Orders"
+              description="Introducing Our Dynamic Product Dashboard for Seamless Management and Insightful Analysis."
+              buttonText="Create New Product"
+              buttonLink="/admin/products/newedit"
+            />
+            <SummaryCard
+              title="This Week"
+              amount={weeklyData ? `$${weeklyData.total.toFixed(2)}` : "$0.00"}
+              percentageChange={weeklyData ? weeklyData.percentageChange : 0}
+              comparisonPeriod="week"
+              className="x-chunk='dashboard-05-chunk-1'"
+            />
+            <SummaryCard
+              title="This Month"
+              amount={monthlyData ? `$${monthlyData.total.toFixed(2)}` : "$0.00"}
+              percentageChange={monthlyData ? monthlyData.percentageChange : 0}
+              comparisonPeriod="month"
+              className="x-chunk='dashboard-05-chunk-2'"
+            />
+          </>
+        )}
       </div>
 
       <Tabs value={timeFilter} onValueChange={setTimeFilter}>
@@ -134,19 +144,19 @@ export default function Admin() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem 
+                <DropdownMenuCheckboxItem
                   checked={statusFilter.includes("All")}
                   onCheckedChange={() => handleStatusFilterChange("All")}
                 >
                   All
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem 
+                <DropdownMenuCheckboxItem
                   checked={statusFilter.includes("Succeeded")}
                   onCheckedChange={() => handleStatusFilterChange("Succeeded")}
                 >
                   Succeeded
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem 
+                <DropdownMenuCheckboxItem
                   checked={statusFilter.includes("Failed")}
                   onCheckedChange={() => handleStatusFilterChange("Failed")}
                 >
@@ -212,7 +222,18 @@ export default function Admin() {
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
                         <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant={order.status === "Succeeded" ? "secondary" : "outline"}>
+                          <Badge
+                            className="text-xs"
+                            variant={
+                              order.status === "Succeeded" ? "secondary" :
+                                order.status === "Failed" ? "destructive" :
+                                  "outline"
+                            }
+                            style={{
+                              backgroundColor: order.status === "Succeeded" ? "green" : undefined,
+                              color: order.status === "Succeeded" ? "white" : undefined
+                            }}
+                          >
                             {order.status}
                           </Badge>
                         </TableCell>
