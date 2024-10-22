@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, LineChart, Package, Package2, Settings, ShoppingCart, LucideIcon } from "lucide-react"
+import { Home, Package, Package2, Settings, ShoppingCart, LucideIcon } from "lucide-react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -20,7 +20,6 @@ interface NavItem {
 
 const iconComponents: { [key: string]: LucideIcon } = {
   Home,
-  LineChart,
   Package,
   Package2,
   Settings,
