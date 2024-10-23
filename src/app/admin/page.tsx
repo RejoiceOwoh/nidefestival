@@ -197,14 +197,14 @@ export default function Admin() {
                 />
                 <SummaryCard
                   title="This Week"
-                  amount={weeklyData ? `$${weeklyData.total.toFixed(2)}` : "$0.00"}
+                  amount={weeklyData ? `£${weeklyData.total.toFixed(2)}` : "£0.00"}
                   percentageChange={weeklyData ? weeklyData.percentageChange : 0}
                   comparisonPeriod="week"
                   className="x-chunk='dashboard-05-chunk-1'"
                 />
                 <SummaryCard
                   title="This Month"
-                  amount={monthlyData ? `$${monthlyData.total.toFixed(2)}` : "$0.00"}
+                  amount={monthlyData ? `£${monthlyData.total.toFixed(2)}` : "£0.00"}
                   percentageChange={monthlyData ? monthlyData.percentageChange : 0}
                   comparisonPeriod="month"
                 />
@@ -340,7 +340,7 @@ export default function Admin() {
                               </Badge>
                             </TableCell>
                             <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                            <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
+                            <TableCell className="text-right">£{order.amount.toFixed(2)}</TableCell>
                             <TableCell className="text-right">
                               <Link href={`/admin/orders/${order.id}`}>
                                 <Button size="sm">View Now</Button>

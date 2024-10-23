@@ -218,7 +218,7 @@ export default function EnhancedOrderDetail() {
         <InfoCard title="Order Information" icon={<Info className="w-5 h-5" />}>
           <p><span className="font-semibold">Status:</span> {charge.status || 'Unknown'}</p>
           <p><span className="font-semibold">Date:</span> {charge.created ? new Date(charge.created * 1000).toLocaleString() : 'Unknown'}</p>
-          <p><span className="font-semibold">Amount:</span> {charge.amount ? `${(charge.amount / 100).toFixed(2)} ${charge.currency?.toUpperCase() || ''}` : 'Unknown'}</p>
+          <p><span className="font-semibold">Amount:</span> {charge.amount ? `£${(charge.amount / 100).toFixed(2)}` : 'Unknown'}</p>
           <p><span className="font-semibold">Receipt Number:</span> {charge.receipt_number || 'Not available'}</p>
         </InfoCard>
 
@@ -263,7 +263,7 @@ export default function EnhancedOrderDetail() {
                 >
                   <span className="font-semibold">{item.description || 'Unknown product'}</span>
                   <span className="ml-2">- Quantity: {item.quantity || 1},</span>
-                  <span className="ml-2">Price: {item.amount ? `${(item.amount / 100).toFixed(2)} ${item.currency?.toUpperCase() || ''}` : 'Unknown'}</span>
+                  <span className="ml-2">Price: {item.amount ? `£${(item.amount / 100).toFixed(2)}` : 'Unknown'}</span>
                 </motion.li>
               ))}
             </ul>

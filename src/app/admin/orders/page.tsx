@@ -175,7 +175,7 @@ export default function Orders() {
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                    <TableCell className="text-right">${order.amount.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">£{order.amount.toFixed(2)}</TableCell>
                     <TableCell className="text-right">
                       <Button size="sm" onClick={() => router.push(`/admin/orders/${order.id}`)}>
                         View Now
