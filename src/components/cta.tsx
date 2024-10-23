@@ -12,6 +12,9 @@ export default function CTA() {
   const recipes = [
     { name: 'Native African Salad', image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1729520905/SAVE_20241021_152540_qj2jyo.jpg' },
     { name: 'Egusi Soup', image: 'https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198510/Egusi_Soup_Recipe_-_How_to_cook_egusi_soup_pd3u7q.jpg' },
+    { name: 'Nkwobi', image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1729717685/SAVE_20241023_213303_yrgua9.jpg' },
+    { name: 'Abacha', image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1729717677/SAVE_20241023_213320_ngsloi.jpg' },
+    { name: 'And Lots More', image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1729717678/SAVE_20241023_213312_pfseiv.jpg' },
   ]
 
   const nextRecipe = useCallback(() => {
