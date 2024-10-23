@@ -171,17 +171,6 @@ const Cart = () => {
                         >
                             {isCheckingOut ? 'Processing...' : 'Checkout'}
                         </Button>
-                        <div className="flex justify-center text-center text-xs text-gray-500">
-                            <p>
-                                or{' '}
-                                <SheetClose asChild>
-                                    <button className="font-medium text-primary hover:text-primary/80">
-                                        Continue Shopping
-                                        <span aria-hidden="true"> &rarr;</span>
-                                    </button>
-                                </SheetClose>
-                            </p>
-                        </div>
                     </div>
                 </SheetFooter>
             </Sheet>
