@@ -48,13 +48,11 @@ export default function EnhancedOrderDetail() {
       setLoading(true)
       setError(null)
       try {
-        console.log('Fetching order with ID:', id)
         const response = await fetch(`/api/orders/${id}`)
         if (!response.ok) {
           throw new Error(await response.text())
         }
         const data = await response.json()
-        console.log('Received data:', data)
         setOrderData(data)
       } catch (error) {
         console.error("Error fetching order details:", error)

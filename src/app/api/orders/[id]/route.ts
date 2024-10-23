@@ -24,7 +24,7 @@ export async function GET(
   const { id } = params;
 
   try {
-    console.log('Fetching order with ID:', id);
+    // console.log('Fetching order with ID:', id);
     
     // Retrieve the charge
     const charge = await stripe.charges.retrieve(id, {
@@ -43,7 +43,7 @@ export async function GET(
       }));
     }
 
-    console.log('Charge and line items retrieved successfully');
+    // console.log('Charge and line items retrieved successfully');
 
     return NextResponse.json({ charge, lineItems });
   } catch (error) {

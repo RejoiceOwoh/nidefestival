@@ -168,12 +168,6 @@ export default function Admin() {
     });
   };
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
-
-  // Add these console.log statements just before rendering the SummaryCards
-  console.log('Weekly Data:', weeklyData);
-  console.log('Monthly Data:', monthlyData);
-
   return (
     <div className="flex mt-5 min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col lg:flex-row">
