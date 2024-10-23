@@ -21,8 +21,6 @@ interface NavItem {
 const iconComponents: { [key: string]: LucideIcon } = {
   Home,
   Package,
-  Package2,
-  Settings,
   ShoppingCart,
 }
 
