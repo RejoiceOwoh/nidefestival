@@ -70,7 +70,7 @@ export default function NewEditProduct() {
       };
       fetchProduct();
     }
-  }, [productId]);
+  }, [form, productId]);
 
   // Handle image upload with Cloudinary
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
