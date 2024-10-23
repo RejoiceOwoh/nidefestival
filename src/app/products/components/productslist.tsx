@@ -54,9 +54,11 @@ export default function ProductsList() {
                 setLoading(true)
                 const response = await fetch("/api/products")
                 const data = await response.json()
-                setProducts(data)
+                // Ensure products is always an array
+                setProducts(Array.isArray(data.products) ? data.products : [])
             } catch (error) {
                 console.error("Failed to fetch products:", error)
+                setProducts([]) // Set to empty array on error
             } finally {
                 setLoading(false)
             }
@@ -181,7 +183,7 @@ export default function ProductsList() {
                                     </Card>
                                 </motion.div>
                             ))
-                            : products.map((product) => (
+                            : (Array.isArray(products) ? products : []).map((product) => (
                                 <motion.div
                                     key={product.id}
                                     initial={{ opacity: 0, y: 20 }}
