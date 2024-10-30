@@ -35,8 +35,8 @@ const quickLinks = [
 
 const legalLinks = [
   { name: "Privacy Policy", href: "/privacy-policy" },
-  { name: "Terms of Service", href: "/terms-of-service" },
-  { name: "Sitemap", href: "/sitemap" },
+  { name: "Terms of Service", href: "/privacy-policy" },
+  { name: "Shipping Policy", href: "/privacy-policy" },
 ];
 
 export default function Footer() {
@@ -163,18 +163,21 @@ export default function Footer() {
             &copy; {currentYear} Acefoods Global. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0">
-            {/* <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
+            <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
               {legalLinks.map((link) => (
                 <li key={link.name}>
                   <Link
-                    href={link.href}
+                    href={{
+                      pathname: link.href,
+                      query: { tab: link.name } // Specify the tab you want to open
+                    }}
                     className="text-sm text-gray-300 hover:text-white transition duration-300"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
-            </ul> */}
+            </ul>
             <p className="text-xs text-gray-400">
               The Media Guy.ng Project in Partnership with {" "}
               <a

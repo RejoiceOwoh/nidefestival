@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp, Shield, Truck, FileText } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // Define a type for the expandedSections state
@@ -102,13 +103,25 @@ const policies = [
 ]
 
 export default function PolicyPage() {
-  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({})
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get('tab');
+  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({});
+  const [defaultTab, setDefaultTab] = useState<string>('privacy-policy');
+
+  useEffect(() => {
+    if (tab) {
+      setDefaultTab(tab.toLowerCase().replace(' ', '-'));
+    } else {
+      setDefaultTab('privacy-policy'); // Fallback to default tab if none is provided
+    }
+  }, [tab]);
 
   const toggleSection = (policyIndex: number, sectionIndex: number) => {
     setExpandedSections(prev => ({
       ...prev,
       [`${policyIndex}-${sectionIndex}`]: !prev[`${policyIndex}-${sectionIndex}`]
-    }))
+    }));
   }
 
   return (
@@ -119,11 +132,11 @@ export default function PolicyPage() {
           Effective Date: October 2024
         </p>
 
-        <Tabs defaultValue="privacy-policy" className="w-full">
+        <Tabs value={defaultTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-8">
             {policies.map((policy, index) => (
-              <TabsTrigger 
-                key={index} 
+              <TabsTrigger
+                key={index}
                 value={policy.title.toLowerCase().replace(' ', '-')}
                 className="flex items-center justify-center"
               >
@@ -190,3 +203,10 @@ export default function PolicyPage() {
     </div>
   )
 }
+
+
+
+// How to Use
+// <Link href="/privacy-policy?page=policy&tab=shipping-policy">Shipping Policy</Link>
+// <Link href="/privacy-policy?page=policy&tab=privacy-policy">Privacy Policy</Link>
+// <Link href="/privacy-policy?page=policy&tab=terms-of-service">Terms of Service</Link>
