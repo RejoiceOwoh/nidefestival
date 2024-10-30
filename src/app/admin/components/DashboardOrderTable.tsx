@@ -29,37 +29,37 @@ export default function DashboardOrderTable() {
     const fetchDashboardOrderData = useCallback(async () => {
         setIsLoading(true);
 
-    const fetchRecentOrders = async () => {
-        const response = await fetch("/api/recent-orders?timeFilter=" + timeFilter + "&statusFilter=" + statusFilter.join(','));
-        if (!response.ok) {
-            console.error("Error fetching recent orders:", await response.text());
-            return;
-        }
-        const data = await response.json();
-        setRecentOrders(data.orders);
-    };
+        const fetchRecentOrders = async () => {
+            const response = await fetch("/api/recent-orders?timeFilter=" + timeFilter + "&statusFilter=" + statusFilter.join(','));
+            if (!response.ok) {
+                console.error("Error fetching recent orders:", await response.text());
+                return;
+            }
+            const data = await response.json();
+            setRecentOrders(data.orders);
+        };
 
-    await Promise.all([
-        fetchRecentOrders(),
-      ]);
-      setIsLoading(false);
+        await Promise.all([
+            fetchRecentOrders(),
+        ]);
+        setIsLoading(false);
     }, [timeFilter, statusFilter]);
 
     useEffect(() => {
         fetchDashboardOrderData();
-      }, [fetchDashboardOrderData]);
+    }, [fetchDashboardOrderData]);
 
     const handleStatusFilterChange = (status: string) => {
         setStatusFilter(prev => {
-          if (status === "All") {
-            return ["All"];
-          }
-          const newFilter = prev.includes(status)
-            ? prev.filter(s => s !== status)
-            : [...prev.filter(s => s !== "All"), status];
-          return newFilter.length ? newFilter : ["All"];
+            if (status === "All") {
+                return ["All"];
+            }
+            const newFilter = prev.includes(status)
+                ? prev.filter(s => s !== status)
+                : [...prev.filter(s => s !== "All"), status];
+            return newFilter.length ? newFilter : ["All"];
         });
-      };
+    };
 
     return (
         <div>
@@ -119,10 +119,10 @@ export default function DashboardOrderTable() {
                                     <TableRow>
                                         <TableHead>Customer</TableHead>
                                         <TableHead className="hidden sm:table-cell">Payment Method</TableHead>
-                                        <TableHead className="hidden sm:table-cell">Status</TableHead>
+                                        <TableHead className="table-cell">Status</TableHead>
                                         <TableHead className="hidden md:table-cell">Date</TableHead>
                                         <TableHead className="text-right">Amount</TableHead>
-                                        <TableHead className="text-right">Actions</TableHead>
+                                        <TableHead className="hidden sm:text-right">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -156,31 +156,35 @@ export default function DashboardOrderTable() {
                                         recentOrders.slice(0, 7).map((order) => (
                                             <TableRow key={order.id}>
                                                 <TableCell>
-                                                    <div className="font-medium">{order.customerName}</div>
-                                                    <div className="hidden text-sm text-muted-foreground md:inline">
-                                                        {order.customerEmail}
-                                                    </div>
+                                                    <Link href={`/admin/orders/${order.id}`}>
+                                                        <div className="font-medium">{order.customerName}</div>
+                                                        <div className="hidden text-sm text-muted-foreground md:inline">
+                                                            {order.customerEmail}
+                                                        </div>
+                                                    </Link>
                                                 </TableCell>
                                                 <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
-                                                <TableCell className="hidden sm:table-cell">
-                                                    <Badge
-                                                        className="text-xs"
-                                                        variant={
-                                                            order.status === "Succeeded" ? "secondary" :
-                                                                order.status === "Failed" ? "destructive" :
-                                                                    "outline"
-                                                        }
-                                                        style={{
-                                                            backgroundColor: order.status === "Succeeded" ? "green" : undefined,
-                                                            color: order.status === "Succeeded" ? "white" : undefined
-                                                        }}
-                                                    >
-                                                        {order.status}
-                                                    </Badge>
+                                                <TableCell className="table-cell">
+                                                    <Link href={`/admin/orders/${order.id}`}>
+                                                        <Badge
+                                                            className="text-xs"
+                                                            variant={
+                                                                order.status === "Succeeded" ? "secondary" :
+                                                                    order.status === "Failed" ? "destructive" :
+                                                                        "outline"
+                                                            }
+                                                            style={{
+                                                                backgroundColor: order.status === "Succeeded" ? "green" : undefined,
+                                                                color: order.status === "Succeeded" ? "white" : undefined
+                                                            }}
+                                                        >
+                                                            {order.status}
+                                                        </Badge>
+                                                    </Link>
                                                 </TableCell>
                                                 <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                                                <TableCell className="text-right">£{order.amount.toFixed(2)}</TableCell>
-                                                <TableCell className="text-right">
+                                                <TableCell className="text-right"><Link href={`/admin/orders/${order.id}`}> £{order.amount.toFixed(2)} </Link></TableCell>
+                                                <TableCell className="hidden sm:text-right">
                                                     <Link href={`/admin/orders/${order.id}`}>
                                                         <Button size="sm">View Now</Button>
                                                     </Link>

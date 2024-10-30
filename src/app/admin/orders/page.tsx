@@ -15,16 +15,17 @@ import { Badge } from "@/components/ui/badge";
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 import { ListFilter } from "lucide-react";
+import Link from "next/link";
 
 export default function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const [timeFilter, setTimeFilter] = useState("week");
+  const [timeFilter, setTimeFilter] = useState("month");
   const [statusFilter, setStatusFilter] = useState<string[]>(["All"]);
   const router = useRouter();
 
@@ -87,19 +88,19 @@ export default function Orders() {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem 
+                    <DropdownMenuCheckboxItem
                       checked={statusFilter.includes("All")}
                       onCheckedChange={() => handleStatusFilterChange("All")}
                     >
                       All
                     </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem 
+                    <DropdownMenuCheckboxItem
                       checked={statusFilter.includes("Succeeded")}
                       onCheckedChange={() => handleStatusFilterChange("Succeeded")}
                     >
                       Succeeded
                     </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem 
+                    <DropdownMenuCheckboxItem
                       checked={statusFilter.includes("Failed")}
                       onCheckedChange={() => handleStatusFilterChange("Failed")}
                     >
@@ -115,10 +116,10 @@ export default function Orders() {
               <TableRow>
                 <TableHead>Customer</TableHead>
                 <TableHead className="hidden sm:table-cell">Payment Method</TableHead>
-                <TableHead className="hidden sm:table-cell">Status</TableHead>
+                <TableHead className="table-cell">Status</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="hidden sm:text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -152,34 +153,38 @@ export default function Orders() {
                 orders.map((order) => (
                   <TableRow key={order.id}>
                     <TableCell>
-                      <div className="font-medium">{order.customerName}</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
-                        {order.customerEmail}
-                      </div>
+                      <Link href={`/admin/orders/${order.id}`}>
+                        <div className="font-medium">{order.customerName}</div>
+                        <div className="hidden text-sm text-muted-foreground md:inline">
+                          {order.customerEmail}
+                        </div>
+                      </Link>
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">{order.paymentMethod}</TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <Badge 
-                        className="text-xs" 
-                        variant={
-                          order.status === "Succeeded" ? "secondary" : 
-                          order.status === "Failed" ? "destructive" : 
-                          "outline"
-                        }
-                        style={{
-                          backgroundColor: order.status === "Succeeded" ? "green" : undefined,
-                          color: order.status === "Succeeded" ? "white" : undefined
-                        }}
-                      >
-                        {order.status}
-                      </Badge>
+                    <TableCell className="table-cell">
+                      <Link href={`/admin/orders/${order.id}`}>
+                        <Badge
+                          className="text-xs"
+                          variant={
+                            order.status === "Succeeded" ? "secondary" :
+                              order.status === "Failed" ? "destructive" :
+                                "outline"
+                          }
+                          style={{
+                            backgroundColor: order.status === "Succeeded" ? "green" : undefined,
+                            color: order.status === "Succeeded" ? "white" : undefined
+                          }}
+                        >
+                          {order.status}
+                        </Badge>
+                      </Link>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{order.date}</TableCell>
-                    <TableCell className="text-right">£{order.amount.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">
-                      <Button size="sm" onClick={() => router.push(`/admin/orders/${order.id}`)}>
-                        View Now
-                      </Button>
+                    <TableCell className="text-right"><Link href={`/admin/orders/${order.id}`}> £{order.amount.toFixed(2)} </Link></TableCell>
+                    <TableCell className="hidden sm:text-right">
+                      <Link href={`/admin/orders/${order.id}`}>
+                        <Button size="sm">View Now</Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))
