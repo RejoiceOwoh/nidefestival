@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import FallbackLoading from './components/Fallback'
 
 // Define a type for the expandedSections state
 type ExpandedSections = {
@@ -125,7 +126,6 @@ export default function PolicyPage() {
   }
 
   return (
-    <Suspense>
       <div className="min-h-screen bg-background text-foreground p-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-primary mb-8 text-center">Acefoods Policies</h1>
@@ -133,6 +133,7 @@ export default function PolicyPage() {
             Effective Date: October 2024
           </p>
 
+          <Suspense fallback={<FallbackLoading />}>
           <Tabs value={defaultTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3 mb-8">
               {policies.map((policy, index) => (
@@ -178,7 +179,7 @@ export default function PolicyPage() {
                           {expandedSections[`${policyIndex}-${sectionIndex}`] && (
                             <motion.div
                               initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
+                              animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: 0.3 }}
                               className="overflow-hidden"
@@ -196,13 +197,13 @@ export default function PolicyPage() {
               </TabsContent>
             ))}
           </Tabs>
+        </Suspense>
 
           <footer className="mt-12 text-center text-sm text-muted-foreground">
             <p>For any questions or concerns, please contact us at support@acefoods.co.uk</p>
           </footer>
         </div>
       </div>
-    </Suspense>
   )
 }
 
