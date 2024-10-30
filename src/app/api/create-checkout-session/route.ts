@@ -21,9 +21,9 @@ export async function POST(request: Request) {
     };
 
     // Define available payment methods based on currency
-    const paymentMethods = ["card", "paypal"];
+    const paymentMethods = ["card"];
     if (currency.toLowerCase() === "eur") {
-      paymentMethods.push("sofort", "giropay", "ideal", "bancontact", "sepa_debit");
+      paymentMethods.push("ideal", "bancontact");
     }
 
     let totalDiscount = 0;
