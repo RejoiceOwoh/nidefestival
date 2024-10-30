@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp, Shield, Truck, FileText } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -125,82 +125,84 @@ export default function PolicyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-primary mb-8 text-center">Acefoods Policies</h1>
-        <p className="text-lg text-center mb-12">
-          Effective Date: October 2024
-        </p>
+    <Suspense>
+      <div className="min-h-screen bg-background text-foreground p-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-primary mb-8 text-center">Acefoods Policies</h1>
+          <p className="text-lg text-center mb-12">
+            Effective Date: October 2024
+          </p>
 
-        <Tabs value={defaultTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            {policies.map((policy, index) => (
-              <TabsTrigger
-                key={index}
-                value={policy.title.toLowerCase().replace(' ', '-')}
-                className="flex items-center justify-center"
-              >
-                <policy.icon className="w-5 h-5 mr-2 flex-shrink-0" />
-                <span className="hidden sm:inline">{policy.title}</span>
-              </TabsTrigger>
+          <Tabs value={defaultTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
+              {policies.map((policy, index) => (
+                <TabsTrigger
+                  key={index}
+                  value={policy.title.toLowerCase().replace(' ', '-')}
+                  className="flex items-center justify-center"
+                >
+                  <policy.icon className="w-5 h-5 mr-2 flex-shrink-0" />
+                  <span className="hidden sm:inline">{policy.title}</span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {policies.map((policy, policyIndex) => (
+              <TabsContent key={policyIndex} value={policy.title.toLowerCase().replace(' ', '-')}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-primary flex items-center">
+                      <policy.icon className="w-6 h-6 mr-2" />
+                      {policy.title}
+                    </CardTitle>
+                    <CardDescription>
+                      Learn about our {policy.title.toLowerCase()} at Acefoods
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {policy.content.map((section, sectionIndex) => (
+                      <div key={sectionIndex} className="mb-4">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-between text-left font-semibold py-2 px-4"
+                          onClick={() => toggleSection(policyIndex, sectionIndex)}
+                        >
+                          {section.title}
+                          {expandedSections[`${policyIndex}-${sectionIndex}`] ? (
+                            <ChevronUp className="w-5 h-5" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5" />
+                          )}
+                        </Button>
+                        <AnimatePresence>
+                          {expandedSections[`${policyIndex}-${sectionIndex}`] && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <p className="p-4 bg-muted rounded-md mt-2">
+                                {section.description}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </TabsContent>
             ))}
-          </TabsList>
+          </Tabs>
 
-          {policies.map((policy, policyIndex) => (
-            <TabsContent key={policyIndex} value={policy.title.toLowerCase().replace(' ', '-')}>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl text-primary flex items-center">
-                    <policy.icon className="w-6 h-6 mr-2" />
-                    {policy.title}
-                  </CardTitle>
-                  <CardDescription>
-                    Learn about our {policy.title.toLowerCase()} at Acefoods
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {policy.content.map((section, sectionIndex) => (
-                    <div key={sectionIndex} className="mb-4">
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-between text-left font-semibold py-2 px-4"
-                        onClick={() => toggleSection(policyIndex, sectionIndex)}
-                      >
-                        {section.title}
-                        {expandedSections[`${policyIndex}-${sectionIndex}`] ? (
-                          <ChevronUp className="w-5 h-5" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5" />
-                        )}
-                      </Button>
-                      <AnimatePresence>
-                        {expandedSections[`${policyIndex}-${sectionIndex}`] && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <p className="p-4 bg-muted rounded-md mt-2">
-                              {section.description}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
-
-        <footer className="mt-12 text-center text-sm text-muted-foreground">
-          <p>For any questions or concerns, please contact us at support@acefoods.co.uk</p>
-        </footer>
+          <footer className="mt-12 text-center text-sm text-muted-foreground">
+            <p>For any questions or concerns, please contact us at support@acefoods.co.uk</p>
+          </footer>
+        </div>
       </div>
-    </div>
+    </Suspense>
   )
 }
 
