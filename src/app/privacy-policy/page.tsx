@@ -79,7 +79,7 @@ const policies = [
       },
       {
         title: "Estimated Delivery Times",
-        description: "UK: Standard shipping takes 3-5 business days, express shipping 1-2 business days. International orders typically take 20-60 business days."
+        description: "UK: Standard orders made before noon gets delivered the next day while pallet delivery takes 2-3 business days. International orders typically take 20-60 business days."
       },
       {
         title: "Tracking Your Order",
@@ -91,7 +91,7 @@ const policies = [
       },
       {
         title: "Lost or Damaged Shipments",
-        description: "Contact us immediately at shipping@acefoods.co.uk for lost or damaged orders. We'll investigate and provide a replacement or refund as needed."
+        description: "In the unlikely event that your order is lost or arrives damaged, please contact us immediately at shipping@acefoods.co.uk. We will investigate the issue and provide a replacement or refund as needed."
       },
       {
         title: "Returns and Refunds",
