@@ -9,7 +9,7 @@ import { ShoppingBag, Menu, X, Home, Info, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/lib/useCart"
-import Cart from "@/app/products/components/Cart"
+import Cart from "@/app/products/components/cart"
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 
 const navigation = [
