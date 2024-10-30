@@ -14,7 +14,7 @@ export async function GET() {
       },
     });
 
-    const productData = topProducts.map(product => ({
+    const productData = topProducts.map((product: { name: string; stock: number }) => ({
       name: product.name,
       value: product.stock,
     }));

@@ -1,7 +1,11 @@
+"use client"
+
 import DashboardOrderTable from "./components/DashboardOrderTable";
 import DashboardCard from "./components/DashboardCards";
 import AdminLineChart from "./components/AdminLineChart";
 import AdminPieChart from "./components/AdminPieChart";
+
+
 
 export default function Admin() {
   return (

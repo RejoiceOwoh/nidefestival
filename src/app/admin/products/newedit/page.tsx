@@ -265,23 +265,23 @@ export default function NewEdit() {
 
         <div className="flex flex-col sm:flex-row items-end justify-end sm:items-center gap-2 sm:gap-4">
           <div className='flex items-center justify-between space-x-2 w-full'>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => router.push('/admin/products')}
-            className="sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Products
-          </Button>
-          {productId && (
-            <DeleteProductDialog 
-              productId={parseInt(productId, 10)}
-              productName={form.name}
-              onDeleteSuccess={handleDeleteSuccess}
-            />
-          )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push('/admin/products')}
+              className="sm:w-auto"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Products
+            </Button>
+            {productId && (
+              <DeleteProductDialog
+                productId={parseInt(productId, 10)}
+                productName={form.name}
+                onDeleteSuccess={handleDeleteSuccess}
+              />
+            )}
           </div>
-          
+
           <Button
             type="submit"
             form="product-form"
@@ -477,8 +477,8 @@ export default function NewEdit() {
                     <Image
                       alt="Product image"
                       src={imagePreview || "/image-placeholder2.jpg"}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: 'cover' }}
                     />
                   </div>
                   <div className="flex justify-center">

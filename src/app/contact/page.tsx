@@ -14,8 +14,8 @@ const ContactPage = () => {
         <Image
           src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218410/_LUP8406_gguzww.png"
           alt="About Us Banner"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
           priority
         />
         <div className="absolute inset-0 bg-black/50  flex items-center justify-center">

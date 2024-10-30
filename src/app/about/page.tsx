@@ -13,8 +13,8 @@ const AboutPage = () => {
         <Image
           src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218624/_LUP8399_qhesh0.png"
           alt="Acefoods Banner"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
           objectPosition="bottom"
           priority
         />

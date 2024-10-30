@@ -25,7 +25,7 @@ export default function DetailedHome() {
   return (
     <section className="bg-gradient-to-b from-white to-gray-50">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <MotionDiv 
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -39,7 +39,7 @@ export default function DetailedHome() {
         </MotionDiv>
 
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-          <MotionDiv 
+          <MotionDiv
             className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:h-full"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -48,13 +48,14 @@ export default function DetailedHome() {
             <Image
               alt="Afrigold Palm Oil Production"
               src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218622/_LUP8379_z3nzi5.png"
-              layout="fill"
+              fill
+              style={{ objectFit: 'cover' }}
               objectFit="cover"
               className="transition-transform duration-300 hover:scale-105"
             />
           </MotionDiv>
 
-          <MotionDiv 
+          <MotionDiv
             className="flex flex-col justify-center"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -78,7 +79,7 @@ export default function DetailedHome() {
                 <div className="mt-6">
                   <Link href="/about" passHref>
                     <Button variant="outline" className="group text-primary">
-                      Read More 
+                      Read More
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>

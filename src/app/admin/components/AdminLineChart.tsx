@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import {
@@ -10,37 +10,32 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
+type SalesDataType = { date: string; sales: number; profit: number };
+
 export default function AdminLineChart() {
-
     const [isLoading, setIsLoading] = useState(true);
-
-
-    const [salesData, setSalesData] = useState<any[]>([]);
+    const [salesData, setSalesData] = useState<SalesDataType[]>([]);
 
     const fetchDashboardData = useCallback(async () => {
         setIsLoading(true);
 
-        const fetchSalesData = async () => {
+        try {
             const response = await fetch("/api/sales-data");
-            if (!response.ok) {
-                console.error("Error fetching sales data:", await response.text());
-                return;
-            }
-            const data = await response.json();
-            setSalesData(data);
-        };
+            if (!response.ok) throw new Error("Failed to fetch");
 
-        await Promise.all([
-            fetchSalesData(),
-        ]);
-        setIsLoading(false);
+            const data: SalesDataType[] = await response.json();
+            setSalesData(data);
+        } catch (error) {
+            console.error("Error fetching sales data:", error);
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
 
     useEffect(() => {
         fetchDashboardData();
     }, [fetchDashboardData]);
 
-    
     return (
         <div>
             <Card>
@@ -66,5 +61,5 @@ export default function AdminLineChart() {
                 </CardContent>
             </Card>
         </div>
-    )
+    );
 }

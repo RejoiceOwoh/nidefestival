@@ -48,7 +48,8 @@ export default function ProductsList2() {
                   width={500}  // You need to provide width
                   height={500} // You need to provide height
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  layout="responsive" // Optional: to make it responsive
+                  fill
+                  style={{ objectFit: 'cover' }} // Optional: to make it responsive
                   placeholder="blur"  // Optional: for blur-up placeholder effect
                   blurDataURL="/path-to-blur-placeholder" // Optional: blur image placeholder
                 />

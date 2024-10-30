@@ -122,7 +122,7 @@ export default function DashboardOrderTable() {
                                         <TableHead className="table-cell">Status</TableHead>
                                         <TableHead className="hidden md:table-cell">Date</TableHead>
                                         <TableHead className="text-right">Amount</TableHead>
-                                        <TableHead className="hidden sm:text-right">Actions</TableHead>
+                                        <TableHead className="hidden md:table-cell sm:text-right">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -184,7 +184,7 @@ export default function DashboardOrderTable() {
                                                 </TableCell>
                                                 <TableCell className="hidden md:table-cell">{order.date}</TableCell>
                                                 <TableCell className="text-right"><Link href={`/admin/orders/${order.id}`}> £{order.amount.toFixed(2)} </Link></TableCell>
-                                                <TableCell className="hidden sm:text-right">
+                                                <TableCell className="hidden md:table-cell sm:text-right">
                                                     <Link href={`/admin/orders/${order.id}`}>
                                                         <Button size="sm">View Now</Button>
                                                     </Link>

@@ -32,9 +32,9 @@ export default function CTA() {
         <Image
           src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1727198510/Egusi_Soup_Recipe_-_How_to_cook_egusi_soup_pd3u7q.jpg"
           alt="Background"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-10"
+          fill
+          style={{ objectFit: 'cover' }}
+        className="opacity-10"
         />
       </div>
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -84,8 +84,8 @@ export default function CTA() {
                     <Image
                       src={recipes[activeIndex].image}
                       alt={recipes[activeIndex].name}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: 'cover' }}
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white">
                       <h3 className="text-xl font-semibold">{recipes[activeIndex].name}</h3>
