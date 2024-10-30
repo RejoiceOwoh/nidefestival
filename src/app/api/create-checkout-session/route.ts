@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     };
 
     // Define available payment methods based on currency
-    const paymentMethods = ["card", "alipay", "paypal"];
+    const paymentMethods = ["card", "paypal"];
     if (currency.toLowerCase() === "eur") {
       paymentMethods.push("sofort", "giropay", "ideal", "bancontact", "sepa_debit");
     }
