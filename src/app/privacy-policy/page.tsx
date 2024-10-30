@@ -1,13 +1,9 @@
-// Import Suspense
-import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
-import FallbackLoading from './components/Fallback';
-import PolicyPage from './components/PolicyPage';
+import dynamic from 'next/dynamic';
+import Fallback from './components/Fallback';
 
-export default function PrivacyPolicyPage() {
-  return (
-    <Suspense fallback={<FallbackLoading />}>
-      <PolicyPage />
-    </Suspense>
-  );
+// Dynamically import PolicyPage with SSR disabled to avoid server-side errors
+const PolicyPage = dynamic(() => import('./components/PolicyPage'), { ssr: false, loading: () => <Fallback /> });
+
+export default function Page() {
+  return <PolicyPage />;
 }
