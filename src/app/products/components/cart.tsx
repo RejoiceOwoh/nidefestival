@@ -162,7 +162,7 @@ const Cart = () => {
                             <p className="text-sm text-green-600 font-medium">You save: {formatPrice(totalSavings)}</p>
                         )}
                         <div className="text-xs text-gray-500 space-y-1">
-                            <p>Shipping costs are estimated and may be adjusted at checkout.</p>
+                            <p>Orders made before noon (UK) are delivered the next day. Bulk orders take 2-3 working days. Shipping times vary for other locations.</p>
                         </div>
                         <Button
                             onClick={handleCheckout}
