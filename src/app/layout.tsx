@@ -14,6 +14,10 @@ export const metadata = {
   authors: [{ name: 'AfriGold' }],
   creator: 'AfriGold',
   publisher: 'AfriGold',
+  image: 'https://res.cloudinary.com/dkjnkg7hd/image/upload/v1730354254/Afrigoldlogo_w3gu6t.png',
+  url: 'https://www.acefoods.co.uk',
+  type: 'website',
+  site_name: 'Acefoods UK',
   formatDetection: {
     email: false,
     address: false,
