@@ -313,9 +313,12 @@ export default function NewEdit() {
                   <Label htmlFor="name">Product Name</Label>
                   <Input
                     id="name"
-                    value={form.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    type="text"
+                    placeholder="Enter the product name"
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    defaultValue={form.name || ""}
                     required
+                    className="w-full"
                   />
                   {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
                 </div>
@@ -323,19 +326,29 @@ export default function NewEdit() {
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
-                    value={form.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
-                    rows={4}
+                    placeholder="Describe the product briefly (optional)"
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    defaultValue={form.description || ""}
+                    className="min-h-32"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="stock">Stock</Label>
                   <Input
                     id="stock"
-                    type="number"
-                    value={form.stock}
-                    onChange={(e) => handleInputChange('stock', e.target.value)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[0-9]*$"
+                    placeholder="Enter stock quantity (e.g., 100)"
+                    value={form.stock || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setForm({ ...form, stock: value });
+                      }
+                    }}
                     required
+                    className="w-full remove-arrows"
                   />
                   {errors.stock && <p className="text-sm text-red-500">{errors.stock}</p>}
                 </div>
@@ -361,11 +374,24 @@ export default function NewEdit() {
                   <Label htmlFor="price">Price (£)</Label>
                   <Input
                     id="price"
-                    type="number"
-                    step="0.01"
-                    value={form.price}
-                    onChange={(e) => handleInputChange('price', e.target.value)}
+                    type="text"
+                    inputMode="decimal"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    placeholder="£ 99.99"
+                    value={form.price || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const regex = /^\d*(\.\d{0,2})?$/;
+                      if (regex.test(value)) {
+                        setForm({ ...form, price: value });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = parseFloat(e.target.value || "0").toFixed(2);
+                      setForm({ ...form, price: value });
+                    }}
                     required
+                    className="w-full remove-arrows"
                   />
                   {errors.price && <p className="text-sm text-red-500">{errors.price}</p>}
                 </div>
@@ -383,9 +409,17 @@ export default function NewEdit() {
                   <Label htmlFor="maxCap">Maximum Order Quantity</Label>
                   <Input
                     id="maxCap"
-                    type="number"
-                    value={form.maxCap}
-                    onChange={(e) => handleInputChange('maxCap', e.target.value)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[0-9]*$"
+                    placeholder="Enter maximum quantity a user can order at once(Only if it applies)"
+                    value={form.maxCap || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setForm({ ...form, maxCap: value });
+                      }
+                    }}
                   />
                 </div>
               </CardContent>
@@ -402,10 +436,23 @@ export default function NewEdit() {
                   <Label htmlFor="baseShippingCost">Base Shipping Cost (£)</Label>
                   <Input
                     id="baseShippingCost"
-                    type="number"
-                    step="0.01"
-                    value={form.baseShippingCost}
-                    onChange={(e) => handleInputChange('baseShippingCost', e.target.value)}
+                    type="text"
+                    inputMode="decimal"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    placeholder="£ 3.50"
+                    value={form.baseShippingCost || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                      if (regex.test(value)) {
+                        setForm({ ...form, baseShippingCost: value });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                      setForm({ ...form, baseShippingCost: value });
+                    }}
+                    className="w-full remove-arrows"
                   />
                 </div>
                 <Separator />
@@ -413,19 +460,40 @@ export default function NewEdit() {
                   <Label htmlFor="bulkThreshold">Bulk Order Threshold</Label>
                   <Input
                     id="bulkThreshold"
-                    type="number"
-                    value={form.bulkThreshold}
-                    onChange={(e) => handleInputChange('bulkThreshold', e.target.value)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[0-9]*$"
+                    placeholder="Enter pallet threshold per order box(Only if it applies)"
+                    value={form.bulkThreshold || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setForm({ ...form, bulkThreshold: value });
+                      }
+                    }}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="bulkShippingCost">Bulk Shipping Cost (£)</Label>
                   <Input
                     id="bulkShippingCost"
-                    type="number"
-                    step="0.01"
-                    value={form.bulkShippingCost}
-                    onChange={(e) => handleInputChange('bulkShippingCost', e.target.value)}
+                    type="text"
+                    inputMode="decimal"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    placeholder="£ 3.50"
+                    value={form.bulkShippingCost || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                      if (regex.test(value)) {
+                        setForm({ ...form, bulkShippingCost: value });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                      setForm({ ...form, bulkShippingCost: value });
+                    }}
+                    className="w-full remove-arrows"
                   />
                 </div>
                 <Separator />
@@ -433,28 +501,57 @@ export default function NewEdit() {
                   <Label htmlFor="palletThreshold">Pallet Threshold</Label>
                   <Input
                     id="palletThreshold"
-                    type="number"
-                    value={form.palletThreshold}
-                    onChange={(e) => handleInputChange('palletThreshold', e.target.value)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[0-9]*$"
+                    placeholder="Enter pallet threshold per order box(Only if it applies)"
+                    value={form.palletThreshold || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setForm({ ...form, palletThreshold: value });
+                      }
+                    }}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="palletShippingCost">Pallet Shipping Cost (£)</Label>
                   <Input
                     id="palletShippingCost"
-                    type="number"
-                    step="0.01"
-                    value={form.palletShippingCost}
-                    onChange={(e) => handleInputChange('palletShippingCost', e.target.value)}
+                    type="text"
+                    inputMode="decimal"
+                    pattern="^\d*(\.\d{0,2})?$"
+                    placeholder="£ 3.50"
+                    value={form.palletShippingCost || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const regex = /^\d*(\.\d{0,2})?$/; // Allow numbers and max two decimal places
+                      if (regex.test(value)) {
+                        setForm({ ...form, palletShippingCost: value });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const value = parseFloat(e.target.value || "0").toFixed(2); // Format to 2 decimal places on blur
+                      setForm({ ...form, palletShippingCost: value });
+                    }}
+                    className="w-full remove-arrows"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="quantityPerBox">Quantity Per Box</Label>
                   <Input
                     id="quantityPerBox"
-                    type="number"
-                    value={form.quantityPerBox}
-                    onChange={(e) => handleInputChange('quantityPerBox', e.target.value)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[0-9]*$"
+                    placeholder="Enter quantity per box(Only if it applies)"
+                    value={form.quantityPerBox || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^[0-9]*$/.test(value)) {
+                        setForm({ ...form, quantityPerBox: value });
+                      }
+                    }}
                   />
                 </div>
               </CardContent>

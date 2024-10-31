@@ -15,7 +15,8 @@ export function calculateItemPrice(item: CartItem): number {
 
   if (product.bulkThreshold && boxQuantity >= product.bulkThreshold) {
     totalPrice +=
-      boxQuantity * ((product.discountPricePerUnit ?? product.price) * quantityPerBox);
+      boxQuantity *
+      ((product.discountPricePerUnit ?? product.price) * quantityPerBox);
   } else {
     totalPrice += boxQuantity * (product.price * quantityPerBox);
   }
@@ -27,17 +28,29 @@ export function calculateItemPrice(item: CartItem): number {
 
 export function calculateShipping(item: CartItem): number {
   const { product, quantity } = item;
-  const boxQuantity = Math.ceil(quantity / product.quantityPerBox!);
+  const boxQuantity = Math.ceil(quantity / (product.quantityPerBox || 1));
 
-  if (boxQuantity >= product.palletThreshold!) {
-    return product.palletShippingCost!;
+  let shippingCost = 0;
+
+  if (
+    product.palletThreshold != null &&
+    product.palletShippingCost != null &&
+    product.palletThreshold > 0 &&
+    boxQuantity >= product.palletThreshold
+  ) {
+    shippingCost = product.palletShippingCost;
+  } else if (
+    product.bulkThreshold != null &&
+    product.bulkShippingCost != null &&
+    product.bulkThreshold > 0 &&
+    boxQuantity >= product.bulkThreshold
+  ) {
+    shippingCost = boxQuantity * product.bulkShippingCost;
+  } else {
+    shippingCost = boxQuantity * (product.baseShippingCost || 0);
   }
 
-  if (boxQuantity >= product.bulkThreshold!) {
-    return boxQuantity * product.bulkShippingCost!;
-  }
-
-  return boxQuantity * product.baseShippingCost!;
+  return shippingCost;
 }
 
 export function calculateTotalPrice(items: CartItem[]): number {
@@ -49,8 +62,8 @@ export function calculateTotalShipping(items: CartItem[]): number {
 }
 
 export function formatPrice(price: number | undefined | null): string {
-  if (typeof price !== 'number') {
-    return '£0.00';
+  if (typeof price !== "number") {
+    return "£0.00";
   }
   return `£${price.toFixed(2)}`;
 }
