@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import Providers from '@/components/Providers';
 import { Toaster } from '@/components/ui/sonner';
 import ClientLayout from './ClientLayout';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics} from '@next/third-parties/google'
 
 export const metadata = {
   title: {
@@ -35,8 +35,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased">
         <Providers>
-          <ClientLayout>
-            <GoogleTagManager gtmId='GT-WBZNZRBF' />
+          <ClientLayout>\
             {children}
             <GoogleAnalytics gaId="G-3H7TNL4S0Z" />
           </ClientLayout>
