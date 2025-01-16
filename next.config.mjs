@@ -6,6 +6,7 @@ const nextConfig = {
       { hostname: "tailwindui.com" },
       { hostname: "www.allrecipes.com" },
       { hostname: "www.chilipeppermadness.com" },
+      { hostname: "images.pexels.com" },
     ],
   },
   reactStrictMode: true,
