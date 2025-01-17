@@ -17,10 +17,10 @@ import { FaStar } from 'react-icons/fa';
 import FooterForm from "./footerForm";
 
 const socialLinks = [
-  { name: "Facebook", href: "https://facebook.com/afrigoldpalmoil", icon: FacebookIcon },
-  { name: "Twitter", href: "https://x.com/afrigoldpalmoil", icon: TwitterIcon },
-  { name: "Instagram", href: "https://instagram.com/afrigoldpalmoil", icon: InstagramIcon },
-  { name: "Tiktok", href: "https://tiktok.com/@afrigoldpalmoil", icon: FaTiktok },
+  { name: "Facebook", href: "https://facebook.com/nidefestnigeria", icon: FacebookIcon },
+  { name: "Twitter", href: "https://x.com/nidefestnigeria", icon: TwitterIcon },
+  { name: "Instagram", href: "https://instagram.com/nidefestnigeria", icon: InstagramIcon },
+  { name: "Tiktok", href: "https://tiktok.com/@nidefestnigeria", icon: FaTiktok },
 ];
 
 
@@ -28,16 +28,23 @@ const socialLinks = [
 const quickLinks = [
   { name: "Home", href: "/" },
   { name: "About Us", href: "/about" },
-  { name: "Contact Us", href: "/contact" },
-  { name: "Products", href: "/products" },
+  { name: "Calendar", href: "/calendar" },
+  { name: "Tickets", href: "/tickets" },
   { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
 const legalLinks = [
   { name: "Privacy Policy", href: "/privacy-policy" },
   { name: "Terms of Service", href: "/privacy-policy" },
-  { name: "Shipping Policy", href: "/privacy-policy" },
+  { name: "Registration Policy", href: "/privacy-policy" },
 ];
+
+const contactInfo = {
+  address: "Nigeria",
+  phone: "+234 9038470835",
+  email: "info@nidefest.africa",
+  whatsapp: "https://wa.me/+2349038470835",
+};
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -63,10 +70,10 @@ export default function Footer() {
           {/* Website Info */}
           <div>
             <h2 className="text-2xl font-bold mb-4 text-primary">
-              Afrigold Palmoil
+              NIDEFEST Nigeria
             </h2>
             <p className="mb-4 text-sm text-gray-200">
-              Palm Oil at its Originality
+              Bringing Nigeria Originality!
             </p>
             <div className="flex mb-4 space-x-4">
               {socialLinks.map((item) => (
@@ -81,10 +88,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="mb-4 text-sm text-gray-200">
-              <b>PARTNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">acefoodsuk@gmail.com</a>
-            </p>
-            <p className="mb-4 text-sm text-gray-200">
-              <b>NAFDAC REG. NO: A8-108803L</b> 
+              <b>PARTNERSHIP?</b> Send us an email at <a href="mailto:acefoodsuk@gmail.com">nidefestnigeria@gmail.com</a>
             </p>
           </div>
 
@@ -115,31 +119,30 @@ export default function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center space-x-2 text-sm">
                 <MapPinIcon className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-200">
-                United Kingdom
-                </span>
+                <span className="text-gray-200">{contactInfo.address}</span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <PhoneIcon className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-200"> <a href="tel:+44 75260 66245">+44 75260 66245</a> 
+                <span className="text-gray-200">
+                  <a href={`tel:${contactInfo.phone}`}>{contactInfo.phone}</a>
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <EnvelopeIcon className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                 <a href="mailto:info@acefoods.co.uk">info@acefoods.co.uk</a>
+                  <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
-              <FaWhatsapp size={40} className="h-5 w-5 text-gray-300" />
+                <FaWhatsapp size={40} className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                <a href="https://wa.me/+447526066245" target="_blank" rel="noopener noreferrer">Chat with us</a>
+                  <a href={contactInfo.whatsapp} target="_blank" rel="noopener noreferrer">Chat with us</a>
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
-              <FaStar size={20} className="h-5 w-5 text-gray-300" />
+                <FaStar size={20} className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-200">
-                <a href="/contact" target="_blank" rel="noopener noreferrer">Let{"'"}s hear your review</a>
+                  <Link href="/contact" target="_blank" rel="noopener noreferrer">Let{"'"}s hear your review</Link>
                 </span>
               </li>
             </ul>
@@ -160,7 +163,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-center md:text-left text-gray-300">
-            &copy; {currentYear} Acefoods Global. All rights reserved.
+            &copy; {currentYear} PJ Chills and Crew. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row items-center mt-4 md:mt-0">
             <ul className="flex space-x-4 mb-2 md:mb-0 md:mr-4">
