@@ -47,7 +47,7 @@ export const aboutNidefest: PageContent = {
       content: "As we look to the future, NIDEFEST continues to evolve, embracing new technologies and innovative ways to showcase the Niger Delta's cultural wealth. We invite you to join us in this celebration of identity, creativity, and unity."
     }
   ],
-  imageSrc: "https://res.cloudinary.com/dnbnev9lr/image/upload/c_crop,w_600,h_800/v1734439927/New_Project_19_l2g96e.png",
+  imageSrc: "https://res.cloudinary.com/dnbnev9lr/image/upload/c_fill,w_800,h_600,g_auto/v1734365468/pexels-christian-alemu-127251395-28664276_i9nhkt.jpg",
   // imageSrc: "/placeholder.svg?height=600&width=800",
   imageAlt: "NIDEFEST Celebration",
   quickFacts: [
@@ -95,7 +95,7 @@ export const aboutPJChills: PageContent = {
       content: "Join us in our mission to celebrate and elevate the rich cultural tapestry of the Niger Delta. Whether you're planning an event or looking to build a brand that resonates with the heart of our region, PJ Chills and Crew is your partner in bringing your vision to life."
     }
   ],
-  imageSrc: "https://res.cloudinary.com/dnbnev9lr/image/upload/c_crop,w_600,h_800/v1734439694/New_Project_18_pgkxbb.png",
+  imageSrc: "https://res.cloudinary.com/dnbnev9lr/image/upload/c_fill,w_800,h_600,g_auto/v1734365458/pexels-rdne-6192557_1_zzgkwl.jpg",
   // imageSrc: "/placeholder.svg?height=600&width=800",
   imageAlt: "PJ Chills and Crew Team",
   quickFacts: [

@@ -32,7 +32,7 @@ export default function DetailedPageTemplate({
       {/* Banner */}
       <header className="relative h-[50vh] overflow-hidden">
         <Image
-          src="https://res.cloudinary.com/dnbnev9lr/image/upload/c_crop,w_800,h_1600,g_auto/v1734365479/pexels-rdne-6192557_xxjwiz.jpg"
+          src="https://res.cloudinary.com/dnbnev9lr/image/upload/c_fill,w_1600,h_800,g_auto/v1734365458/pexels-rdne-6192557_1_zzgkwl.jpg"
           alt={`${title} Banner`}
           fill
           className="brightness-50 object-cover"
