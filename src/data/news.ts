@@ -155,6 +155,46 @@ export interface NewsItem {
           url: "/sustainability"
         }
       ]
+    },
+    {
+      id: 4,
+      title: "NIDEFEST 2024 Unveils Eco-Friendly Initiatives",
+      excerpt: "Learn about our commitment to sustainability and the environment-friendly measures we're implementing for this year's festival.",
+      date: "2024-03-25",
+      readTime: "6 min",
+      image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1736404463/New_Project_23_yearb9.png",
+      category: "Sustainability",
+      author: "Environmental Team",
+      content: [
+        {
+          type: "paragraph",
+          content: "As we prepare for NIDEFEST 2024, we're excited to announce a series of eco-friendly initiatives aimed at reducing our environmental impact and promoting sustainability throughout the festival."
+        },
+        {
+          type: "heading",
+          content: "Our Green Commitments"
+        },
+        {
+          type: "paragraph",
+          content: "1. Zero Waste Goal: We're implementing a comprehensive recycling and composting program to minimize waste sent to landfills.\n2. Renewable Energy: A significant portion of the festival's energy needs will be met through solar power.\n3. Sustainable Transportation: We're partnering with local transit authorities to provide eco-friendly transportation options for attendees.\n4. Water Conservation: Water refill stations will be available throughout the festival grounds to reduce plastic bottle usage."
+        },
+        {
+          type: "image",
+          content: "",
+          url: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1736404463/New_Project_23_yearb9.png",
+          alt: "Solar panels being installed at the festival grounds",
+          caption: "Installation of solar panels to power NIDEFEST 2024"
+        },
+        {
+          type: "paragraph",
+          content: "These initiatives reflect our commitment to preserving the natural beauty of the Niger Delta region and setting a positive example for sustainable event management."
+        },
+        {
+          type: "callToAction",
+          content: "Learn more about our eco-friendly initiatives and how you can contribute!",
+          url: "/sustainability"
+        }
+      ]
     }
   ];
   
