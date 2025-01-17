@@ -21,13 +21,13 @@ export default function PartnersSponsorsPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <header className="relative h-[50vh] overflow-hidden">
-     <div className="absolute inset-0 bg-black bg-opacity-60">
+     <div className="absolute inset-0 bg-black">
        <video
          autoPlay
          loop
          muted
          playsInline
-         className="w-full h-full object-cover opacity-50"
+         className="w-full h-full brightness-50 object-cover opacity-50"
        >
          <source src="https://res.cloudinary.com/dnbnev9lr/video/upload/v1737026869/19529709-hd_1920_1080_25fps_lwwppn.mp4" type="video/mp4" />
        </video>
