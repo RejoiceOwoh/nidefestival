@@ -22,7 +22,7 @@ const navItems = [
     ]
   },
   { name: 'News', href: '/news' },
-  { name: 'Sponsors', href: '/sponsors' },
+  { name: 'Partners & Sponsors', href: '/partners-sponsors' },
   { name: "FAQ's", href: '/faqs' },
   { name: 'Contact', href: '/contact' },
 ]

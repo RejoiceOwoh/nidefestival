@@ -7,6 +7,7 @@ const nextConfig = {
       { hostname: "www.allrecipes.com" },
       { hostname: "www.chilipeppermadness.com" },
       { hostname: "images.pexels.com" },
+      { hostname: "img.icons8.com" },
     ],
   },
   reactStrictMode: true,
