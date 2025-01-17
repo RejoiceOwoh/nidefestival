@@ -1,47 +1,107 @@
-"use client";
+'use client'
 
-import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import AboutMain from "../about/_components/aboutmain";
-import AboutUs from "./AboutUs";
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ChevronRight } from 'lucide-react'
+import { aboutNidefest, aboutPJChills } from '@/data/content'
 
-const AboutPage = () => {
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+}
+
+export default function AboutPage() {
   return (
-    <div className="min-h-screen font-sans">
-      <div className="relative h-[300px] md:h-[400px] overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Header */}
+      <header className="relative h-[50vh] overflow-hidden">
         <Image
-          src="https://res.cloudinary.com/dyd0lsoo4/image/upload/v1723218624/_LUP8399_qhesh0.png"
-          alt="Acefoods Banner"
+          src="https://res.cloudinary.com/dnbnev9lr/image/upload/c_crop,w_800,h_1600,g_auto/v1734365479/pexels-rdne-6192557_xxjwiz.jpg"
+          alt="About Us Banner"
           fill
-          style={{ objectFit: 'cover' }}
-          objectPosition="bottom"
-          priority
+          className="brightness-50 object-cover"
         />
-        <div className="absolute inset-0 bg-black/50  flex items-center justify-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-accent text-center tracking-tight"
-          >
-            About Us
-          </motion.h1>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-20 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white rounded-xl shadow-2xl p-8 md:p-12"
+          transition={{ duration: 0.8 }}
         >
-          <AboutUs />
+          <h1 className="text-6xl font-bold text-white text-center">
+            About <span className="text-[#E67E22]">Us</span>
+          </h1>
         </motion.div>
-      </div>
-    </div>
-  );
-};
+      </header>
 
-export default AboutPage;
+      {/* About NIDEFEST */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="flex flex-col lg:flex-row items-center gap-12"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <div className="lg:w-1/2">
+              <Image
+                src={aboutNidefest.imageSrc || "/placeholder.svg"}
+                alt={aboutNidefest.imageAlt}
+                width={800}
+                height={600}
+                className="rounded-lg shadow-2xl"
+              />
+            </div>
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl font-bold mb-4">{aboutNidefest.title}</h2>
+              <p className="text-xl text-gray-600 mb-6">{aboutNidefest.subtitle}</p>
+              <p className="text-gray-700 mb-6">{aboutNidefest.excerpt}</p>
+              <Link 
+                href="/about/nidefest" 
+                className="inline-flex items-center px-6 py-3 bg-[#E67E22] text-white rounded-full hover:bg-[#D35400] transition-colors"
+              >
+                Read More <ChevronRight className="ml-2 w-5 h-5" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* About PJ Chills and Crew */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="flex flex-col lg:flex-row-reverse items-center gap-12"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <div className="lg:w-1/2">
+              <Image
+                src={aboutPJChills.imageSrc || "/placeholder.svg"}
+                alt={aboutPJChills.imageAlt}
+                width={800}
+                height={600}
+                className="rounded-lg shadow-2xl"
+              />
+            </div>
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl font-bold mb-4">{aboutPJChills.title}</h2>
+              <p className="text-xl text-gray-600 mb-6">{aboutPJChills.subtitle}</p>
+              <p className="text-gray-700 mb-6">{aboutPJChills.excerpt}</p>
+              <Link 
+                href="/about/pj-chills-and-crew" 
+                className="inline-flex items-center px-6 py-3 bg-[#E67E22] text-white rounded-full hover:bg-[#D35400] transition-colors"
+              >
+                Read More <ChevronRight className="ml-2 w-5 h-5" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  )
+}
