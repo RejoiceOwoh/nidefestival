@@ -1,3 +1,4 @@
+import CalendarOverview from '@/components/CalendarOverview';
 import CTA from '@/components/cta';
 import DetailedHome from '@/components/detailedhome';
 import GovernorsSection from '@/components/GovernorsSection';
@@ -12,7 +13,7 @@ export default function Home() {
     <div>
       <HeroSection />
       <GovernorsSection />
-      <Hero />
+      <CalendarOverview />
       <Stats />
       <CTA />
       <OverlayCTA />

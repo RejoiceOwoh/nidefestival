@@ -8,16 +8,16 @@ import { Play, Pause } from 'lucide-react'
 
 // This would typically come from an API or database
 const governors = [
-    { id: 1, name: "John Doe", state: "Rivers", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734435462/New_Project_14_y1y74k.png", description: "Governor of Rivers State, committed to sustainable development." },
-    { id: 2, name: "Jane Smith", state: "Delta", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434228/New_Project_ym7led.png", description: "Governor of Delta State, focusing on economic growth and education." },
-    { id: 3, name: "Mike Johnson", state: "Bayelsa", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434209/New_Project_1_w9h5zt.png", description: "Governor of Bayelsa State, prioritizing environmental conservation." },
-    { id: 4, name: "Sarah Brown", state: "Akwa Ibom", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434191/New_Project_2_saqgpi.png", description: "Governor of Akwa Ibom State, championing youth empowerment." },
-    { id: 5, name: "Chris Wilson", state: "Edo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434187/New_Project_3_ud5z2c.png", description: "Governor of Edo State, driving technological innovation." },
-    { id: 6, name: "Laura Taylor", state: "Cross River", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433627/New_Project_7_u1jek5.png", description: "Governor of Cross River State, promoting tourism and culture." },
-    { id: 7, name: "Alex Green", state: "Ondo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433724/New_Project_5_opnbff.png", description: "Governor of Ondo State, advancing agricultural initiatives." },
-    { id: 8, name: "Olivia White", state: "Imo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433629/New_Project_8_utu20d.png", description: "Governor of Imo State, focusing on infrastructure development." },
-    { id: 9, name: "Daniel Black", state: "Abia", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433688/New_Project_6_u6wvvc.png", description: "Governor of Abia State, championing small business growth." },
-  ]
+  { id: 1, name: "John Doe", state: "Rivers", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734435462/New_Project_14_y1y74k.png", description: "Governor of Rivers State, committed to sustainable development." },
+  { id: 2, name: "Jane Smith", state: "Delta", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434228/New_Project_ym7led.png", description: "Governor of Delta State, focusing on economic growth and education." },
+  { id: 3, name: "Mike Johnson", state: "Bayelsa", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434209/New_Project_1_w9h5zt.png", description: "Governor of Bayelsa State, prioritizing environmental conservation." },
+  { id: 4, name: "Sarah Brown", state: "Akwa Ibom", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434191/New_Project_2_saqgpi.png", description: "Governor of Akwa Ibom State, championing youth empowerment." },
+  { id: 5, name: "Chris Wilson", state: "Edo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434187/New_Project_3_ud5z2c.png", description: "Governor of Edo State, driving technological innovation." },
+  { id: 6, name: "Laura Taylor", state: "Cross River", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433627/New_Project_7_u1jek5.png", description: "Governor of Cross River State, promoting tourism and culture." },
+  { id: 7, name: "Alex Green", state: "Ondo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433724/New_Project_5_opnbff.png", description: "Governor of Ondo State, advancing agricultural initiatives." },
+  { id: 8, name: "Olivia White", state: "Imo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433629/New_Project_8_utu20d.png", description: "Governor of Imo State, focusing on infrastructure development." },
+  { id: 9, name: "Daniel Black", state: "Abia", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433688/New_Project_6_u6wvvc.png", description: "Governor of Abia State, championing small business growth." },
+]
 
 const CountdownTimer = ({ duration, isPlaying }: { duration: number; isPlaying: boolean }) => {
   return (
@@ -33,28 +33,9 @@ const CountdownTimer = ({ duration, isPlaying }: { duration: number; isPlaying: 
   )
 }
 
-const SkeletonLoader = () => (
-  <div className="animate-pulse flex flex-col md:flex-row h-full">
-    <div className="md:w-1/2 bg-gray-300 h-[400px] md:h-full"></div>
-    <div className="md:w-1/2 p-8 flex flex-col justify-between">
-      <div>
-        <div className="h-8 bg-gray-300 rounded w-3/4 mb-4"></div>
-        <div className="h-6 bg-gray-300 rounded w-1/2 mb-6"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4 mb-6"></div>
-      </div>
-      <div>
-        <div className="h-10 bg-gray-300 rounded w-1/3"></div>
-      </div>
-    </div>
-  </div>
-)
-
 export default function GovernorsSection() {
   const [activeGovernor, setActiveGovernor] = useState(governors[0])
   const [isPlaying, setIsPlaying] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -64,7 +45,6 @@ export default function GovernorsSection() {
           const nextIndex = (governors.findIndex((g) => g.id === prev.id) + 1) % governors.length
           return governors[nextIndex]
         })
-        setIsLoading(true)
       }, 10000)
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current)
@@ -74,10 +54,6 @@ export default function GovernorsSection() {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [isPlaying])
-
-  const handleImageLoad = () => {
-    setIsLoading(false)
-  }
 
   return (
     <section className="py-16 bg-gray-50">
@@ -98,10 +74,7 @@ export default function GovernorsSection() {
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setActiveGovernor(governor)
-                  setIsLoading(true)
-                }}
+                onClick={() => setActiveGovernor(governor)}
               >
                 <Image
                   src={governor.image || "/placeholder.svg"}
@@ -128,15 +101,13 @@ export default function GovernorsSection() {
                 transition={{ duration: 0.3 }}
                 className="flex flex-col md:flex-row h-full"
               >
-                <div className="md:w-1/2 h-full relative">
-                  {isLoading && <SkeletonLoader />}
+                <div className="md:w-1/2 h-[400px] md:h-full relative">
                   <Image
                     src={activeGovernor.image || "/placeholder.svg"}
                     alt={activeGovernor.name}
-                    width={400}
-                    height={600}
-                    className={`w-full h-full object-cover ${isLoading ? 'invisible' : 'visible'}`}
-                    onLoad={handleImageLoad}
+                    layout="fill"
+                    objectFit="cover"
+                    className="w-full h-full"
                   />
                 </div>
                 <div className="md:w-1/2 p-8 flex flex-col justify-between">
@@ -171,4 +142,3 @@ export default function GovernorsSection() {
     </section>
   )
 }
-
