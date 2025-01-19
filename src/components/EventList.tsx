@@ -3,7 +3,21 @@
 import { motion } from 'framer-motion'
 import { Calendar, Clock, MapPin } from 'lucide-react'
 
-export default function EventList({ events, onSelectEvent }) {
+interface Event {
+  id: number;
+  title: string;
+  start: string; // or Date if you're using Date objects
+  end: string; // or Date if you're using Date objects
+  location: string;
+  // Add any other properties relevant to your event
+}
+
+interface EventListProps {
+  events: Event[];
+  onSelectEvent: (event: Event) => void; // Define the type for the event handler
+}
+
+export default function EventList({ events, onSelectEvent }: EventListProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}

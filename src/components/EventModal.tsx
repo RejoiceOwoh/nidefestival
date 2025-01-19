@@ -4,9 +4,26 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Edit, Trash } from 'lucide-react'
 
-export default function EventModal({ event, onClose, onEdit, onDelete }) {
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  start: string; // or Date if you're using Date objects
+  end: string; // or Date if you're using Date objects
+  // Add any other properties relevant to your event
+}
+
+interface EventModalProps {
+  event: Event;
+  onClose: () => void; // Define the type for the close handler
+  onEdit: (editedEvent: Event) => void; // Define the type for the edit handler
+  onDelete: (eventId: number) => void; // Define the type for the delete handler
+}
+
+export default function EventModal({ event, onClose, onEdit, onDelete }: EventModalProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const [editedEvent, setEditedEvent] = useState(event)
+  const [editedEvent, setEditedEvent] = useState<Event>(event)
 
   const handleEdit = () => {
     onEdit(editedEvent)
