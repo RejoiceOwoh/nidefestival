@@ -1,20 +1,22 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, MapPin, ChevronRight, Play, Pause } from 'lucide-react'
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { motion, AnimatePresence } from "framer-motion"
+import { Calendar, Clock, MapPin, ChevronRight, Play, Pause } from "lucide-react"
+import { events } from "@/data/event"
 
-// Sample event data (replace with actual data in production)
-const events = [
-  { id: 1, name: "Opening Ceremony", date: "2023-08-01", time: "10:00 AM", location: "Port Harcourt Stadium" },
-  { id: 2, name: "Traditional Dance Competition", date: "2023-08-02", time: "2:00 PM", location: "Cultural Center, Yenagoa" },
-  { id: 3, name: "Art Exhibition", date: "2023-08-03", time: "11:00 AM", location: "National Museum, Benin City" },
-  { id: 4, name: "Music Festival", date: "2023-08-04", time: "7:00 PM", location: "Calabar Stadium" },
-  { id: 5, name: "Culinary Showcase", date: "2023-08-05", time: "12:00 PM", location: "Eko Hotel, Lagos" },
-]
+interface Event {
+  id: number
+  title: string
+  start: Date
+  end: Date
+  description: string
+  location: string
+  category: string
+}
 
-const EventCard = ({ event }: { event: typeof events[0] }) => (
+const EventCard = ({ event }: { event: Event }) => (
   <motion.div
     className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-6 shadow-lg"
     initial={{ opacity: 0, y: 20 }}
@@ -22,14 +24,14 @@ const EventCard = ({ event }: { event: typeof events[0] }) => (
     exit={{ opacity: 0, y: -20 }}
     transition={{ duration: 0.5 }}
   >
-    <h3 className="text-xl font-semibold mb-2">{event.name}</h3>
+    <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
     <div className="flex items-center text-sm mb-1">
       <Calendar className="w-4 h-4 mr-2" />
-      <span>{new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+      <span>{event.start.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
     </div>
     <div className="flex items-center text-sm mb-1">
       <Clock className="w-4 h-4 mr-2" />
-      <span>{event.time}</span>
+      <span>{event.start.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}</span>
     </div>
     <div className="flex items-center text-sm">
       <MapPin className="w-4 h-4 mr-2" />
@@ -87,10 +89,7 @@ export default function CalendarOverview() {
           </AnimatePresence>
           <div className="mt-4 flex items-center justify-between">
             <div className="w-full bg-white bg-opacity-20 h-1 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-[#E67E22]"
-                style={{ width: `${progress}%` }}
-              />
+              <motion.div className="h-full bg-[#E67E22]" style={{ width: `${progress}%` }} />
             </div>
             <button
               onClick={togglePlayPause}
@@ -113,3 +112,4 @@ export default function CalendarOverview() {
     </section>
   )
 }
+
