@@ -5,19 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause } from 'lucide-react'
-
-// This would typically come from an API or database
-const governors = [
-  { id: 1, name: "John Doe", state: "Rivers", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734435462/New_Project_14_y1y74k.png", description: "Governor of Rivers State, committed to sustainable development." },
-  { id: 2, name: "Jane Smith", state: "Delta", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434228/New_Project_ym7led.png", description: "Governor of Delta State, focusing on economic growth and education." },
-  { id: 3, name: "Mike Johnson", state: "Bayelsa", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434209/New_Project_1_w9h5zt.png", description: "Governor of Bayelsa State, prioritizing environmental conservation." },
-  { id: 4, name: "Sarah Brown", state: "Akwa Ibom", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434191/New_Project_2_saqgpi.png", description: "Governor of Akwa Ibom State, championing youth empowerment." },
-  { id: 5, name: "Chris Wilson", state: "Edo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734434187/New_Project_3_ud5z2c.png", description: "Governor of Edo State, driving technological innovation." },
-  { id: 6, name: "Laura Taylor", state: "Cross River", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433627/New_Project_7_u1jek5.png", description: "Governor of Cross River State, promoting tourism and culture." },
-  { id: 7, name: "Alex Green", state: "Ondo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433724/New_Project_5_opnbff.png", description: "Governor of Ondo State, advancing agricultural initiatives." },
-  { id: 8, name: "Olivia White", state: "Imo", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433629/New_Project_8_utu20d.png", description: "Governor of Imo State, focusing on infrastructure development." },
-  { id: 9, name: "Daniel Black", state: "Abia", image: "https://res.cloudinary.com/dnbnev9lr/image/upload/v1734433688/New_Project_6_u6wvvc.png", description: "Governor of Abia State, championing small business growth." },
-]
+import { governors } from '@/data/governors'
 
 const CountdownTimer = ({ duration, isPlaying }: { duration: number; isPlaying: boolean }) => {
   return (
@@ -142,3 +130,4 @@ export default function GovernorsSection() {
     </section>
   )
 }
+

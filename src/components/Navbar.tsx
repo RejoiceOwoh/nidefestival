@@ -18,7 +18,7 @@ const navItems = [
     href: '/gallery',
     subItems: [
       { name: 'Governors Gallery', href: '/gallery/governors' },
-      { name: 'States Gallery', href: '/gallery/states' },
+      { name: 'States Gallery', href: '/gallery/states-gallery' },
     ]
   },
   { name: 'News', href: '/news' },
