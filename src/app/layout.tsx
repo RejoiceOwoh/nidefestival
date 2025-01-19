@@ -16,7 +16,7 @@ export const metadata = {
   creator: 'NIDEFEST',
   publisher: 'NIDEFEST',
   image: 'https://res.cloudinary.com/dnbnev9lr/image/upload/v1734444342/New_Project__20_-removebg-preview_1_md87x7.png',
-  url: 'https://www.acefoods.co.uk',
+  url: 'https://www.nidefest.africa',
   type: 'website',
   site_name: 'NIDEFEST',
   formatDetection: {

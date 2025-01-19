@@ -8,7 +8,7 @@ import { UserButton } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard',
-  description: 'AfriGold Palm Oil admin dashboard',
+  description: 'NIDFEST Palm Oil admin dashboard',
   robots: 'noindex, nofollow', // Prevent indexing of admin pages
 };
 
