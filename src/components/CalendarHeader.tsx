@@ -5,13 +5,21 @@ import { Search, Plus } from 'lucide-react'
 
 const categories = ['All', 'Music', 'Dance', 'Art', 'Food', 'Workshop']
 
+interface CalendarHeaderProps {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+  setIsAddEventFormOpen: (isOpen: boolean) => void;
+}
+
 export default function CalendarHeader({ 
   searchTerm, 
   setSearchTerm, 
   selectedCategory, 
   setSelectedCategory,
   setIsAddEventFormOpen
-}) {
+}: CalendarHeaderProps) {
   return (
     <motion.header 
       className="bg-[#2C3E50] text-white py-8"
