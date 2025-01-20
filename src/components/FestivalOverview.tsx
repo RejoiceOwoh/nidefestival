@@ -49,12 +49,15 @@ const FeatureCard = ({ icon, title, description, color, index }: FeatureCardProp
       className="bg-white rounded-lg p-6 shadow-xl transition-all duration-300"
     >
       <div className="flex items-center mb-4">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: color }}>
+        <div
+          className="w-12 h-12 rounded-full flex items-center justify-center"
+          style={{ backgroundColor: color || "#000000" }}
+        >
           <IconComponent className="w-6 h-6 text-white" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-800 ml-4">{title}</h3>
+        <h3 className="text-xl font-semibold text-gray-800 ml-4">{title || "Untitled Feature"}</h3>
       </div>
-      <p className="text-gray-600">{description}</p>
+      <p className="text-gray-600">{description || "No description available"}</p>
     </motion.div>
   )
 }
@@ -69,6 +72,11 @@ export default function FestivalOverview() {
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1, 0.6])
+
+  if (!festivalData || !Array.isArray(festivalData.features) || festivalData.features.length === 0) {
+    console.error("Festival data is missing or invalid")
+    return null
+  }
 
   const featuresPerPage = 4
   const totalPages = Math.ceil(festivalData.features.length / featuresPerPage)
@@ -142,7 +150,7 @@ export default function FestivalOverview() {
         >
           <Link
             href="/tickets"
-            className="inline-flex items-center px-8 py-4 bg-[#E67E22] text-white text-lg font-semibold rounded-full hover:bg-[#D35400] transition-colors shadow-lg transform hover:scale-105 transition-transform duration-300"
+            className="inline-flex items-center px-8 py-4 bg-[#E67E22] text-white text-lg font-semibold rounded-full hover:bg-[#D35400] transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             <Ticket className="w-6 h-6 mr-2" />
             {festivalData.ticketInfo.cta}
