@@ -106,7 +106,7 @@ export default function GovernorsSection() {
                   </div>
                   <div>
                     <Link
-                      href={`/governors/${activeGovernor.id}`}
+                      href={`/gallery/governors/${activeGovernor.id}`}
                       className="inline-block bg-[#E67E22] text-white px-6 py-2 rounded-full hover:bg-[#D35400] transition-colors"
                     >
                       Read More

@@ -79,7 +79,7 @@ export default function GovernorsGalleryPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredGovernors.map((governor) => (
-            <Link href={`/governors/${governor.id}`} key={governor.id}>
+            <Link href={`/gallery/governors/${governor.id}`} key={governor.id}>
               <motion.div
                 className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer"
                 whileHover={{ scale: 1.05 }}
