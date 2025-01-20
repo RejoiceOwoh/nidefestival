@@ -33,6 +33,7 @@ export default function Home() {
       <AboutUsSection />
       <GovernorsSection />
       {showCountdown ? <Countdown /> : <CalendarOverview />}
+      <CalendarOverview />
       <FestivalOverview />
       <SponsorsPartnersSection />
       <NewsSection />

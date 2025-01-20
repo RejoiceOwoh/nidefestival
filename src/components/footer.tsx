@@ -34,9 +34,9 @@ const quickLinks = [
 ];
 
 const legalLinks = [
-  { name: "Privacy Policy", href: "/privacy-policy" },
-  { name: "Terms of Service", href: "/privacy-policy" },
-  { name: "Registration Policy", href: "/privacy-policy" },
+  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Terms of Service", href: "/privacy" },
+  { name: "Registration Policy", href: "/privac" },
 ];
 
 const contactInfo = {

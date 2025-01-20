@@ -67,7 +67,7 @@ export const events = [
     {
       id: 1,
       title: 'Opening Ceremony',
-      start: new Date(2023, 7, 1, 10, 0),
+      start: new Date(2025, 7, 1, 10, 0),
       end: new Date(2023, 7, 1, 12, 0),
       description: 'Grand opening of the Niger Delta Festival',
       location: 'Port Harcourt Stadium',
