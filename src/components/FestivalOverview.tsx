@@ -18,31 +18,27 @@ import {
 } from "lucide-react"
 import { festivalData } from "@/data/event"
 
-// Mapping of icon strings to actual components
 const iconMap = {
-  Music: Music,
-  Utensils: Utensils,
-  Palette: Palette,
-  Users: Users,
-  Ticket: Ticket,
-  Camera: Camera,
-  Mask: Mask,
-  Book: Book,
-};
-
-// Define a type for the icon keys
-type IconKeys = keyof typeof iconMap;
+  Music,
+  Utensils,
+  Palette,
+  Users,
+  Ticket,
+  Camera,
+  VenetianMask: Mask,
+  Book,
+}
 
 interface FeatureCardProps {
-  icon: IconKeys; // Use the union type for icon
-  title: string;
-  description: string;
-  color: string;
-  index: number;
+  icon: keyof typeof iconMap
+  title: string
+  description: string
+  color: string
+  index: number
 }
 
 const FeatureCard = ({ icon, title, description, color, index }: FeatureCardProps) => {
-  const IconComponent = iconMap[icon]; // Get the component from the map
+  const IconComponent = iconMap[icon] || Users // Default to Users icon if not found
 
   return (
     <motion.div
@@ -81,16 +77,18 @@ export default function FestivalOverview() {
   const prevPage = () => setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages)
 
   return (
-    <section ref={containerRef} className="relative py-24 overflow-hidden bg-gradient-to-b from-[#F5E6D3] to-white">
-      <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
-        <Image
-          src={festivalData.backgroundImage || "/placeholder.svg"}
-          alt="Festival Background"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-20"
-        />
-      </motion.div>
+    <section ref={containerRef} className="relative py-24 overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#F5E6D3] to-white">
+        <motion.div className="absolute inset-0" style={{ y, opacity }}>
+          <Image
+            src={festivalData.backgroundImage || "/placeholder.svg"}
+            alt="Festival Background"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-20"
+          />
+        </motion.div>
+      </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -106,7 +104,14 @@ export default function FestivalOverview() {
             {festivalData.features
               .slice(currentPage * featuresPerPage, (currentPage + 1) * featuresPerPage)
               .map((feature, index) => (
-                <FeatureCard key={feature.title} icon={feature.icon as "Music" | "Utensils" | "Palette" | "Users" | "Ticket" | "Camera" | "Mask" | "Book"} title={feature.title} description={feature.description} color={feature.color} index={index} />
+                <FeatureCard
+                  key={feature.title}
+                  icon={feature.icon as keyof typeof iconMap}
+                  title={feature.title}
+                  description={feature.description}
+                  color={feature.color}
+                  index={index}
+                />
               ))}
           </AnimatePresence>
         </div>
@@ -137,7 +142,7 @@ export default function FestivalOverview() {
         >
           <Link
             href="/tickets"
-            className="inline-flex items-center px-8 py-4 bg-[#E67E22] text-white text-lg font-semibold rounded-full hover:bg-[#D35400] transition-colors shadow-lg transform hover:scale-105 duration-300"
+            className="inline-flex items-center px-8 py-4 bg-[#E67E22] text-white text-lg font-semibold rounded-full hover:bg-[#D35400] transition-colors shadow-lg transform hover:scale-105 transition-transform duration-300"
           >
             <Ticket className="w-6 h-6 mr-2" />
             {festivalData.ticketInfo.cta}
