@@ -7,30 +7,36 @@ import Image from 'next/image'
 import VideoDialog from './VideoDialog'
 import ImageDialog from './ImageDialog'
 
+
+
+
+
+
+
 const slides = [
   {
     type: 'video',
       src: 'https://res.cloudinary.com/dnbnev9lr/video/upload/v1737026869/19529709-hd_1920_1080_25fps_lwwppn.mp4',
       thumbnail: 'https://res.cloudinary.com/dnbnev9lr/image/upload/v1737027570/Screenshot_2025-01-16_at_12.39.21_tshw44.png',
-      title: 'Experience the Rhythm',
+      title: 'Experience untold wonders ',
       description: 'Immerse yourself in the vibrant traditional dances of the Niger Delta.',
-      cta: { text: 'Explore Performances', href: '/performances' },
+      cta: { text: 'Register Now', href: '/sign-up' },
     duration: 5 // Duration in seconds
   },
   {
     type: 'video',
       src: 'https://res.cloudinary.com/dnbnev9lr/video/upload/v1737027632/3967249-hd_1366_720_24fps_l2trzl.mp4',
       thumbnail: 'https://res.cloudinary.com/dnbnev9lr/image/upload/v1737027680/Screenshot_2025-01-16_at_12.38.01_gzivqi.png',
-      title: 'Experience the Rhythm',
+      title: 'Celebrate Heritage and Culture',
       description: 'Immerse yourself in the vibrant traditional dances of the Niger Delta.',
-      cta: { text: 'Explore Performances', href: '/performances' },
+      cta: { text: 'Explore Festival ', href: '/performances' },
     duration: 7 // Duration in seconds
   },
   {
     type: 'video',
       src: 'https://res.cloudinary.com/dnbnev9lr/video/upload/v1737026854/112267444_1920_1080_25fps_lovuyc.mp4',
       thumbnail: 'https://res.cloudinary.com/dnbnev9lr/image/upload/v1737026859/pexels-safari-consoler-3290243-11834888_ujkzgx.jpg',
-      title: 'Taste the Flavors',
+      title: 'Niger Delta\'s story',
       description: 'Savor the rich and diverse cuisine of the Niger Delta region.',
       cta: { text: 'Food Festival Info', href: '/food-festival' },
     duration: 7 // Duration in seconds
@@ -39,9 +45,9 @@ const slides = [
     type: 'video',
       src: 'https://res.cloudinary.com/dnbnev9lr/video/upload/v1737027641/12297192_1280_720_50fps_sfey3v.mp4',
       thumbnail: 'https://res.cloudinary.com/dnbnev9lr/image/upload/v1737027689/Screenshot_2025-01-16_at_12.38.08_z6eqwz.png',
-      title: 'Taste the Flavors',
+      title: 'A Story Worth Sharing',
       description: 'Savor the rich and diverse cuisine of the Niger Delta region.',
-      cta: { text: 'Food Festival Info', href: '/food-festival' },
+      cta: { text: 'Register Now', href: '/sign-up' },
     duration: 7 // Duration in seconds
   },
   // {

@@ -17,34 +17,54 @@ export interface PageContent {
 export const aboutNidefest: PageContent = {
   title: "About NIDEFEST",
   subtitle: "Celebrating the Rich Cultural Heritage of the Niger Delta",
-  excerpt: "NIDEFEST, the Niger Delta Festival of Arts and Culture, is a grand celebration of the rich heritage and vibrant culture of the Niger Delta region. Established in 2010, this annual event has grown to become one of the most anticipated cultural festivals in Nigeria.",
+  excerpt: "NIDEFEST is a vibrant celebration of traditions, cultures, and pride in our roots. It showcases the unmatched beauty of our region, where cultures collide and communities unite.A dynamic movement bringing energy, unity, and heritage to life.",
   fullContent: [
     {
       type: 'paragraph',
-      content: "NIDEFEST showcases the diverse traditions of the nine states that make up the Niger Delta region: Abia, Akwa Ibom, Bayelsa, Cross River, Delta, Edo, Imo, Ondo, and Rivers. Through a myriad of events and activities, NIDEFEST offers a unique opportunity to experience the essence of Niger Delta culture."
+      content: "NIDEFEST is a beacon of light shining a global spotlight on the incredible diversity, resilience, and creativity of the Niger Delta. It’s about igniting pride in who we are, celebrating what we’ve achieved, and dreaming together about what we can become with the sole mission to preserve, promote, and propel the unique stories of the Niger Delta onto a global stage."
     },
     {
       type: 'heading',
-      content: "Key Features of NIDEFEST:"
+      content: "WHAT MAKES NIDEFEST UNIQUE?:"
     },
     {
       type: 'list',
       items: [
-        "Cultural Performances: Traditional dances, music, and theatrical performances that bring to life the stories and legends of the Niger Delta people.",
-        "Art Exhibitions: Showcasing the works of local artists, from traditional crafts to contemporary art pieces inspired by Niger Delta themes.",
-        "Culinary Delights: A food festival featuring the diverse and delicious cuisine of the Niger Delta, with cooking demonstrations and tasting sessions.",
-        "Fashion Shows: Displaying both traditional attire and modern fashion inspired by Niger Delta aesthetics.",
-        "Literary Events: Book readings, poetry performances, and storytelling sessions that celebrate the region's rich oral and written traditions.",
-        "Youth Engagement: Programs designed to educate and inspire the younger generation about their cultural heritage."
+        "The air is filled with rhythm, energetic dances, soul-stirring music, and the iconic beats of the Niger Delta. ",
+        "Your taste buds travel through time, sampling local delicacies passed down through generations, alongside bold new culinary creations. ",
+        "Art comes alive with breathtaking exhibitions, live craft-making, and cutting-edge fashion inspired by the colors and textures of our land.  ",
+        "The beauty and amazing tourist locations you never thought existed in the Niger Delta are unveiled to the whole world ",
+       
+       // "Literary Events: Book readings, poetry performances, and storytelling sessions that celebrate the region's rich oral and written traditions.",
+        //"Youth Engagement: Programs designed to educate and inspire the younger generation about their cultural heritage."
       ]
     },
     {
+      type: 'heading',
+      content: "WHY NIDEFEST MATTERS :"
+    },
+    {
+      type: 'list',
+      items: [
+        "We Preserve Culture: Every performance, every bite of food, every handmade craft helps keep the rich traditions of the Niger Delta alive.  ",
+        "We Empower Communities: By spotlighting local artists, traders, and farmers, we create opportunities that fuel growth and prosperity. ",
+        "We Unite People: Whether you’re from the Niger Delta or the other side of the globe, NIDEFEST is a shared space to celebrate, connect, and belong.  ",
+        "We Inspire Tourism: By showcasing the wonders of the Niger Delta, we attract visitors who leave with memories—and a newfound love for the region. ",
+       
+       // "Literary Events: Book readings, poetry performances, and storytelling sessions that celebrate the region's rich oral and written traditions.",
+        //"Youth Engagement: Programs designed to educate and inspire the younger generation about their cultural heritage."
+      ]
+    },
+
+
+
+    {
       type: 'paragraph',
-      content: "NIDEFEST is more than just a festival; it's a platform for cultural exchange, economic empowerment, and community building. By bringing together artisans, performers, and visitors, the festival contributes to the preservation and promotion of Niger Delta culture while also boosting local tourism and economy."
+      content: "Whether you’re here to explore tradition, discover something new, or simply soak in the energy of the Niger Delta, NIDEFEST is your destination. "
     },
     {
       type: 'paragraph',
-      content: "As we look to the future, NIDEFEST continues to evolve, embracing new technologies and innovative ways to showcase the Niger Delta's cultural wealth. We invite you to join us in this celebration of identity, creativity, and unity."
+      content: "So come with an open heart, ready to experience the magic of a festival that’s not just about celebration but about legacy, unity, and progress."
     }
   ],
   imageSrc: "https://res.cloudinary.com/dnbnev9lr/image/upload/c_fill,w_800,h_600,g_auto/v1734365468/pexels-christian-alemu-127251395-28664276_i9nhkt.jpg",

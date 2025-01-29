@@ -77,8 +77,12 @@ export default function DetailedPageTemplate({
                         <ul key={index} className="list-disc pl-6 mb-6">
                           {item.items?.map((listItem, listIndex) => (
                             <li key={listIndex} className="mb-2">{listItem}</li>
+                            
                           ))}
                         </ul>
+ 
+
+
                       );
                     default:
                       return null;

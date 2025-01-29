@@ -49,7 +49,7 @@ export default function AboutUsSection() {
             </ul>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
-                href="/about-nidefest"
+                href="/about/about-nidefest"
                 className="inline-block mt-6 px-8 py-3 bg-[#E67E22] text-white font-semibold rounded-full hover:bg-[#D35400] transition-colors duration-300 shadow-lg"
               >
                 Learn More About NIDEFEST
@@ -90,7 +90,7 @@ export default function AboutUsSection() {
           <h4 className="text-2xl font-semibold text-gray-800 mb-4">Brought to you by</h4>
           <p className="text-xl text-gray-600 mb-6">{aboutPJChills.title}</p>
           <Link
-            href="/about-pj-chills"
+            href="/about/about-pj-chills-and-crew"
             className="text-[#E67E22] hover:text-[#D35400] font-semibold transition-colors duration-300"
           >
             Learn about the team behind NIDEFEST

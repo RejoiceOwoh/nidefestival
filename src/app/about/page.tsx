@@ -59,7 +59,7 @@ export default function AboutPage() {
               <p className="text-xl text-gray-600 mb-6">{aboutNidefest.subtitle}</p>
               <p className="text-gray-700 mb-6">{aboutNidefest.excerpt}</p>
               <Link 
-                href="/about/nidefest" 
+                href="/about/about-nidefest" 
                 className="inline-flex items-center px-6 py-3 bg-[#E67E22] text-white rounded-full hover:bg-[#D35400] transition-colors"
               >
                 Read More <ChevronRight className="ml-2 w-5 h-5" />
@@ -93,7 +93,7 @@ export default function AboutPage() {
               <p className="text-xl text-gray-600 mb-6">{aboutPJChills.subtitle}</p>
               <p className="text-gray-700 mb-6">{aboutPJChills.excerpt}</p>
               <Link 
-                href="/about/pj-chills-and-crew" 
+                href="/about/about-pj-chills-and-crew" 
                 className="inline-flex items-center px-6 py-3 bg-[#E67E22] text-white rounded-full hover:bg-[#D35400] transition-colors"
               >
                 Read More <ChevronRight className="ml-2 w-5 h-5" />
